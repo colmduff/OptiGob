@@ -1,0 +1,8 @@
+{
+    "baseline_year": 2020,
+    "target_year": 2050,
+    "abatement_scenario": 1,
+    "gas": "CO2",
+    "emissions_budget": 10000,
+    "dairy_beef_ratio": 2
+}
