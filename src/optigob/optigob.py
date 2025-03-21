@@ -1,103 +1,110 @@
-from optigob.optimisation.livestock_optimisation import LivestockOptimisation
+from optigob.budget_model.baseline_emssions import BaselineEmission
+from optigob.budget_model.emissions_budget import EmissionsBudget
+import pandas as pd
 
 
 class Optigob:
     def __init__(self, optigob_data_manager):
         self.data_manager_class = optigob_data_manager
-        self.livestock_optimisation = LivestockOptimisation(optigob_data_manager)
 
-        self.baseline_year = self.data_manager_class.get_baseline_year()
-        self.target_year = self.data_manager_class.get_target_year()
-        self.abatement_scenario = self.data_manager_class.get_abatement_scenario()
-        self.gas = self.data_manager_class.get_gas()
-        self.emissions_budget = self.data_manager_class.get_emissions_budget()
-        self.dairy_beef_ratio = self.data_manager_class.get_dairy_beef_ratio()
+        self.baseline_emission = BaselineEmission(self.data_manager_class)
+        self.emission_budget = EmissionsBudget(self.data_manager_class)
 
 
-        # Internal cache to store the optimization result for the baseline population.
-        self._baseline_year_dict = None
-        self._target_year_dict = None
-
-    def _get_baseline_year_dict(self):
+    def get_baseline_co2e_emissions_by_sector(self):
         """
-        Retrieves and caches the livestock population for the baseline year.
-        
-        If the population has already been calculated, the cached value is returned.
-        Otherwise, the optimization is run and the result is stored in the cache.
         """
-        if self._baseline_year_dict is None:
-            # Run the optimization and cache the result.
-            self._baseline_year_dict = self.livestock_optimisation.optimise_livestock_pop(
-                self.gas,
-                self.emissions_budget,
-                self.dairy_beef_ratio,
-                self.baseline_year,
-                self.abatement_scenario
-            )
-        return self._baseline_year_dict
+        return self.baseline_emission.get_co2e_emission_categories()
     
-    def _get_target_year_dict(self):
+    def get_baseline_ch4_emissions_by_sector(self):
         """
-        Retrieves and caches the livestock population for the target year.
-        
-        If the population has already been calculated, the cached value is returned.
-        Otherwise, the optimization is run and the result is stored in the cache.
         """
-        if self._target_year_dict is None:
-            # Run the optimization and cache the result.
-            self._target_year_dict = self.livestock_optimisation.optimise_livestock_pop(
-                self.gas,
-                self.emissions_budget,
-                self.dairy_beef_ratio,
-                self.target_year,
-                self.abatement_scenario
-            )
-        return self._target_year_dict
-
-    def get_baseline_beef_population(self):
-        """
-        Retrieves the baseline beef population using the cached optimization result.
-        
-        Returns:
-            The beef population (e.g., in actual animal numbers) from the optimization.
-        """
-
-        pop = self._get_baseline_year_dict()
-
-        return pop["Beef_animals"]
-
-    def get_baseline_dairy_population(self):
-        """
-        Retrieves the baseline dairy population using the cached optimization result.
-        
-        Returns:
-            The dairy population (e.g., in actual animal numbers) from the optimization.
-        """
-
-        pop = self._get_baseline_year_dict()
-        return pop["Dairy_animals"]
+        return self.baseline_emission.get_ch4_emission_categories()
     
+    def get_baseline_n2o_emissions_by_sector(self):
+        """
+        """
+        return self.baseline_emission.get_n2o_emission_categories()
     
-    def get_target_beef_population(self):
+    def get_baseline_co2_emissions_by_sector(self):
         """
-        Retrieves the target beef population using the cached optimization result.
-        
-        Returns:
-            The beef population (e.g., in actual animal numbers) from the optimization.
         """
-
-        pop = self._get_target_year_dict()
-        return pop["Beef_animals"]
+        return self.baseline_emission.get_co2_emission_categories()
     
-    def get_target_dairy_population(self):
+    def get_baseline_co2e_emissions_total(self):
         """
-        Retrieves the target dairy population using the cached optimization result.
-        
-        Returns:
-            The dairy population (e.g., in actual animal numbers) from the optimization.
         """
-
-        pop = self._get_target_year_dict()
-        return pop["Dairy_animals"]
+        return self.baseline_emission.get_total_co2e_emission()
+    
+    def get_baseline_co2_emissions_total(self):
+        """
+        """
+        return self.baseline_emission.get_total_co2_emission()
+    
+    def get_baseline_ch4_emissions_total(self):
+        """
+        """
+        return self.baseline_emission.get_total_ch4_emission()
+    
+    def get_baseline_n2o_emissions_total(self):
+        """
+        """
+        return self.baseline_emission.get_total_n2o_emission()
+    
+    def get_scenario_co2e_emissions_by_sector(self):
+        """
+        """
+        return self.emission_budget.get_co2e_emission_categories()
+    
+    def get_scenario_ch4_emissions_by_sector(self):
+        """
+        """
+        return self.emission_budget.get_ch4_emission_categories()
+    
+    def get_scenario_n2o_emissions_by_sector(self):
+        """
+        """
+        return self.emission_budget.get_n2o_emission_categories()
+    
+    def get_scenario_co2_emissions_by_sector(self):
+        """
+        """
+        return self.emission_budget.get_co2_emission_categories()
     
 
+    def get_total_emissions_co2e_by_sector(self):
+        """
+        """
+        return {"baseline": self.get_baseline_co2e_emissions_by_sector(), 
+                "scenario": self.get_scenario_co2e_emissions_by_sector()}
+    
+    def get_total_emissions_ch4_by_sector(self):
+        """
+        """
+        return {"baseline": self.get_baseline_ch4_emissions_by_sector(), 
+                "scenario": self.get_scenario_ch4_emissions_by_sector()}        
+    
+    def get_total_emissions_n2o_by_sector(self):
+        """
+        """
+        return {"baseline": self.get_baseline_n2o_emissions_by_sector(), 
+                "scenario": self.get_scenario_n2o_emissions_by_sector()}
+    
+    def get_total_emissions_co2_by_sector(self):
+        """
+        """
+        return {"baseline": self.get_baseline_co2_emissions_by_sector(), 
+                "scenario": self.get_scenario_co2_emissions_by_sector()}
+    
+    
+    def get_total_emissions_co2e_by_sector_df(self):
+        """
+        Returns total emissions in a tidy Pandas DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
+        """
+        data = {
+            "baseline": self.get_baseline_co2e_emissions_by_sector(),
+            "scenario": self.get_scenario_co2e_emissions_by_sector()
+        }
+
+        df = pd.DataFrame.from_dict(data, orient='columns')
+        return df

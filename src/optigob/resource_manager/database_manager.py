@@ -34,10 +34,141 @@ class DatabaseManager:
         return sqa.create_engine(engine_url)
 
 
-    def get_livestock_scalers(self):
+    def get_livestock_emission_scaler_table(self):
         """
         """
-        table = "animal_scalers"
+        table = "animal_emission_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_static_livestock_emission_scaler_table(self):
+        """
+        """
+        table = "static_animal_emission_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_static_livestock_area_scaler_table(self):
+        """
+        """
+        table = "static_animal_area_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_livestock_area_scaler_table(self):
+        """
+        """
+        table = "animal_area_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+
+    def get_forest_scaler_table(self):
+        """
+        """
+        table = "forest_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+
+    def get_static_forest_scaler_table(self):
+        """
+        """
+        table = "static_forest_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_ccs_scaler_table(self):
+        """
+        """
+        table = "ccs_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_hwp_scaler_table(self):
+        """
+        """
+        table = "hwp_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_substitution_scaler_table(self):
+        """
+        """
+        table = "substitution_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_ad_emission_scaler_table(self):
+        """
+        """
+        table = "ad_emission_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_ad_area_scaler_table(self):
+        """
+        """
+        table = "ad_area_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_organic_soil_emission_scaler_table(self):
+        """
+        """
+        table = "organic_soils_emission_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_organic_soil_area_scaler_table(self):
+        """
+        """
+        table = "organic_soils_area_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_crop_scaler_table(self):
+        """
+        """
+        table = "crop_scalers"
         dataframe = pd.read_sql(
             "SELECT * FROM '%s'" % (table),
             self.engine,

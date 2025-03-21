@@ -10,9 +10,10 @@ readme = "README.md"
 python = "^3.9"
 pyomo = "^6.8.0"
 cplex = "^22.1.2.0"
-pandas = "2.1.4"
-numpy = "^1.25.0"
-sqlalchemy = "^1.4.0"
+pandas = "^2.2.3"
+numpy = "^2.2.4"
+sqlalchemy = "^2.0.39"
+pyyaml = "^6.0.2"
 
 [tool.poetry.dev-dependencies]
 
