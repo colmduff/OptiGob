@@ -39,6 +39,16 @@ class BioMethaneBudget:
 
         return filtered["value"].item()
     
+    def get_total_biomethane_area(self):
+        """
+        """
+        ad_ag_area = self.get_ad_ag_area()
+        ad_substitution_area = self.get_ad_substitution_area()
+        ad_ccs_area = self.get_ad_ccs_area()
+
+        return ad_ag_area + ad_substitution_area + ad_ccs_area
+    
+    
     def get_ad_ag_co2_emission(self):
         """
         """
@@ -207,3 +217,4 @@ class BioMethaneBudget:
         ad_ccs_n2o_emission = self.get_ad_ccs_n2o_emission()
 
         return ad_ag_n2o_emission + ad_substitution_n2o_emission + ad_ccs_n2o_emission
+    

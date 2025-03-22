@@ -25,5 +25,22 @@ class TestForestBudget(unittest.TestCase):
         result = self.forest_budget.total_emission_offset()
         self.assertIsNotNone(result)
 
+    def test_get_managed_forest_area(self):
+        result = self.forest_budget.get_managed_forest_area()
+        self.assertIsNotNone(result)
+
+    def test_get_afforestation_area(self):
+        result = self.forest_budget.get_afforestation_area()
+        self.assertIsNotNone(result)
+
+    def test_get_hwp_volume(self):
+        result = self.forest_budget.get_hwp_volume()
+        self.assertIsNotNone(result)
+
+    def test_get_ccs_volume(self):
+        result = self.forest_budget.get_ccs_volume()
+        self.assertIsNotNone(result)
+        
+
 if __name__ == '__main__':
     unittest.main()

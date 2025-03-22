@@ -128,7 +128,11 @@ class EmissionsBudget:
 
         return static_ag_emission + other_land_emission + biomethane_emission
     
-
+    def get_split_gas_budget(self):
+        return self.split_gas_budget
+    
+    def get_net_zero_budget(self):
+        return self.net_zero_budget
 
     def total_agriculture_co2e_emission(self):
         """

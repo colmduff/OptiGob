@@ -168,3 +168,22 @@ class StaticAgBudget:
         )
 
         return pig_and_poultry_area["value"].item()
+    
+    def get_crop_area(self):
+        """
+        """
+        crop_area = self.data_manager_class.get_crop_scaler(
+            year=self.target_year,gas="CO2e", abatement=self.abatement_type
+        )
+
+        return crop_area["area_ha"].item()
+
+
+    def get_total_static_ag_area(self):
+        """
+        """
+        sheep_area = self.get_sheep_area()
+        pig_and_poultry_area = self.get_pig_and_poultry_area()
+        crop_area = self.get_crop_area()
+
+        return sheep_area + pig_and_poultry_area + crop_area

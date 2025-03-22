@@ -78,5 +78,9 @@ class TestBaselineLivestock(unittest.TestCase):
         print(f"beef area: {result}")
         self.assertIsNotNone(result)
 
+    def test_get_total_area(self):
+        result = self.baseline.get_total_area()
+        print(f"total area: {result}")
+
 if __name__ == '__main__':
     unittest.main()

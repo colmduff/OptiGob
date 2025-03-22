@@ -69,5 +69,9 @@ class TestForestBudget(unittest.TestCase):
         result = self.biomethane_budget.get_ad_ccs_co2e_emission()
         self.assertIsNotNone(result)
 
+    def test_get_total_biomethane_area(self):
+        result = self.biomethane_budget.get_total_biomethane_area()
+        self.assertIsNotNone(result)
+
 if __name__ == '__main__':
     unittest.main()

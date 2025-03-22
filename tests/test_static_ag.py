@@ -86,6 +86,18 @@ class TestStaticAgBudget(unittest.TestCase):
         print(f"pig and poultry area: {result}")
         self.assertIsInstance(result, float)
 
+    def test_get_crop_area(self):
+        result = self.static_ag_budget.get_crop_area()
+
+        print(f"crop area: {result}")
+        self.assertIsInstance(result, float)
+
+    def test_get_total_static_ag_area(self):
+        result = self.static_ag_budget.get_total_static_ag_area()
+
+        print(f"total static ag area: {result}")
+        self.assertIsInstance(result, float)
+
 
 if __name__ == '__main__':
     unittest.main()

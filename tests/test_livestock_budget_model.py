@@ -5,10 +5,9 @@ from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
 class TestForestBudget(unittest.TestCase):
 
     def setUp(self):
-        self.data = './data/sip.json'
+        self.data = './data/sip.yaml'
         self.data_manager = OptiGobDataManager(self.data)
-        self.livestock_budget = LivestockBudget(self.data_manager)
-
+        self.livestock_budget = LivestockBudget(self.data_manager, 1000, 500)
 
 
     def test_get_dairy_population(self):
@@ -80,6 +79,21 @@ class TestForestBudget(unittest.TestCase):
         total_co2e_emission = self.livestock_budget.get_total_co2e_emission()
         print(f"Total CO2e Emission: {total_co2e_emission}")
         self.assertIsNotNone(total_co2e_emission)
+
+    def test_get_dairy_cows_area(self):
+        result = self.livestock_budget.get_dairy_cows_area()
+        print(f"dairy area: {result}")
+        self.assertIsNotNone(result)
+
+    def test_get_beef_cows_area(self):
+        result = self.livestock_budget.get_beef_cows_area()
+        print(f"beef area: {result}")
+        self.assertIsNotNone(result)
+
+    def test_get_total_area(self):
+        result = self.livestock_budget.get_total_area()
+        print(f"total area: {result}")
+
 
 if __name__ == '__main__':
     unittest.main()

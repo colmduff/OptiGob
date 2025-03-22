@@ -155,4 +155,10 @@ class BaselineLivestock:
         )
 
 
-        return beef_area['value'] * self.beef_cows
+        return beef_area['value'].item() * self.beef_cows
+
+
+    def get_total_area(self):
+        """
+        """
+        return self.get_dairy_cows_area() + self.get_beef_cows_area()

@@ -40,6 +40,9 @@ class OptiGobDataManager:
         self._static_livestock_emission_scalers = None
         self._static_livestock_area_scalers = None
 
+        self._ha_to_kha = 1e-3
+        self._kha_to_ha = 1e3
+
         self._AR_VALUES = {
             "AR5": {
                 "CO2": 1,
@@ -62,6 +65,25 @@ class OptiGobDataManager:
             "wood_ccs",
             "other_land_use",
             "ad"]
+
+    def get_ha_to_kha(self):
+        """
+        Retrieves the conversion factor from hectares to square kilometers.
+
+        Returns:
+            float: The conversion factor.
+        """
+        return self._ha_to_kha
+    
+    def get_kha_to_ha(self):
+        """
+        Retrieves the conversion factor from square kilometers to hectares.
+
+        Returns:
+            float: The conversion factor.
+        """
+        return self._kha_to_ha
+    
 
     def get_AR_gwp100_values(self, gas):
         """

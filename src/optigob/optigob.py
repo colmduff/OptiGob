@@ -1,5 +1,6 @@
 from optigob.budget_model.baseline_emssions import BaselineEmission
 from optigob.budget_model.emissions_budget import EmissionsBudget
+from optigob.budget_model.landarea_budget import LandAreaBudget
 import pandas as pd
 
 
@@ -9,6 +10,7 @@ class Optigob:
 
         self.baseline_emission = BaselineEmission(self.data_manager_class)
         self.emission_budget = EmissionsBudget(self.data_manager_class)
+        self.land_area_budget = LandAreaBudget(self.data_manager_class)
 
 
     def get_baseline_co2e_emissions_by_sector(self):
@@ -104,6 +106,28 @@ class Optigob:
         data = {
             "baseline": self.get_baseline_co2e_emissions_by_sector(),
             "scenario": self.get_scenario_co2e_emissions_by_sector()
+        }
+
+        df = pd.DataFrame.from_dict(data, orient='columns')
+        return df
+    
+
+    def get_total_land_area_by_sector(self):
+        """
+        """
+        data = {
+            "baseline": self.land_area_budget.get_total_baseline_land_area_by_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_land_area_by_sector()
+        }
+        return data
+    
+    def get_total_land_area_by_sector_df(self):
+        """
+        Returns total land area in a tidy Pandas DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
+        """
+        data = {
+            "baseline": self.land_area_budget.get_total_baseline_land_area_by_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_land_area_by_sector()
         }
 
         df = pd.DataFrame.from_dict(data, orient='columns')

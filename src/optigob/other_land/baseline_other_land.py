@@ -72,7 +72,7 @@ class BaselineOtherLand:
         
         filtered = drained_organic_soil_area_df[drained_organic_soil_area_df["type"] == "drained_organic"]
 
-        return filtered["areas_ha"].item()
+        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
     
     def get_rewetted_organic_area(self):
         """
@@ -85,7 +85,7 @@ class BaselineOtherLand:
 
         filtered = rewtted_organic_area_df[rewtted_organic_area_df["type"] == "rewetted_organic"]
 
-        return filtered["areas_ha"].item()
+        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
     
     def get_drained_wetland_area(self):
         """
@@ -98,7 +98,7 @@ class BaselineOtherLand:
 
         filtered = drained_wetland_area_df[drained_wetland_area_df["type"] == "drained_wetland"]
 
-        return filtered["areas_ha"].item()
+        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
     
     def get_rewetted_wetland_area(self):
         """
@@ -111,5 +111,15 @@ class BaselineOtherLand:
 
         filtered = rewetted_wetland_area_df[rewetted_wetland_area_df["type"] == "rewetted_wetland"]
 
-        return filtered["areas_ha"].item()
+        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
+    
+    def get_total_other_land_area(self):
+        """
+        """
+        drained_organic_soil_area = self.get_drained_organic_soil_area()
+        rewetted_organic_area = self.get_rewetted_organic_area()
+        drained_wetland_area = self.get_drained_wetland_area()
+        rewetted_wetland_area = self.get_rewetted_wetland_area()
+
+        return drained_organic_soil_area + rewetted_organic_area + drained_wetland_area + rewetted_wetland_area
     

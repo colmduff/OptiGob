@@ -88,3 +88,47 @@ class ForestBudget:
 
         return total_offset_biomass + hwp_offset + substitution_offset + ccs_offset
 
+    def get_managed_forest_area(self):
+        """
+        """
+        managed_forest_df = self.data_manager_class.get_static_forest_scaler(
+            target_year=self.target_year,
+            harvest=self.harvest_rate
+        )
+        return managed_forest_df["area_ha"].item()
+    
+    def get_afforestation_area(self):
+        """
+        """
+        afforestation_df = self.data_manager_class.get_forest_scaler(
+            target_year=self.target_year,
+            affor_rate=self.afforestation_rate,
+            broadleaf_frac=self.broadleaf_fraction,
+            organic_soil_frac=self.organic_soil_fraction,
+            harvest=self.harvest_rate
+        )
+        return afforestation_df["area_ha"].item()
+    
+    def get_hwp_volume(self):
+        """
+        """
+        hwp_df = self.data_manager_class.get_hwp_scaler(
+            target_year=self.target_year,
+            affor_rate=self.afforestation_rate,
+            broadleaf_frac=self.broadleaf_fraction,
+            organic_soil_frac=self.organic_soil_fraction,
+            harvest=self.harvest_rate
+        )
+        return hwp_df["volume"].item()
+    
+    def get_ccs_volume(self):
+        """
+        """
+        ccs_df = self.data_manager_class.get_ccs_scaler(
+            target_year=self.target_year,
+            affor_rate=self.afforestation_rate,
+            broadleaf_frac=self.broadleaf_fraction,
+            organic_soil_frac=self.organic_soil_fraction,
+            harvest=self.harvest_rate
+        )
+        return ccs_df["volume"].item()
