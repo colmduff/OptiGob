@@ -1,3 +1,23 @@
+"""
+Livestock Optimisation
+======================
+
+Module for optimizing livestock populations under emissions constraints using Pyomo.
+
+This module contains the following classes:
+- LivestockOptimisation: Class for optimizing livestock populations under emissions constraints.
+
+Classes:
+    LivestockOptimisation
+
+Methods:
+    __init__(self, optigob_data_manager)
+        Initializes the optimisation class with a specified solver.
+    
+    optimise_livestock_pop(self, dairy_beef_ratio, year, scenario, abatement, emissions_budget, ch4_budget=None)
+        Set up and solve the optimisation model.
+"""
+
 import pandas as pd
 from pyomo.environ import ConcreteModel, Var, Constraint, Objective, NonNegativeReals, maximize, SolverFactory
 
@@ -10,6 +30,9 @@ class LivestockOptimisation():
     def __init__(self, optigob_data_manager):
         """
         Initializes the optimisation class with a specified solver.
+        
+        Parameters:
+        optigob_data_manager: An instance of the data manager class to retrieve emission scalers.
         """
         self.solver = "cplex_direct"
         self.data_manager_class = optigob_data_manager
@@ -25,11 +48,12 @@ class LivestockOptimisation():
         Set up and solve the optimisation model.
         
         Parameters:
-        emissions_budget: Total allowable emissions in CO2e.
-        ch4_budget: Optional methane (CH4) emissions constraint.
         dairy_beef_ratio: Ratio of dairy animals to beef animals (e.g., 10 for a 10:1 ratio).
         year: Year to select the correct row from the scaler data.
         scenario: Abatement scenario.
+        abatement: Abatement level.
+        emissions_budget: Total allowable emissions in CO2e.
+        ch4_budget: Optional methane (CH4) emissions constraint.
         
         Returns:
         Dictionary with optimal population sizes and emissions data.

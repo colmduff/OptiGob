@@ -7,7 +7,7 @@ class ImportFactory:
     @staticmethod
     def load_config(config_path):
         """
-        Loads a configuration file (JSON, YAML, CSV, etc.) based on the file extension.
+        Loads a configuration file (JSON, YAML) based on the file extension.
         
         Parameters:
             config_path (str): Path to the configuration file.

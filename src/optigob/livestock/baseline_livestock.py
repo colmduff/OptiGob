@@ -1,5 +1,40 @@
+"""
+BaselineLivestock Module
+========================
+
+This module defines the BaselineLivestock class, which is responsible for calculating
+various emissions and area usage for dairy and beef cows based on baseline data.
+
+Class:
+    BaselineLivestock
+
+Methods:
+    __init__(self, optigob_data_manager): Initializes the BaselineLivestock instance.
+    get_dairy_cows_co2_emission(self): Calculates CO2 emissions for dairy cows.
+    get_dairy_cows_ch4_emission(self): Calculates CH4 emissions for dairy cows.
+    get_dairy_cows_n2o_emission(self): Calculates N2O emissions for dairy cows.
+    get_dairy_cows_co2e_emission(self): Calculates CO2e emissions for dairy cows.
+    get_beef_cows_co2_emission(self): Calculates CO2 emissions for beef cows.
+    get_beef_cows_ch4_emission(self): Calculates CH4 emissions for beef cows.
+    get_beef_cows_n2o_emission(self): Calculates N2O emissions for beef cows.
+    get_beef_cows_co2e_emission(self): Calculates CO2e emissions for beef cows.
+    get_total_co2_emission(self): Calculates total CO2 emissions for dairy and beef cows.
+    get_total_ch4_emission(self): Calculates total CH4 emissions for dairy and beef cows.
+    get_total_n2o_emission(self): Calculates total N2O emissions for dairy and beef cows.
+    get_total_co2e_emission(self): Calculates total CO2e emissions for dairy and beef cows.
+    get_dairy_cows_area(self): Calculates area usage for dairy cows.
+    get_beef_cows_area(self): Calculates area usage for beef cows.
+    get_total_area(self): Calculates total area usage for dairy and beef cows.
+"""
+
 class BaselineLivestock:
     def __init__(self, optigob_data_manager):
+        """
+        Initialize the BaselineLivestock instance with the provided data manager.
+
+        Args:
+            optigob_data_manager: An instance of the data manager class to fetch baseline data.
+        """
         self.data_manager_class = optigob_data_manager
 
         self.baseline_year = self.data_manager_class.get_baseline_year()
@@ -10,6 +45,10 @@ class BaselineLivestock:
 
     def get_dairy_cows_co2_emission(self):
         """
+        Calculate the CO2 emissions for dairy cows.
+
+        Returns:
+            float: The CO2 emissions for dairy cows in kilotons (kt).
         """
         dairy_co2 = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -22,6 +61,10 @@ class BaselineLivestock:
     
     def get_dairy_cows_ch4_emission(self):
         """
+        Calculate the CH4 emissions for dairy cows.
+
+        Returns:
+            float: The CH4 emissions for dairy cows in kilotons (kt).
         """
         dairy_ch4 = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -34,6 +77,10 @@ class BaselineLivestock:
     
     def get_dairy_cows_n2o_emission(self):
         """
+        Calculate the N2O emissions for dairy cows.
+
+        Returns:
+            float: The N2O emissions for dairy cows in kilotons (kt).
         """
         dairy_n2o = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -46,6 +93,10 @@ class BaselineLivestock:
     
     def get_dairy_cows_co2e_emission(self):
         """
+        Calculate the CO2e emissions for dairy cows.
+
+        Returns:
+            float: The CO2e emissions for dairy cows in kilotons (kt).
         """
         dairy_co2e = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -58,6 +109,10 @@ class BaselineLivestock:
     
     def get_beef_cows_co2_emission(self):
         """
+        Calculate the CO2 emissions for beef cows.
+
+        Returns:
+            float: The CO2 emissions for beef cows in kilotons (kt).
         """
         beef_co2 = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -70,6 +125,10 @@ class BaselineLivestock:
     
     def get_beef_cows_ch4_emission(self):
         """
+        Calculate the CH4 emissions for beef cows.
+
+        Returns:
+            float: The CH4 emissions for beef cows in kilotons (kt).
         """
         beef_ch4 = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -82,6 +141,10 @@ class BaselineLivestock:
     
     def get_beef_cows_n2o_emission(self):
         """
+        Calculate the N2O emissions for beef cows.
+
+        Returns:
+            float: The N2O emissions for beef cows in kilotons (kt).
         """
         beef_n2o = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -94,6 +157,10 @@ class BaselineLivestock:
     
     def get_beef_cows_co2e_emission(self):
         """
+        Calculate the CO2e emissions for beef cows.
+
+        Returns:
+            float: The CO2e emissions for beef cows in kilotons (kt).
         """
         beef_co2e = self.data_manager_class.get_livestock_emission_scaler(
             year=self.baseline_year,
@@ -107,21 +174,37 @@ class BaselineLivestock:
 
     def get_total_co2_emission(self):
         """
+        Calculate the total CO2 emissions for both dairy and beef cows.
+
+        Returns:
+            float: The total CO2 emissions in kilotons (kt).
         """
         return self.get_dairy_cows_co2_emission() + self.get_beef_cows_co2_emission()
     
     def get_total_ch4_emission(self):
         """
+        Calculate the total CH4 emissions for both dairy and beef cows.
+
+        Returns:
+            float: The total CH4 emissions in kilotons (kt).
         """
         return self.get_dairy_cows_ch4_emission() + self.get_beef_cows_ch4_emission()
     
     def get_total_n2o_emission(self):
         """
+        Calculate the total N2O emissions for both dairy and beef cows.
+
+        Returns:
+            float: The total N2O emissions in kilotons (kt).
         """
         return self.get_dairy_cows_n2o_emission() + self.get_beef_cows_n2o_emission()
     
     def get_total_co2e_emission(self):
         """
+        Calculate the total CO2e emissions for both dairy and beef cows.
+
+        Returns:
+            float: The total CO2e emissions in kilotons (kt).
         """
         return self.get_dairy_cows_co2e_emission() + self.get_beef_cows_co2e_emission()
     
@@ -129,6 +212,10 @@ class BaselineLivestock:
 
     def get_dairy_cows_area(self):
         """
+        Calculate the area usage for dairy cows.
+
+        Returns:
+            float: The area usage for dairy cows.
         """
         dairy_data = self.data_manager_class.get_livestock_area_scaler(
             year=self.baseline_year,
@@ -146,6 +233,10 @@ class BaselineLivestock:
     
     def get_beef_cows_area(self):
         """
+        Calculate the area usage for beef cows.
+
+        Returns:
+            float: The area usage for beef cows.
         """
         beef_area = self.data_manager_class.get_livestock_area_scaler(
             year=self.baseline_year,
@@ -160,5 +251,9 @@ class BaselineLivestock:
 
     def get_total_area(self):
         """
+        Calculate the total area usage for both dairy and beef cows.
+
+        Returns:
+            float: The total area usage.
         """
         return self.get_dairy_cows_area() + self.get_beef_cows_area()

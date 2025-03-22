@@ -1,3 +1,23 @@
+"""
+Module: forest_budget
+
+This module contains the ForestBudget class, which is responsible for calculating various forest-related offsets and metrics.
+The class interacts with an optigob data manager to retrieve necessary data for these calculations.
+
+Methods:
+    - __init__(self, optigob_data_manager): Initializes the ForestBudget instance with data from the optigob data manager.
+    - get_managed_forest_offset(self): Calculates the emission offset from managed forests (in kt).
+    - get_afforestation_offset(self): Calculates the emission offset from afforestation activities (in kt).
+    - get_total_forest_offset(self): Calculates the total emission offset from both managed forests and afforestation (in kt).
+    - get_hwp_offset(self): Calculates the emission offset from harvested wood products (HWP) (in kt).
+    - get_ccs_offset(self): Calculates the emission offset from carbon capture and storage (CCS) (in kt).
+    - get_subsitution_offset(self): Calculates the emission offset from substitution effects (in kt).
+    - total_emission_offset(self): Calculates the total emission offset from all sources (in kt).
+    - get_managed_forest_area(self): Retrieves the area of managed forests (in hectares).
+    - get_afforestation_area(self): Retrieves the area of afforestation activities (in hectares).
+    - get_hwp_volume(self): Retrieves the volume of harvested wood products (in cubic meters).
+    - get_ccs_volume(self): Retrieves the volume of carbon captured and stored (in cubic meters).
+"""
 
 class ForestBudget:
     def __init__(self, optigob_data_manager):
@@ -12,6 +32,7 @@ class ForestBudget:
 
     def get_managed_forest_offset(self):
         """
+        Calculates the emission offset from managed forests.
         """
         managed_forest_df = self.data_manager_class.get_static_forest_scaler(
             target_year=self.target_year,
@@ -21,6 +42,7 @@ class ForestBudget:
 
     def get_afforestation_offset(self):
         """
+        Calculates the emission offset from afforestation activities.
         """
         afforestation_df = self.data_manager_class.get_forest_scaler(
             target_year=self.target_year,
@@ -33,6 +55,7 @@ class ForestBudget:
     
     def get_total_forest_offset(self):
         """
+        Calculates the total emission offset from both managed forests and afforestation.
         """
         afforestation_offset = self.get_afforestation_offset()
         managed_forest_offset = self.get_managed_forest_offset()
@@ -41,6 +64,7 @@ class ForestBudget:
     
     def get_hwp_offset(self):
         """
+        Calculates the emission offset from harvested wood products (HWP).
         """
         hwp_df = self.data_manager_class.get_hwp_scaler(
             target_year=self.target_year,
@@ -53,6 +77,7 @@ class ForestBudget:
     
     def get_ccs_offset(self):
         """
+        Calculates the emission offset from carbon capture and storage (CCS).
         """
         ccs_df = self.data_manager_class.get_ccs_scaler(
             target_year=self.target_year,
@@ -65,6 +90,7 @@ class ForestBudget:
     
     def get_subsitution_offset(self):
         """
+        Calculates the emission offset from substitution effects.
         """
         substitution_df = self.data_manager_class.get_substitution_scaler(
             target_year=self.target_year,
@@ -77,6 +103,7 @@ class ForestBudget:
     
     def total_emission_offset(self):
         """
+        Calculates the total emission offset from all sources.
         """
         total_offset_biomass = self.get_total_forest_offset()
         hwp_offset = self.get_hwp_offset()
@@ -90,6 +117,7 @@ class ForestBudget:
 
     def get_managed_forest_area(self):
         """
+        Retrieves the area of managed forests.
         """
         managed_forest_df = self.data_manager_class.get_static_forest_scaler(
             target_year=self.target_year,
@@ -99,6 +127,7 @@ class ForestBudget:
     
     def get_afforestation_area(self):
         """
+        Retrieves the area of afforestation activities.
         """
         afforestation_df = self.data_manager_class.get_forest_scaler(
             target_year=self.target_year,
@@ -111,6 +140,7 @@ class ForestBudget:
     
     def get_hwp_volume(self):
         """
+        Retrieves the volume of harvested wood products (in cubic meters).
         """
         hwp_df = self.data_manager_class.get_hwp_scaler(
             target_year=self.target_year,
@@ -123,6 +153,7 @@ class ForestBudget:
     
     def get_ccs_volume(self):
         """
+        Retrieves the volume of carbon captured and stored (in cubic meters).
         """
         ccs_df = self.data_manager_class.get_ccs_scaler(
             target_year=self.target_year,

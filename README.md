@@ -1,8 +1,17 @@
 # optigob
 
-A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance
+A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance.
+
+## Features
+
+- Calculate total CO2e emissions by sector
+- Calculate total land area by sector
+- Generate detailed dataframes for emissions and land area
+- Easy integration with preconfigured data sources
 
 ## Installation
+
+To install the package, use pip:
 
 ```bash
 $ pip install optigob
@@ -16,7 +25,6 @@ Here is a short example of how to use the `Optigob` class:
 from optigob.optigob import Optigob
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
 
-
 def main():
     data = './data/sip.yaml'
     # Initialize the data manager
@@ -27,11 +35,8 @@ def main():
 
     # Get baseline and target populations
     print(optigob.get_total_emissions_co2e_by_sector())
-
     print(optigob.get_total_emissions_co2e_by_sector_df())
-
     print(optigob.get_total_land_area_by_sector())
-
     print(optigob.get_total_land_area_by_sector_df())
 
 if __name__ == '__main__':
