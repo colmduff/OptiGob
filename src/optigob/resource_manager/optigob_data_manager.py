@@ -17,8 +17,10 @@ Methods:
     get_emission_sectors: Retrieves the emission sectors.
     get_livestock_emission_scaler: Retrieves the scaler value for a given year, system, gas, and scenario.
     get_livestock_area_scaler: Retrieves the scaler value for a given year, system, and scenario.
+    get_livestock_protein_scaler: Retrieves the scaler value for a given year, system, and scenario.
     get_static_livestock_emission_scaler: Retrieves the static scaler value for a given year, system, gas, and abatement.
     get_static_livestock_area_scaler: Retrieves the static scaler value for a given year, system, and abatement.
+    get_static_livestock_protein_scaler: Retrieves the static scaler value for a given year, system, and abatement.
     get_forest_scaler: Retrieves the scaler value for a given year and forest management parameters.
     get_static_forest_scaler: Retrieves the static scaler value for a given year and harvest intensity.
     get_ccs_scaler: Retrieves the CCS scaler value for a given year and forest management parameters.
@@ -77,6 +79,7 @@ class OptiGobDataManager:
 
         self._livestock_emission_scalers = None  
         self._livestock_area_scalers = None
+        self._livestock_protein_scalers = None
         self._forest_scalers = None
         self._static_forest_scalers = None
         self._ccs_scalers = None
@@ -89,6 +92,8 @@ class OptiGobDataManager:
         self._crop_scalers = None
         self._static_livestock_emission_scalers = None
         self._static_livestock_area_scalers = None
+        self._static_livestock_protein_scalers = None
+
 
         self._ha_to_kha = 1e-3
         self._kha_to_ha = 1e3
@@ -179,6 +184,18 @@ class OptiGobDataManager:
         if self._static_livestock_area_scalers is None:
             self._static_livestock_area_scalers = self.db_manager.get_static_livestock_area_scaler_table()
         return self._static_livestock_area_scalers.copy()
+    
+    def _load_livestock_protein_scalers(self):
+        """Loads and caches the livestock protein scalers from the database."""
+        if self._livestock_protein_scalers is None:
+            self._livestock_protein_scalers = self.db_manager.get_livestock_protein_scaler_table()
+        return self._livestock_protein_scalers.copy()
+    
+    def _load_static_livestock_protein_scalers(self):
+        """Loads and caches the static livestock protein scalers from the database."""
+        if self._static_livestock_protein_scalers is None:
+            self._static_livestock_protein_scalers = self.db_manager.get_static_livestock_protein_scaler_table()
+        return self._static_livestock_protein_scalers.copy()
     
     def _load_forest_scalers(self):
         """Loads and caches the forest scalers from the database."""
@@ -314,6 +331,38 @@ class OptiGobDataManager:
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
     
+    def get_livestock_protein_scaler(self, year, system, item, scenario, abatement):
+        """
+        Retrieves the scaler value for a given year, system, and scenario.
+        
+        Parameters:
+            year (int): The year of interest.
+            system (str): The system identifier.
+            item (str): The item identifier.
+            scenario (int): The scenario identifier.
+            abatement (int): The abatement identifier.
+        
+        Returns:
+            DataFrame: The filtered DataFrame containing the scaler values.
+        
+        Raises:
+            ValueError: If no matching row is found.
+        """
+        df = self._load_livestock_protein_scalers()
+
+        # Filter the DataFrame based on the provided parameters.
+        filtered = df[
+            (df["year"] == year) &
+            (df["system"] == system) &
+            (df["item"] == item) &
+            (df["scenario"] == scenario) &
+            (df["abatement"] == abatement)
+        ]
+        if filtered.empty:
+            raise ValueError("No matching scaler found for the provided parameters.")
+        # Return the scaler value; if more than one row matches, we take the first.
+        return filtered
+    
     def get_static_livestock_emission_scaler(self,
                                             year,
                                             system, 
@@ -381,6 +430,36 @@ class OptiGobDataManager:
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
 
+    def get_static_livestock_protein_scaler(self, year, system, item, abatement):
+        """
+        Retrieves the static scaler value for a given year, system, and abatement.
+        
+        Parameters:
+            year (int): The year of interest.
+            system (str): The system identifier.
+            item (str): The item identifier.
+            abatement (int): The abatement identifier.
+        
+        Returns:
+            DataFrame: The filtered DataFrame containing the scaler values.
+        
+        Raises:
+            ValueError: If no matching row is found.
+        """
+        df = self._load_static_livestock_protein_scalers()
+
+        # Filter the DataFrame based on the provided parameters.
+        filtered = df[
+            (df["year"] == year) &
+            (df["system"] == system) &
+            (df["item"] == item) &
+            (df["scenario"] == 0) & 
+            (df["abatement"] == abatement)
+        ]
+        if filtered.empty:
+            raise ValueError("No matching scaler found for the provided parameters.")
+        # Return the scaler value; if more than one row matches, we take the first.
+        return filtered
 
     def get_forest_scaler(self, target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest):
         """

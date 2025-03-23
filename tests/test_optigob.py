@@ -41,6 +41,13 @@ class TestOptigob(unittest.TestCase):
         self.assertIsNotNone(result.get_scenario_co2_emissions_by_sector())
 
         
+        # Scenario protein
+        print("\nScenario Protein by Sector:\n", result.get_total_protein_by_sector())
+        print("\nScenario Protein by Sector Dataframe:\n", result.get_total_protein_by_sector_df())
+
+        self.assertIsNotNone(result.get_total_protein_by_sector())
+        self.assertIsNotNone(result.get_total_protein_by_sector_df())
+
 
 if __name__ == '__main__':
     unittest.main()

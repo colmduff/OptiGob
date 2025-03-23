@@ -30,11 +30,14 @@ Methods:
     get_total_emissions_co2e_by_sector_df: Returns total CO2e emissions in a tidy Pandas DataFrame.
     get_total_land_area_by_sector: Retrieves total land area by sector for both baseline and scenario.
     get_total_land_area_by_sector_df: Returns total land area in a tidy Pandas DataFrame.
+    get_total_protein_by_sector: Retrieves total protein by sector for both baseline and scenario.
+    get_total_protein_by_sector_df: Returns total protein in a tidy Pandas DataFrame.
 """
 
 from optigob.budget_model.baseline_emssions import BaselineEmission
 from optigob.budget_model.emissions_budget import EmissionsBudget
 from optigob.budget_model.landarea_budget import LandAreaBudget
+from optigob.budget_model.econ_output import EconOutput
 import pandas as pd
 
 
@@ -51,6 +54,7 @@ class Optigob:
         self.baseline_emission = BaselineEmission(self.data_manager_class)
         self.emission_budget = EmissionsBudget(self.data_manager_class)
         self.land_area_budget = LandAreaBudget(self.data_manager_class)
+        self.econ_output = EconOutput(self.data_manager_class)
 
     def get_baseline_co2e_emissions_by_sector(self):
         """
@@ -247,6 +251,33 @@ class Optigob:
         data = {
             "baseline": self.land_area_budget.get_total_baseline_land_area_by_sector(),
             "scenario": self.land_area_budget.get_total_scenario_land_area_by_sector()
+        }
+
+        df = pd.DataFrame.from_dict(data, orient='columns')
+        return df
+
+    def get_total_protein_by_sector(self):
+        """
+        Retrieves total protein by sector for both baseline and scenario.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of sector protein as values.
+        """
+        data = {
+            "baseline": self.econ_output.get_total_baseline_protein_by_sector(),
+            "scenario": self.econ_output.get_total_scenario_protein_by_sector()
+        }
+        return data
+    
+    def get_total_protein_by_sector_df(self):
+        """
+        Returns total protein in a tidy Pandas DataFrame with sectors as rows
+        and 'baseline' and 'scenario' as columns.   "
+        """
+        data = {
+            "baseline": self.econ_output.get_total_baseline_protein_by_sector(),
+            "scenario": self.econ_output.get_total_scenario_protein_by_sector()
         }
 
         df = pd.DataFrame.from_dict(data, orient='columns')

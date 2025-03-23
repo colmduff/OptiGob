@@ -14,6 +14,8 @@ Methods:
     get_static_livestock_emission_scaler_table: Retrieves the 'static_animal_emission_scalers' table.
     get_static_livestock_area_scaler_table: Retrieves the 'static_animal_area_scalers' table.
     get_livestock_area_scaler_table: Retrieves the 'animal_area_scalers' table.
+    get_livestock_protein_scaler_table: Retrieves the 'animal_protein_scalers' table.
+    get_static_livestock_protein_scaler_table: Retrieves the 'static_animal_protein_scalers' table.
     get_forest_scaler_table: Retrieves the 'forest_scalers' table.
     get_static_forest_scaler_table: Retrieves the 'static_forest_scalers' table.
     get_ccs_scaler_table: Retrieves the 'ccs_scalers' table.
@@ -111,6 +113,34 @@ class DatabaseManager:
             pandas.DataFrame: DataFrame containing the 'animal_area_scalers' table data.
         """
         table = "animal_area_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_livestock_protein_scaler_table(self):
+        """
+        Retrieves the 'animal_protein_scalers' table from the database.
+        
+        Returns:
+            pandas.DataFrame: DataFrame containing the 'animal_protein_scalers' table data.
+        """
+        table = "animal_protein_scalers"
+        dataframe = pd.read_sql(
+            "SELECT * FROM '%s'" % (table),
+            self.engine,
+        )
+        return dataframe
+    
+    def get_static_livestock_protein_scaler_table(self):
+        """
+        Retrieves the 'static_animal_protein_scalers' table from the database.
+        
+        Returns:
+            pandas.DataFrame: DataFrame containing the 'static_animal_protein_scalers' table data.
+        """
+        table = "static_animal_protein_scalers"
         dataframe = pd.read_sql(
             "SELECT * FROM '%s'" % (table),
             self.engine,

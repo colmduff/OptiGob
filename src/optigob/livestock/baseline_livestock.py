@@ -25,6 +25,8 @@ Methods:
     get_dairy_cows_area(self): Calculates area usage for dairy cows.
     get_beef_cows_area(self): Calculates area usage for beef cows.
     get_total_area(self): Calculates total area usage for dairy and beef cows.
+    get_total_beef_protein(self): Calculates total protein production for beef and dairy+beef systems.
+    get_total_milk_protein(self): Calculates total milk protein production for dairy cows.
 """
 
 class BaselineLivestock:
@@ -257,3 +259,51 @@ class BaselineLivestock:
             float: The total area usage.
         """
         return self.get_dairy_cows_area() + self.get_beef_cows_area()
+    
+
+    def get_total_beef_protein(self):
+        """
+        Calculate the total protein production for beef and dairy+beef systems.
+
+        Returns:
+            float: The total protein production for beef and dairy+beef systems in kg.
+        """
+        beef_protein = self.data_manager_class.get_livestock_protein_scaler(
+            year=self.baseline_year,
+            system='Beef',
+            item="beef",
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        dairy_beef_protein = self.data_manager_class.get_livestock_protein_scaler(
+            year=self.baseline_year,
+            system='Dairy',
+            item="beef",
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        total_protein = beef_protein["value"].item() * self.beef_cows + dairy_beef_protein["value"].item() * self.dairy_cows
+        
+        return total_protein
+    
+
+    def get_total_milk_protein(self):
+        """
+        Calculate the total milk protein production for dairy cows.
+
+        Returns:
+            float: The total milk protein production for dairy cows in kg.
+        """
+        dairy_protein = self.data_manager_class.get_livestock_protein_scaler(
+            year=self.baseline_year,
+            system='Dairy',
+            item="milk",
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        total_protein = dairy_protein["value"].item() * self.dairy_cows
+        
+        return total_protein

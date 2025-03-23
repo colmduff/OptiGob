@@ -2,7 +2,17 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.1 (14/03/2025)
+## v0.1.2 (23/03/2025)
+
+- added additional testing, all tests passing
+- added data tables for protein (sheep, pig and poultry, dairy and beef)
+- added econ_output.py in budget model to link baseline and scenario with protein outputs
+- updated the example to include the protein dictionary and dataframe output 
+- update the main optigob module 
+- updated documentation to reflect changes. 
+- 124 unittests passing
+
+## v0.1.1 (22/03/2025)
 
 - Bug fixes and performance improvements.
 - added updated database to include biomethane, livestock, static ag, 
