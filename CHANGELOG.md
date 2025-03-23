@@ -10,6 +10,7 @@
 - updated the example to include the protein dictionary and dataframe output 
 - update the main optigob module 
 - updated documentation to reflect changes. 
+- 124 unittests passing
 
 ## v0.1.1 (22/03/2025)
 
