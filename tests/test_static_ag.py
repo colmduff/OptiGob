@@ -98,6 +98,24 @@ class TestStaticAgBudget(unittest.TestCase):
         print(f"total static ag area: {result}")
         self.assertIsInstance(result, float)
 
+    def test_get_sheep_protein(self):
+        result = self.static_ag_budget.get_sheep_protein()
+
+        print(f"sheep protein: {result}")
+        self.assertIsInstance(result, float)
+
+    def test_get_pig_and_poultry_protein(self):
+        result = self.static_ag_budget.get_pig_and_poultry_protein()
+
+        print(f"pig and poultry protein: {result}")
+        self.assertIsInstance(result, float)
+
+    def test_get_total_static_ag_protein(self):
+        result = self.static_ag_budget.get_total_static_ag_protein()
+
+        print(f"total static ag protein: {result}")
+        self.assertIsInstance(result, float)
+        
 
 if __name__ == '__main__':
     unittest.main()

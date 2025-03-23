@@ -32,6 +32,9 @@ Methods:
     get_pig_and_poultry_area(): Returns the area used for pig and poultry farming.
     get_crop_area(): Returns the area used for crop farming.
     get_total_static_ag_area(): Returns the total area used for all static agriculture.
+    get_sheep_protein(): Get the protein value for Sheep systems.
+    get_pig_and_poultry_protein(): Get the protein value for Pig and Poultry systems.
+    get_total_static_ag_protein(): Get the total protein value for all static agricultural systems.
 """
 
 class StaticAgBudget:
@@ -291,3 +294,42 @@ class StaticAgBudget:
         crop_area = self.get_crop_area()
 
         return sheep_area + pig_and_poultry_area + crop_area
+    
+    def get_sheep_protein(self):
+        """
+        Get the protein value for Sheep systems.
+
+        Returns:
+            float: The protein value in kg.
+        """
+        sheep_protein = self.data_manager_class.get_static_livestock_protein_scaler(
+            year=self.target_year, system='Sheep', item='meat',abatement=self.abatement_type
+        )
+
+        return sheep_protein["value"].item()
+    
+
+    def get_pig_and_poultry_protein(self):
+        """
+        Get the protein value for Pig and Poultry systems.
+
+        Returns:
+            float: The protein value in kg.
+        """
+        pig_and_poultry_protein = self.data_manager_class.get_static_livestock_protein_scaler(
+            year=self.target_year, system='Pig_Poultry', item='meat', abatement=self.abatement_type
+        )
+
+        return pig_and_poultry_protein["value"].item()
+    
+    def get_total_static_ag_protein(self):
+        """
+        Get the total protein value for all static agricultural systems.
+
+        Returns:
+            float: The total protein value in kg.
+        """
+        sheep_protein = self.get_sheep_protein()
+        pig_and_poultry_protein = self.get_pig_and_poultry_protein()
+
+        return sheep_protein + pig_and_poultry_protein

@@ -31,6 +31,8 @@ Methods:
     - get_dairy_cows_area(self): Calculate the land area required for dairy cows.
     - get_beef_cows_area(self): Calculate the land area required for beef cows.
     - get_total_area(self): Calculate the total land area required for all livestock.
+    - get_total_beef_protein(self): Calculate the total protein production for beef and dairy+beef systems.
+    - get_total_milk_protein(self): Calculate the total milk protein production for dairy cows.
 """
 
 from optigob.livestock.livestock_optimisation import LivestockOptimisation
@@ -402,3 +404,51 @@ class LivestockBudget:
         - Total land area.
         """
         return self.get_dairy_cows_area() + self.get_beef_cows_area()
+     
+
+    def get_total_beef_protein(self):
+        """
+        Calculate the total protein production for beef and dairy+beef systems.
+
+        Returns:
+            float: The total protein production for beef and dairy+beef systems in kg.
+        """
+        beef_protein = self.data_manager_class.get_livestock_protein_scaler(
+            year=self.target_year,
+            system='Beef',
+            item="beef",
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        dairy_beef_protein = self.data_manager_class.get_livestock_protein_scaler(
+            year=self.target_year,
+            system='Dairy',
+            item="beef",
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        total_protein = beef_protein["value"].item() * self._get_scaled_beef_population() + dairy_beef_protein["value"].item() * self._get_scaled_dairy_population()
+        
+        return total_protein
+    
+    
+    def get_total_milk_protein(self):
+        """
+        Calculate the total milk protein production for dairy cows.
+
+        Returns:
+            float: The total milk protein production for dairy cows in kg.
+        """
+        dairy_protein = self.data_manager_class.get_livestock_protein_scaler(
+            year=self.target_year,
+            system='Dairy',
+            item="milk",
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        total_protein = dairy_protein["value"].item() * self._get_scaled_dairy_population()
+        
+        return total_protein

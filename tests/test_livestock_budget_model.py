@@ -94,6 +94,16 @@ class TestForestBudget(unittest.TestCase):
         result = self.livestock_budget.get_total_area()
         print(f"total area: {result}")
 
+    def test_get_total_beef_protein(self):
+        result = self.livestock_budget.get_total_beef_protein()
+        print(f"TOTAL beef protein: {result}")
+        self.assertIsNotNone(result)
+
+    def test_get_total_milk_protein(self):
+        result = self.livestock_budget.get_total_milk_protein()
+        print(f"TOTAL milk protein: {result}")
+        self.assertIsNotNone(result)
+
 
 if __name__ == '__main__':
     unittest.main()
