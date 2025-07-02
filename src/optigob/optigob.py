@@ -72,7 +72,16 @@ class Optigob:
         self.econ_output = EconOutput(self.data_manager_class)
 
         self.split_gas = self.data_manager_class.get_split_gas()
+        
+    def total_emission_co2e(self):
+        """
+        Returns the total CO2e emissions (kt).
 
+        Returns:
+            float: Total CO2e emissions.
+        """
+        return self.emission_budget.get_total_emission_co2e()
+    
     def check_net_zero_status(self):
         """
         Checks if the model is set to net zero.

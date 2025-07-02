@@ -61,5 +61,7 @@ def main():
     print("NZ Status")
 
     print(optigob.check_net_zero_status())
+
+    print(f"total emissions co2e: {optigob.total_emission_co2e()} kt")
 if __name__ == '__main__':
     main()

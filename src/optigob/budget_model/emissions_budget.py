@@ -292,11 +292,11 @@ class EmissionsBudget:
         
         return total_emission
     
-    def _check_net_zero_status(self):
+    def _check_split_gas_net_zero_status(self):
         """
-        Checks if the net zero budget is met.
+        Checks if the split gas budget is met.
         Returns:
-            bool: True if net zero budget is met, False otherwise.
+            bool: True if split gas budget is met, False otherwise.
         """
         forest_emission = self.forest_budget.total_emission_offset()
         emissions_total_co2= self._get_total_emission_co2()
@@ -316,14 +316,21 @@ class EmissionsBudget:
             "split_gas": self._check_split_gas_net_zero_status()
         }
 
-    def _check_split_gas_net_zero_status(self):
+    def _check_net_zero_status(self):
         """
-        Checks if the split gas budget is met.
+        Checks if the net zero budget is met.
         Returns:
-            bool: True if split gas budget is met, False otherwise.
+            bool: True if net zero budget is met, False otherwise.
         """
-        emissions_total = self._split_gas_emissions_total_budget()
+        emissions_total = self._get_total_emission_co2e()
         return emissions_total <= 0
+    
+    def get_total_emission_co2e(self):
+        """
+        Returns the total CO2e emissions (kt).
+        """
+        return self._get_total_emission_co2e()
+    
     
     def get_split_gas_budget(self):
         """
