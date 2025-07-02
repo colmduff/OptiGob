@@ -82,7 +82,7 @@ class OptiGobDataManager:
         self._livestock_protein_scalers = None
         self._forest_scalers = None
         self._static_forest_scalers = None
-        self._ccs_scalers = None
+        self._wood_ccs_scalers = None
         self._hwp_scalers = None
         self._substitution_scalers = None
         self._organic_soil_emission_scalers = None
@@ -93,6 +93,10 @@ class OptiGobDataManager:
         self._static_livestock_emission_scalers = None
         self._static_livestock_area_scalers = None
         self._static_livestock_protein_scalers = None
+        self._protein_crop_emission_scalers = None
+        self._protein_crop_protein_scalers = None
+        self._protein_content_scalers = None
+        self._willow_bioenergy_scalers = None
 
 
         self._ha_to_kha = 1e-3
@@ -116,10 +120,9 @@ class OptiGobDataManager:
             "existing_forest",
             "afforestation",
             "hwp",
-            "wood_substitution",
-            "wood_ccs",
             "other_land_use",
-            "ad"]
+            "ad",
+            "beccs"]
 
     def get_ha_to_kha(self):
         """
@@ -210,11 +213,11 @@ class OptiGobDataManager:
         return self._static_forest_scalers.copy()
 
     
-    def _load_ccs_scalers(self):
+    def _load_wood_ccs_scalers(self):
         """Loads and caches the CCS scalers from the database."""
-        if self._ccs_scalers is None:
-            self._ccs_scalers = self.db_manager.get_ccs_scaler_table()
-        return self._ccs_scalers.copy()
+        if self._wood_ccs_scalers is None:
+            self._wood_ccs_scalers = self.db_manager.get_wood_ccs_scaler_table()
+        return self._wood_ccs_scalers.copy()
     
     def _load_hwp_scalers(self):
         """Loads and caches the HWP scalers from the database."""
@@ -258,6 +261,31 @@ class OptiGobDataManager:
             self._crop_scalers = self.db_manager.get_crop_scaler_table()
         return self._crop_scalers.copy()
     
+    def _load_protein_crop_emission_scalers(self):
+        """Loads and caches the protein crop emission scalers from the database."""
+        if self._protein_crop_emission_scalers is None:
+            self._protein_crop_emission_scalers = self.db_manager.get_protein_crop_emission_scaler_table()
+        return self._protein_crop_emission_scalers.copy()
+
+    def _load_protein_crop_protein_scalers(self):
+        """Loads and caches the protein crop protein scalers from the database."""
+        if self._protein_crop_protein_scalers is None:
+            self._protein_crop_protein_scalers = self.db_manager.get_protein_crop_protein_scaler_table()
+        return self._protein_crop_protein_scalers.copy()
+    
+    def _load_protein_content_scalers(self):
+        """Loads and caches the protein content scalers from the database."""
+        if self._protein_content_scalers is None:
+            self._protein_content_scalers = self.db_manager.get_protein_content_scaler_table()
+        return self._protein_content_scalers.copy()
+
+    def _load_willow_bioenergy_scalers(self):
+        """Loads and caches the willow bioenergy scalers from the database."""
+        if self._willow_bioenergy_scalers is None:
+            self._willow_bioenergy_scalers = self.db_manager.get_willow_bioengery_scaler_table()
+        return self._willow_bioenergy_scalers.copy()
+    
+
     def get_livestock_emission_scaler(self, year, system, gas, scenario, abatement):
         """
         Retrieves the scaler value for a given year, system, gas, and scenario.
@@ -316,20 +344,22 @@ class OptiGobDataManager:
         """
         df = self._load_livestock_area_scalers()
 
-        # Ensure `system` is treated as a list
-        if not isinstance(system, list):
-            system = [system]
-
         filtered = df[
             (df["year"] == year) &
-            (df["system"].isin(system)) &
+            (df["system"]== system) &
             (df["scenario"] == scenario) &
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
             raise ValueError("No matching scaler found for the provided parameters.")
         # Return the scaler value; if more than one row matches, we take the first.
-        return filtered
+
+        output = {"system": system, 
+                  "scenario": scenario, 
+                  "year": year,
+                  "area": filtered["value"].item(),
+                  "hnv_area": filtered["hnv_area"].item()}
+        return output
     
     def get_livestock_protein_scaler(self, year, system, item, scenario, abatement):
         """
@@ -520,7 +550,7 @@ class OptiGobDataManager:
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
     
-    def get_ccs_scaler(self,target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest):
+    def get_wood_ccs_scaler(self,target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest):
         """
         Retrieves the CCS scaler value for a given year and forest management parameters.
         
@@ -537,7 +567,7 @@ class OptiGobDataManager:
         Raises:
             ValueError: If no matching row is found.
         """
-        df = self._load_ccs_scalers()
+        df = self._load_wood_ccs_scalers()
 
         # Filter the DataFrame based on the provided parameters.
         filtered = df[
@@ -760,6 +790,82 @@ class OptiGobDataManager:
         return filtered
 
 
+    def get_protein_crop_emission_scaler(self, year, ghg,abatement):
+        """
+        Retrieves the protein crop emission scaler value for a given year, crop, gas, and abatement.
+        """
+        
+        df = self._load_protein_crop_emission_scalers()
+
+        filtered = df[
+            (df["year"] == year) &           
+            (df["ghg"] == ghg) &
+            (df["abatement"] == abatement)
+        ]
+        if filtered.empty:
+            raise ValueError("No matching protein crop emission scaler found for the provided parameters.")
+        return filtered
+
+    def get_protein_crop_protein_scaler(self, year, abatement):
+        """
+        Retrieves the protein crop protein scaler value for a given year, crop, and abatement.
+        """
+        df = self._load_protein_crop_protein_scalers()
+        filtered = df[
+            (df["year"] == year) &
+            (df["abatement"] == abatement)
+        ]
+        if filtered.empty:
+            raise ValueError("No matching protein crop protein scaler found for the provided parameters.")
+        return filtered
+
+    def get_protein_content_scaler(self, type):
+        """
+        Retrieves the protein content scaler value.
+        
+        Returns:
+            DataFrame: The DataFrame containing the protein content scaler values.
+        
+        Raises:
+            ValueError: If no matching row is found.
+        """
+        df = self._load_protein_content_scalers()
+        # Filter the DataFrame based on the provided type.
+        item = df[df["type"] == type]["conversion"].item()
+
+        if df.empty:
+            raise ValueError("No matching protein content scaler found.")
+        # Return the scaler value; if more than one row matches, we take the first.
+        return item
+    
+    def get_willow_bioenergy_scaler(self, year, type, ghg):
+        """
+        Retrieves the willow bioenergy scaler value for a given year, type, and gas.
+        
+        Parameters:
+            year (int): The year of interest.
+            type (str): The type of willow bioenergy.
+            ghg (str): The greenhouse gas identifier.
+        
+        Returns:
+            DataFrame: The filtered DataFrame containing the scaler values.
+        
+        Raises:
+            ValueError: If no matching row is found.
+        """
+        df = self._load_willow_bioenergy_scalers()
+
+        # Filter the DataFrame based on the provided parameters.
+        filtered = df[
+            (df["year"] == year) &
+            (df["type"] == type) &
+            (df["ghg"] == ghg)
+        ]
+        if filtered.empty:
+            raise ValueError("No matching scaler found for the provided parameters.")
+        # Return the scaler value; if more than one row matches, we take the first.
+        return filtered
+
     # Getter methods for the input parameters.
     def get_baseline_year(self):
         """
@@ -787,15 +893,24 @@ class OptiGobDataManager:
             str: The abatement scenario.
         """
         return self.standard_input_parameters.get("abatement_scenario")
-
-    def get_dairy_beef_ratio(self):
+    
+    def get_livestock_ratio_type(self):
         """
-        Retrieves the dairy to beef ratio from the SIP input file.
+        Retrieves the livestock ratio type from the SIP input file.
 
         Returns:
-            float: The dairy to beef ratio.
+            str: The livestock ratio type.
         """
-        return self.standard_input_parameters.get("dairy_beef_ratio")
+        return self.standard_input_parameters.get("livestock_ratio_type")
+
+    def get_livestock_ratio_value(self):
+        """
+        Retrieves the livestock ratio from the SIP input file.
+
+        Returns:
+            float: The livestock ratio.
+        """
+        return self.standard_input_parameters.get("livestock_ratio_value")
 
     def get_forest_harvest_intensity(self):
         """
@@ -904,6 +1019,33 @@ class OptiGobDataManager:
             float: The split gas fraction.
         """
         return self.standard_input_parameters.get("split_gas_frac")
+    
+    def get_protein_crop_included(self):
+        """
+        Retrieves whether protein crop is included from the SIP input file.
+
+        Returns:
+            bool: True if protein crop is included, False otherwise.
+        """
+        return self.standard_input_parameters.get("protein_crop_included")
+    
+    def get_protein_crop_multiplier(self):
+        """
+        Retrieves the protein crop multiplier from the SIP input file.
+
+        Returns:
+            float: The protein crop multiplier.
+        """
+        return self.standard_input_parameters.get("protein_crop_multiplier")
+    
+    def get_pig_and_poultry_multiplier(self):
+        """
+        Retrieves the pig and poultry multiplier from the SIP input file.
+
+        Returns:
+            float: The pig and poultry multiplier.
+        """
+        return self.standard_input_parameters.get("pig_and_poultry_multiplier")
     
     def get_baseline_dairy_population(self):
         """

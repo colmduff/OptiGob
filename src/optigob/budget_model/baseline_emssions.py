@@ -6,22 +6,22 @@ This module calculates baseline emissions for various sectors including agricult
 All emissions are returned in kilotons (kt).
 
 Classes:
-    - BaselineEmission: Manages and calculates baseline emissions for different sectors.
+    BaselineEmission: Manages and calculates baseline emissions for different sectors.
 
 Methods in BaselineEmission:
-    - __init__(self, optigob_data_manager): Initializes the BaselineEmission class with data manager.
-    - total_agriculture_co2e_emission(self): Calculates total CO2e emissions for agriculture.
-    - total_agriculture_co2_emission(self): Calculates total CO2 emissions for agriculture.
-    - get_total_agriculture_ch4_emission(self): Calculates total CH4 emissions for agriculture.
-    - get_total_agriculture_n2o_emission(self): Calculates total N2O emissions for agriculture.
-    - get_co2e_emission_categories(self): Returns CO2e emissions for all categories.
-    - get_co2_emission_categories(self): Returns CO2 emissions for all categories.
-    - get_ch4_emission_categories(self): Returns CH4 emissions for all categories.
-    - get_n2o_emission_categories(self): Returns N2O emissions for all categories.
-    - get_total_ch4_emission(self): Calculates total CH4 emissions for all sectors.
-    - get_total_n2o_emission(self): Calculates total N2O emissions for all sectors.
-    - get_total_co2_emission(self): Calculates total CO2 emissions for all sectors.
-    - get_total_co2e_emission(self): Calculates total CO2e emissions for all sectors.
+    __init__(self, optigob_data_manager): Initializes the BaselineEmission class with data manager.
+    total_agriculture_co2e_emission(self): Calculates total CO2e emissions for agriculture.
+    total_agriculture_co2_emission(self): Calculates total CO2 emissions for agriculture.
+    get_total_agriculture_ch4_emission(self): Calculates total CH4 emissions for agriculture.
+    get_total_agriculture_n2o_emission(self): Calculates total N2O emissions for agriculture.
+    get_co2e_emission_categories(self): Returns CO2e emissions for all categories.
+    get_co2_emission_categories(self): Returns CO2 emissions for all categories.
+    get_ch4_emission_categories(self): Returns CH4 emissions for all categories.
+    get_n2o_emission_categories(self): Returns N2O emissions for all categories.
+    get_total_ch4_emission(self): Calculates total CH4 emissions for all sectors.
+    get_total_n2o_emission(self): Calculates total N2O emissions for all sectors.
+    get_total_co2_emission(self): Calculates total CO2 emissions for all sectors.
+    get_total_co2e_emission(self): Calculates total CO2e emissions for all sectors.
 """
 
 from optigob.other_land.baseline_other_land import BaselineOtherLand

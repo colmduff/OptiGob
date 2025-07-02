@@ -9,6 +9,7 @@ Classes:
 
 Methods:
     - __init__(self, optigob_data_manager, net_zero_budget=None, split_gas_budget=None): Initialize the LivestockBudget class.
+    - _get_total_area_commitment(self): Calculate the total area commitment based on various land use areas.
     - _load_optomisation_outputs(self): Load optimization outputs if not already loaded.
     - get_ch4_budget(self): Calculate the CH4 budget based on the baseline emissions and split gas fraction.
     - get_optomisation_outputs(self): Get the optimization outputs for livestock population.
@@ -37,6 +38,10 @@ Methods:
 
 from optigob.livestock.livestock_optimisation import LivestockOptimisation
 from optigob.budget_model.baseline_emssions import BaselineEmission
+from optigob.other_land.other_land_budget import OtherLandBudget
+from optigob.forest.forest_budget import ForestBudget
+from optigob.bioenergy.bioenergy_budget import BioEnergyBudget
+from optigob.protein_crops.protein_crops_budget import ProteinCropsBudget
 
 class LivestockBudget:
     def __init__(self, optigob_data_manager,
@@ -57,10 +62,26 @@ class LivestockBudget:
         self.optimisation = LivestockOptimisation(self.data_manager_class)
         self.baseline_emission = BaselineEmission(self.data_manager_class)
 
+        #load areas
+        self.other_land_budget = OtherLandBudget(self.data_manager_class)
+        self.forest_budget = ForestBudget(self.data_manager_class)
+        self.bio_energy_budget = BioEnergyBudget(self.data_manager_class)
+        self.protein_crop_budget = ProteinCropsBudget(self.data_manager_class)
+
+        self.rewetted_area = self.other_land_budget.get_rewetted_organic_area()
+        self.afforested_area = self.forest_budget.get_afforestation_area()
+        self.biomethane_area = self.bio_energy_budget.get_total_biomethane_area()
+        self.willow_area = self.bio_energy_budget.get_total_willow_area()
+        self.protein_crop_area = self.protein_crop_budget.get_crop_area()
+
+        self._milk_protein = self.data_manager_class.get_protein_content_scaler("milk")
+        self._beef_protein = self.data_manager_class.get_protein_content_scaler("beef")
+
         self.target_year = self.data_manager_class.get_target_year()
         self.scenario = self.data_manager_class.get_abatement_scenario()
         self.abatement = self.data_manager_class.get_abatement_type()
-        self.dairy_beef_ratio = self.data_manager_class.get_dairy_beef_ratio()
+        self.get_livestock_ratio_type = self.data_manager_class.get_livestock_ratio_type()
+        self.livestock_ratio_value = self.data_manager_class.get_livestock_ratio_value()
         
         self.split_gas_approach = self.data_manager_class.get_split_gas()
         self.split_gas_frac = self.data_manager_class.get_split_gas_fraction()
@@ -72,6 +93,18 @@ class LivestockBudget:
 
         self._optomisation_outputs = None
 
+    def _get_total_area_commitment(self):
+        """
+        Calculate the total area commitment based on various land use areas.
+
+        Returns:
+        - Total area commitment.
+        """
+        return (float(self.rewetted_area +
+                self.afforested_area +
+                self.biomethane_area +
+                self.protein_crop_area+
+                self.willow_area))
 
     def _load_optomisation_outputs(self):
         """
@@ -101,23 +134,29 @@ class LivestockBudget:
         Returns:
         - Optimization outputs.
         """
+        area_commitment = self._get_total_area_commitment()
+
 
         if self.split_gas_approach:
             return self.optimisation.optimise_livestock_pop(
-                self.dairy_beef_ratio,
-                self.target_year,
-                self.scenario,
-                self.abatement,
-                self.split_gas_budget,
-                self.ch4_budget
+                ratio_type=self.get_livestock_ratio_type,
+                ratio_value=self.livestock_ratio_value,
+                year=self.target_year,
+                scenario=self.scenario,
+                abatement= self.abatement,
+                emissions_budget=self.split_gas_budget,
+                area_commitment=area_commitment,
+                ch4_budget=self.ch4_budget
             )
         else:
             return self.optimisation.optimise_livestock_pop(
-                self.dairy_beef_ratio,
-                self.target_year,
-                self.scenario,
-                self.abatement,
-                self.net_zero_budget
+                ratio_type=self.get_livestock_ratio_type,
+                ratio_value=self.livestock_ratio_value,
+                year=self.target_year,
+                scenario=self.scenario,
+                abatement=self.abatement,
+                area_commitment=area_commitment,
+                emissions_budget=self.net_zero_budget
             )
         
 
@@ -364,19 +403,15 @@ class LivestockBudget:
         Returns:
         - Land area for dairy cows.
         """
-        dairy_data = self.data_manager_class.get_livestock_area_scaler(
+        dairy_area = self.data_manager_class.get_livestock_area_scaler(
             year=self.target_year,
-            system=['Dairy','Dairy+Beef'],
+            system='Dairy',
             scenario=self.scenario,
             abatement=self.abatement
         )
 
-        dairy_area = dairy_data[dairy_data["system"] == "Dairy"]["value"].item()
-        dairy_beef_area = dairy_data[dairy_data["system"] == "Dairy+Beef"]["value"].item()
 
-        total_area = dairy_area + dairy_beef_area
-
-        return total_area * self._get_scaled_dairy_population()
+        return dairy_area['area'] * self._get_scaled_dairy_population()
     
     def get_beef_cows_area(self):
         """
@@ -391,9 +426,16 @@ class LivestockBudget:
             scenario=self.scenario,
             abatement=self.abatement
         )
+        dairy_beef_area = self.data_manager_class.get_livestock_area_scaler(
+            year=self.target_year,
+            system='Dairy+Beef',
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
 
+        total_area = beef_area['area'] + dairy_beef_area['area']
 
-        return beef_area['value'].item() * self._get_scaled_beef_population()
+        return total_area * self._get_scaled_beef_population()
 
 
     def get_total_area(self):
@@ -429,9 +471,9 @@ class LivestockBudget:
             abatement=self.abatement
         )
 
-        total_protein = beef_protein["value"].item() * self._get_scaled_beef_population() + dairy_beef_protein["value"].item() * self._get_scaled_dairy_population()
+        total_protein = (beef_protein["value"].item()  + dairy_beef_protein["value"].item()) * self._get_scaled_beef_population()
         
-        return total_protein
+        return total_protein * self._beef_protein
     
     
     def get_total_milk_protein(self):
@@ -451,4 +493,28 @@ class LivestockBudget:
 
         total_protein = dairy_protein["value"].item() * self._get_scaled_dairy_population()
         
-        return total_protein
+        return total_protein * self._milk_protein
+    
+    def get_hnv_area(self):
+        """
+        Calculate the area of high nature value (HNV) managed by beef cows.
+
+        Returns:
+            float: The HNV area in hectares.
+        """
+        beef_area = self.data_manager_class.get_livestock_area_scaler(
+            year=self.target_year,
+            system='Beef',
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+        dairy_beef_area = self.data_manager_class.get_livestock_area_scaler(
+            year=self.target_year,
+            system='Dairy+Beef',
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        total_area = beef_area['hnv_area'] + dairy_beef_area['hnv_area']
+
+        return total_area * self._get_scaled_beef_population()

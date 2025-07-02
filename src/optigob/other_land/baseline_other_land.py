@@ -5,19 +5,23 @@ BaselineOtherLand
 This module provides the BaselineOtherLand class, which calculates various emissions and areas related to wetland restoration and organic soil management.
 
 Class:
-    BaselineOtherLand
+    BaselineOtherLand: Calculates baseline emissions and areas for wetland restoration and organic soils.
 
-Methods:
-    - __init__(self, optigob_data_manager): Initializes the BaselineOtherLand instance with the provided data manager.
-    - get_wetland_restoration_emission_co2e(self): Returns the CO2e emissions from wetland restoration (kiloton).
-    - get_wetland_restoration_emission_ch4(self): Returns the CH4 emissions from wetland restoration (kiloton).
-    - get_wetland_restoration_emission_n2o(self): Returns the N2O emissions from wetland restoration (kiloton).
-    - get_wetland_restoration_emission_co2(self): Returns the CO2 emissions from wetland restoration (kiloton).
-    - get_drained_organic_soil_area(self): Returns the area of drained organic soil in hectares.
-    - get_rewetted_organic_area(self): Returns the area of rewetted organic soil in hectares.
-    - get_drained_wetland_area(self): Returns the area of drained wetland in hectares.
-    - get_rewetted_wetland_area(self): Returns the area of rewetted wetland in hectares.
-    - get_total_other_land_area(self): Returns the total area of other land, including drained and rewetted organic soil and wetland (hectares).
+Methods in BaselineOtherLand:
+    __init__(self, optigob_data_manager): Initializes the BaselineOtherLand instance with the provided data manager.
+    get_wetland_restoration_emission_co2e(self): Returns the CO2e emissions from wetland restoration (kiloton).
+    get_wetland_restoration_emission_ch4(self): Returns the CH4 emissions from wetland restoration (kiloton).
+    get_wetland_restoration_emission_n2o(self): Returns the N2O emissions from wetland restoration (kiloton).
+    get_wetland_restoration_emission_co2(self): Returns the CO2 emissions from wetland restoration (kiloton).
+    get_drained_organic_soil_area(self): Returns the area of drained organic soil in hectares.
+    get_rewetted_organic_area(self): Returns the area of rewetted organic soil in hectares.
+    get_drained_wetland_area(self): Returns the area of drained wetland in hectares.
+    get_rewetted_wetland_area(self): Returns the area of rewetted wetland in hectares.
+    get_total_other_land_area(self): Returns the total area of other land, including drained and rewetted organic soil and wetland (hectares).
+    get_rewetted_organic_hnv_area(self): Returns the area of rewetted high nature value (HNV) wetland.
+    get_rewetted_wetland_hnv_area(self): Returns the area of rewetted high nature value (HNV) wetland.
+    get_near_natural_wetland_hnv_area(self): Returns the area of near-natural high nature value (HNV) wetland.
+    get_total_other_land_hnv_area(self): Returns the total area of other land, including rewetted organic soil, rewetted wetland, and near-natural wetland, that is high nature value (HNV).
 """
 
 class BaselineOtherLand:
@@ -118,7 +122,7 @@ class BaselineOtherLand:
         
         filtered = drained_organic_soil_area_df[drained_organic_soil_area_df["type"] == "drained_organic"]
 
-        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
+        return filtered["areas_ha"].item()
     
     def get_rewetted_organic_area(self):
         """
@@ -135,7 +139,7 @@ class BaselineOtherLand:
 
         filtered = rewtted_organic_area_df[rewtted_organic_area_df["type"] == "rewetted_organic"]
 
-        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
+        return filtered["areas_ha"].item()
     
     def get_drained_wetland_area(self):
         """
@@ -152,7 +156,7 @@ class BaselineOtherLand:
 
         filtered = drained_wetland_area_df[drained_wetland_area_df["type"] == "drained_wetland"]
 
-        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
+        return filtered["areas_ha"].item()
     
     def get_rewetted_wetland_area(self):
         """
@@ -169,7 +173,23 @@ class BaselineOtherLand:
 
         filtered = rewetted_wetland_area_df[rewetted_wetland_area_df["type"] == "rewetted_wetland"]
 
-        return filtered["areas_ha"].item() * self.data_manager_class.get_kha_to_ha()
+        return filtered["areas_ha"].item()
+    
+    def get_near_natural_wetland_area(self):
+        """
+        Returns the area of near-natural wetland in hectares.
+
+        Returns:
+            float: The area of near-natural wetland in hectares.
+        """
+        near_natural_wetland_area_df = self.data_manager_class.get_organic_soil_area_scaler(
+            target_year=self.baseline_year,
+            wetland_restored_frac=self.wetland_restored_fraction,
+            organic_soil_under_grass_frac=self.organic_soil_under_grass_fraction
+        )
+        filtered = near_natural_wetland_area_df[near_natural_wetland_area_df["type"] == "near_natural_wetland"]
+
+        return filtered["areas_ha"].item()
     
     def get_total_other_land_area(self):
         """
@@ -182,5 +202,68 @@ class BaselineOtherLand:
         rewetted_organic_area = self.get_rewetted_organic_area()
         drained_wetland_area = self.get_drained_wetland_area()
         rewetted_wetland_area = self.get_rewetted_wetland_area()
+        near_natural_wetland_area = self.get_near_natural_wetland_area()
 
-        return drained_organic_soil_area + rewetted_organic_area + drained_wetland_area + rewetted_wetland_area
+        return drained_organic_soil_area + rewetted_organic_area + drained_wetland_area + rewetted_wetland_area + near_natural_wetland_area
+
+    def get_rewetted_organic_hnv_area(self):
+        """
+        Returns the area of rewetted high nature value (HNV) wetland.
+
+        Returns:
+            float: The area of rewetted HNV wetland in hectares.
+        """
+        rewetted_wetland_area_df = self.data_manager_class.get_organic_soil_area_scaler(
+            target_year=self.baseline_year,
+            wetland_restored_frac=self.wetland_restored_fraction,
+            organic_soil_under_grass_frac=self.organic_soil_under_grass_fraction
+        )   
+
+        filtered = rewetted_wetland_area_df[rewetted_wetland_area_df["type"] == "rewetted_organic"]
+
+        return filtered["hnv_area"].item()
+
+    def get_rewetted_wetland_hnv_area(self):
+        """
+        Returns the area of rewetted high nature value (HNV) wetland.
+
+        Returns:
+            float: The area of rewetted HNV wetland in hectares.
+        """
+        rewetted_wetland_area_df = self.data_manager_class.get_organic_soil_area_scaler(
+            target_year=self.baseline_year,
+            wetland_restored_frac=self.wetland_restored_fraction,
+            organic_soil_under_grass_frac=self.organic_soil_under_grass_fraction
+        )   
+        filtered = rewetted_wetland_area_df[rewetted_wetland_area_df["type"] == "rewetted_wetland"]
+
+        return filtered["hnv_area"].item()
+    
+    def get_near_natural_wetland_hnv_area(self):
+        """
+        Returns the area of near-natural high nature value (HNV) wetland.
+
+        Returns:
+            float: The area of near-natural HNV wetland in hectares.
+        """
+        near_natural_wetland_area_df = self.data_manager_class.get_organic_soil_area_scaler(
+            target_year=self.baseline_year,
+            wetland_restored_frac=self.wetland_restored_fraction,
+            organic_soil_under_grass_frac=self.organic_soil_under_grass_fraction
+        )
+        filtered = near_natural_wetland_area_df[near_natural_wetland_area_df["type"] == "near_natural_wetland"]
+
+        return filtered["hnv_area"].item()
+    
+    def get_total_other_land_hnv_area(self):
+        """
+        Returns the total area of other land, including rewetted organic soil, rewetted wetland, and near-natural wetland, that is high nature value (HNV).
+
+        Returns:
+            float: The total HNV area of other land in hectares.
+        """
+        rewetted_organic_hnv_area = self.get_rewetted_organic_hnv_area()
+        rewetted_wetland_hnv_area = self.get_rewetted_wetland_hnv_area()
+        near_natural_wetland_hnv_area = self.get_near_natural_wetland_hnv_area()
+
+        return rewetted_organic_hnv_area + rewetted_wetland_hnv_area + near_natural_wetland_hnv_area

@@ -41,5 +41,25 @@ class TestOtherLandBudget(unittest.TestCase):
         result = self.budget.get_rewetted_wetland_area()
         self.assertIsNotNone(result)
 
+    def test_get_near_natural_wetland_area(self):
+        result = self.budget.get_near_natural_wetland_area()
+        self.assertIsNotNone(result)
+
+    def test_get_total_other_land_area(self):
+        result = self.budget.get_total_other_land_area()
+        self.assertIsNotNone(result)
+
+    def test_get_rewetted_organic_hnv_area(self):
+        result = self.budget.get_rewetted_organic_hnv_area()
+        self.assertIsNotNone(result)
+
+    def test_get_rewetted_wetland_hnv_area(self):
+        result = self.budget.get_rewetted_wetland_hnv_area()
+        self.assertIsNotNone(result)
+
+    def test_get_near_natural_wetland_hnv_area(self):
+        result = self.budget.get_near_natural_wetland_hnv_area()
+        self.assertIsNotNone(result)
+
 if __name__ == '__main__':
     unittest.main()

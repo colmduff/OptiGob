@@ -15,7 +15,7 @@ class TestBudget(unittest.TestCase):
         self.assertIsNotNone(result)
 
     def test_get_total_baseline_land_area_by_sector(self):
-        result = self.budget.get_total_baseline_land_area_by_sector()
+        result = self.budget.get_total_baseline_land_area_by_aggregated_sector()
         print("Total Baseline Land Area by Sector:", result)
         self.assertIsNotNone(result)
 
@@ -25,9 +25,39 @@ class TestBudget(unittest.TestCase):
         self.assertIsNotNone(result)
 
     def test_get_total_scenario_land_area_by_sector(self):
-        result = self.budget.get_total_scenario_land_area_by_sector()
+        result = self.budget.get_total_scenario_land_area_by_aggregated_sector()
         print("Total Scenario Land Area by Sector:", result)
         self.assertIsNotNone(result)
+
+    def test_get_total_scenario_land_area_by_aggregated_sector(self):
+        result = self.budget.get_total_scenario_land_area_by_aggregated_sector()
+        print("Total Scenario Land Area by Aggregated Sector:", result)
+        self.assertIsInstance(result, dict)
+
+    def test_get_total_scenario_land_area_by_disaggregated_sector(self):
+        result = self.budget.get_total_scenario_land_area_by_disaggregated_sector()
+        print("Total Scenario Land Area by Disaggregated Sector:", result)
+        self.assertIsInstance(result, dict)
+
+    def test_get_total_baseline_land_area_by_aggregated_sector(self):
+        result = self.budget.get_total_baseline_land_area_by_aggregated_sector()
+        print("Total Baseline Land Area by Aggregated Sector:", result)
+        self.assertIsInstance(result, dict)
+
+    def test_get_total_baseline_land_area_by_disaggregated_sector(self):
+        result = self.budget.get_total_baseline_land_area_by_disaggregated_sector()
+        print("Total Baseline Land Area by Disaggregated Sector:", result)
+        self.assertIsInstance(result, dict)
+
+    def test_get_total_basline_hnv_land_area_disaggregated_by_sector(self):
+        result = self.budget.get_total_basline_hnv_land_area_disaggregated_by_sector()
+        print("Total Baseline HNV Land Area by Disaggregated Sector:", result)
+        self.assertIsInstance(result, dict)
+
+    def test_get_total_scenario_hnv_land_area_disaggregated_by_sector(self):
+        result = self.budget.get_total_scenario_hnv_land_area_disaggregated_by_sector()
+        print("Total Scenario HNV Land Area by Disaggregated Sector:", result)
+        self.assertIsInstance(result, dict)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,37 +1,52 @@
 """
-Optigob module.
-================
-This module provides the Optigob class, which is used to manage and retrieve 
-various emissions and land area budgets. The class interfaces with baseline 
-emissions, emissions budgets, and land area budgets to provide detailed 
-information on CO2e, CO2, CH4, and N2O emissions by sector, as well as land area usage.
-area usage.
+Optigob module
+==============
 
-Classes:
-    Optigob: Manages and retrieves emissions and land area budgets.
+This module provides the Optigob class, which manages and retrieves emissions, land area, protein, and bioenergy budgets for both baseline and scenario cases. It provides a unified interface to access sectoral and total values for CO2e, CO2, CH4, N2O, land area (aggregated/disaggregated/HNV), protein, bioenergy, harvested wood products, and substitution impacts. All results can be returned as dictionaries or tidy Pandas DataFrames for further analysis.
+
+Class:
+    Optigob: Central interface for retrieving all model outputs by sector and scenario.
 
 Methods:
-    get_baseline_co2e_emissions_by_sector: Retrieves baseline CO2e emissions by sector.
-    get_baseline_ch4_emissions_by_sector: Retrieves baseline CH4 emissions by sector.
-    get_baseline_n2o_emissions_by_sector: Retrieves baseline N2O emissions by sector.
-    get_baseline_co2_emissions_by_sector: Retrieves baseline CO2 emissions by sector.
-    get_baseline_co2e_emissions_total: Retrieves total baseline CO2e emissions.
-    get_baseline_co2_emissions_total: Retrieves total baseline CO2 emissions.
-    get_baseline_ch4_emissions_total: Retrieves total baseline CH4 emissions.
-    get_baseline_n2o_emissions_total: Retrieves total baseline N2O emissions.
-    get_scenario_co2e_emissions_by_sector: Retrieves scenario CO2e emissions by sector.
-    get_scenario_ch4_emissions_by_sector: Retrieves scenario CH4 emissions by sector.
-    get_scenario_n2o_emissions_by_sector: Retrieves scenario N2O emissions by sector.
-    get_scenario_co2_emissions_by_sector: Retrieves scenario CO2 emissions by sector.
-    get_total_emissions_co2e_by_sector: Retrieves total CO2e emissions by sector for both baseline and scenario.
-    get_total_emissions_ch4_by_sector: Retrieves total CH4 emissions by sector for both baseline and scenario.
-    get_total_emissions_n2o_by_sector: Retrieves total N2O emissions by sector for both baseline and scenario.
-    get_total_emissions_co2_by_sector: Retrieves total CO2 emissions by sector for both baseline and scenario.
-    get_total_emissions_co2e_by_sector_df: Returns total CO2e emissions in a tidy Pandas DataFrame.
-    get_total_land_area_by_sector: Retrieves total land area by sector for both baseline and scenario.
-    get_total_land_area_by_sector_df: Returns total land area in a tidy Pandas DataFrame.
-    get_total_protein_by_sector: Retrieves total protein by sector for both baseline and scenario.
-    get_total_protein_by_sector_df: Returns total protein in a tidy Pandas DataFrame.
+    __init__(self, optigob_data_manager): Initializes the Optigob class with the provided data manager.
+    check_net_zero_status(self): Checks if the model is set to net zero (returns bool).
+    get_baseline_co2e_emissions_by_sector(self): Retrieves baseline CO2e emissions by sector.
+    get_baseline_ch4_emissions_by_sector(self): Retrieves baseline CH4 emissions by sector.
+    get_baseline_n2o_emissions_by_sector(self): Retrieves baseline N2O emissions by sector.
+    get_baseline_co2_emissions_by_sector(self): Retrieves baseline CO2 emissions by sector.
+    get_baseline_co2e_emissions_total(self): Retrieves total baseline CO2e emissions.
+    get_baseline_co2_emissions_total(self): Retrieves total baseline CO2 emissions.
+    get_baseline_ch4_emissions_total(self): Retrieves total baseline CH4 emissions.
+    get_baseline_n2o_emissions_total(self): Retrieves total baseline N2O emissions.
+    get_scenario_co2e_emissions_by_sector(self): Retrieves scenario CO2e emissions by sector.
+    get_scenario_ch4_emissions_by_sector(self): Retrieves scenario CH4 emissions by sector.
+    get_scenario_n2o_emissions_by_sector(self): Retrieves scenario N2O emissions by sector.
+    get_scenario_co2_emissions_by_sector(self): Retrieves scenario CO2 emissions by sector.
+    get_total_emissions_co2e_by_sector(self): Retrieves total CO2e emissions by sector for both baseline and scenario.
+    get_total_emissions_ch4_by_sector(self): Retrieves total CH4 emissions by sector for both baseline and scenario.
+    get_total_emissions_n2o_by_sector(self): Retrieves total N2O emissions by sector for both baseline and scenario.
+    get_total_emissions_co2_by_sector(self): Retrieves total CO2 emissions by sector for both baseline and scenario.
+    get_total_emissions_co2e_by_sector_df(self): Returns total CO2e emissions as a tidy DataFrame.
+    get_aggregated_total_land_area_by_sector(self): Retrieves aggregated land area by sector for both baseline and scenario.
+    get_aggregated_total_land_area_by_sector_df(self): Returns aggregated land area as a tidy DataFrame.
+    get_disaggregated_total_land_area_by_sector(self): Retrieves disaggregated land area by sector for both baseline and scenario.
+    get_disaggregated_total_land_area_by_sector_df(self): Returns disaggregated land area as a tidy DataFrame.
+    get_total_protein_by_sector(self): Retrieves total protein by sector for both baseline and scenario.
+    get_total_protein_by_sector_df(self): Returns total protein as a tidy DataFrame.
+    get_total_hnv_land_area_by_sector(self): Retrieves HNV land area by sector for both baseline and scenario.
+    get_total_hnv_land_area_by_sector_df(self): Returns HNV land area as a tidy DataFrame.
+    get_bioenergy_by_sector(self): Retrieves bioenergy area by sector for both baseline and scenario.
+    get_bioenergy_by_sector_df(self): Returns bioenergy area as a tidy DataFrame.
+    get_hwp_volume(self): Retrieves harvested wood product volume for both baseline and scenario.
+    get_hwp_volume_df(self): Returns harvested wood product volume as a tidy DataFrame.
+    get_substiution_emission_by_sector_co2e(self): Retrieves substitution emissions by sector for CO2e.
+    get_substiution_emission_by_sector_co2e_df(self): Returns substitution emissions for CO2e as a tidy DataFrame.
+    get_substiution_emission_by_sector_co2(self): Retrieves substitution emissions by sector for CO2.
+    get_substiution_emission_by_sector_co2_df(self): Returns substitution emissions for CO2 as a tidy DataFrame.
+    get_substiution_emission_by_sector_ch4(self): Retrieves substitution emissions by sector for CH4.
+    get_substiution_emission_by_sector_ch4_df(self): Returns substitution emissions for CH4 as a tidy DataFrame.
+    get_substiution_emission_by_sector_n2o(self): Retrieves substitution emissions by sector for N2O.
+    get_substiution_emission_by_sector_n2o_df(self): Returns substitution emissions for N2O as a tidy DataFrame.
 """
 
 from optigob.budget_model.baseline_emssions import BaselineEmission
@@ -56,6 +71,21 @@ class Optigob:
         self.land_area_budget = LandAreaBudget(self.data_manager_class)
         self.econ_output = EconOutput(self.data_manager_class)
 
+        self.split_gas = self.data_manager_class.get_split_gas()
+
+    def check_net_zero_status(self):
+        """
+        Checks if the model is set to net zero.
+
+        Returns:
+            bool: True if the model is set to net zero, False otherwise.
+        """
+        status = self.emission_budget.check_net_zero_status()
+        if self.split_gas:
+            return status.get("split_gas", None)
+        else:
+            return status.get("net_zero", None)
+        
     def get_baseline_co2e_emissions_by_sector(self):
         """
         Retrieves baseline CO2e emissions by sector.
@@ -210,7 +240,7 @@ class Optigob:
     
     def get_total_emissions_co2e_by_sector_df(self):
         """
-        Returns total CO2e emissions in a tidy Pandas DataFrame with sectors as rows 
+        Returns total CO2e emissions as a tidy DataFrame with sectors as rows 
         and 'baseline' and 'scenario' as columns.
 
         Returns:
@@ -225,23 +255,23 @@ class Optigob:
         df = pd.DataFrame.from_dict(data, orient='columns')
         return df
     
-    def get_total_land_area_by_sector(self):
+    def get_aggregated_total_land_area_by_sector(self):
         """
-        Retrieves total land area by sector for both baseline and scenario.
+        Retrieves aggregated land area by sector for both baseline and scenario.
 
         Returns:
             dict: A dictionary with 'baseline' and 'scenario' as keys and 
                   dictionaries of sector land areas as values.
         """
         data = {
-            "baseline": self.land_area_budget.get_total_baseline_land_area_by_sector(),
-            "scenario": self.land_area_budget.get_total_scenario_land_area_by_sector()
+            "baseline": self.land_area_budget.get_total_baseline_land_area_by_aggregated_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_land_area_by_aggregated_sector()
         }
         return data
     
-    def get_total_land_area_by_sector_df(self):
+    def get_aggregated_total_land_area_by_sector_df(self):
         """
-        Returns total land area in a tidy Pandas DataFrame with sectors as rows 
+        Returns aggregated land area as a tidy DataFrame with sectors as rows 
         and 'baseline' and 'scenario' as columns.
 
         Returns:
@@ -249,12 +279,44 @@ class Optigob:
                           'scenario' as columns.
         """
         data = {
-            "baseline": self.land_area_budget.get_total_baseline_land_area_by_sector(),
-            "scenario": self.land_area_budget.get_total_scenario_land_area_by_sector()
+            "baseline": self.land_area_budget.get_total_baseline_land_area_by_aggregated_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_land_area_by_aggregated_sector()
         }
 
         df = pd.DataFrame.from_dict(data, orient='columns')
         return df
+    
+    def get_disaggregated_total_land_area_by_sector(self):
+        """
+        Retrieves disaggregated land area by sector for both baseline and scenario.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of disaggregated sector land areas as values.
+        """
+        data = {
+            "baseline": self.land_area_budget.get_total_baseline_land_area_by_disaggregated_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_land_area_by_disaggregated_sector()
+        }
+        return data
+    
+    def get_disaggregated_total_land_area_by_sector_df(self):
+        """
+        Returns disaggregated land area as a tidy DataFrame with disaggregated sectors as rows 
+        and 'baseline' and 'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with disaggregated sectors as rows and 'baseline' and 
+                          'scenario' as columns.
+        """
+        data = {
+            "baseline": self.land_area_budget.get_total_baseline_land_area_by_disaggregated_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_land_area_by_disaggregated_sector()
+        }
+
+        df = pd.DataFrame.from_dict(data, orient='columns')
+        return df
+    
 
     def get_total_protein_by_sector(self):
         """
@@ -272,7 +334,7 @@ class Optigob:
     
     def get_total_protein_by_sector_df(self):
         """
-        Returns total protein in a tidy Pandas DataFrame with sectors as rows
+        Returns total protein as a tidy DataFrame with sectors as rows
         and 'baseline' and 'scenario' as columns.   "
         """
         data = {
@@ -282,3 +344,184 @@ class Optigob:
 
         df = pd.DataFrame.from_dict(data, orient='columns')
         return df
+    
+    def get_total_hnv_land_area_by_sector(self):
+        """
+        Retrieves total HNV land area by sector for both baseline and scenario.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of HNV land areas as values.
+        """
+        data = {
+            "baseline": self.land_area_budget.get_total_baseline_hnv_land_area_disaggregated_by_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_hnv_land_area_disaggregated_by_sector()
+        }
+        return data
+    
+    def get_total_hnv_land_area_by_sector_df(self):
+        """
+        Returns total HNV land area as a tidy DataFrame with sectors as rows 
+        and 'baseline' and 'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with sectors as rows and 'baseline' and 
+                          'scenario' as columns.
+        """
+        data = {
+            "baseline": self.land_area_budget.get_total_baseline_hnv_land_area_disaggregated_by_sector(),
+            "scenario": self.land_area_budget.get_total_scenario_hnv_land_area_disaggregated_by_sector()
+        }
+
+        df = pd.DataFrame.from_dict(data, orient='columns')
+        return df
+    
+    def get_bioenergy_by_sector(self):
+        """
+        Retrieves bioenergy area by sector for both baseline and scenario.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of bioenergy areas as values.
+        """
+        data = {
+            "baseline": self.econ_output.get_total_baseline_bioenergy_by_sector(),
+            "scenario": self.econ_output.get_total_scenario_bioenergy_by_sector()
+        }
+        return data
+    
+    def get_bioenergy_by_sector_df(self):
+        """
+        Returns bioenergy area as a tidy DataFrame with sectors as rows 
+        and 'baseline' and 'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with sectors as rows and 'baseline' and 
+                          'scenario' as columns.
+        """
+        data = {
+            "baseline": self.econ_output.get_total_baseline_bioenergy_by_sector(),
+            "scenario": self.econ_output.get_total_scenario_bioenergy_by_sector()
+        }
+
+        df = pd.DataFrame.from_dict(data, orient='columns')
+        return df
+    
+    def get_hwp_volume(self):
+        """
+        Retrieves the volume of harvested wood products (in cubic meters) for both baseline and scenario.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and HWP volumes as values.
+        """
+        return self.econ_output.get_hwp_volume()
+    
+    def get_hwp_volume_df(self):
+        """
+        Returns the harvested wood products (HWP) volume as a tidy DataFrame with 'baseline' and 
+        'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with 'baseline' and 'scenario' as columns.
+        """
+        return pd.DataFrame.from_dict(self.get_hwp_volume(), orient='columns')
+    
+    def get_substiution_emission_by_sector_co2e(self):
+        """
+        Retrieves substitution emissions by sector for CO2e.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of substitution emissions as values.
+        """
+        return self.emission_budget.get_substitution_emission_co2e()
+    
+    def get_substiution_emission_by_sector_co2e_df(self):
+        """
+        Returns substitution emissions for CO2e as a tidy DataFrame with sectors as rows 
+        and 'baseline' and 'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with sectors as rows and 'baseline' and 
+                          'scenario' as columns.
+        """
+        data = {
+            "scenario": self.get_substiution_emission_by_sector_co2e()
+        }
+
+        return pd.DataFrame.from_dict(data, orient='columns')
+
+    
+    def get_substiution_emission_by_sector_co2(self):
+        """
+        Retrieves substitution emissions by sector for CO2.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of substitution emissions as values.
+        """
+        return self.emission_budget.get_substitution_emission_co2()
+    
+    def get_substiution_emission_by_sector_co2_df(self):
+        """
+        Returns substitution emissions for CO2 as a tidy DataFrame with sectors as rows 
+        and 'baseline' and 'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with sectors as rows and 'baseline' and 
+                          'scenario' as columns.
+        """
+        data = {
+            "scenario":self.get_substiution_emission_by_sector_co2()
+        }
+        return pd.DataFrame.from_dict(data, orient='columns')
+    
+    def get_substiution_emission_by_sector_ch4(self):
+        """
+        Retrieves substitution emissions by sector for CH4.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of substitution emissions as values.
+        """
+        return self.emission_budget.get_substitution_emission_ch4()
+    
+    def get_substiution_emission_by_sector_ch4_df(self):
+        """
+        Returns substitution emissions for CH4 as a tidy DataFrame with sectors as rows 
+        and 'baseline' and 'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with sectors as rows and 'baseline' and 
+                          'scenario' as columns.
+        """
+        data = {
+            "scenario":self.get_substiution_emission_by_sector_ch4()
+        }
+        return pd.DataFrame.from_dict(data, orient='columns')
+
+    
+    def get_substiution_emission_by_sector_n2o(self):
+        """
+        Retrieves substitution emissions by sector for N2O.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of substitution emissions as values.
+        """
+        return self.emission_budget.get_substitution_emission_n2o()
+    
+    def get_substiution_emission_by_sector_n2o_df(self):
+        """
+        Returns substitution emissions for N2O as a tidy DataFrame with sectors as rows 
+        and 'baseline' and 'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with sectors as rows and 'baseline' and 
+                          'scenario' as columns.
+        """
+        data = {
+            "scenario":self.get_substiution_emission_by_sector_n2o()
+        }
+        return pd.DataFrame.from_dict(data, orient='columns')
+
