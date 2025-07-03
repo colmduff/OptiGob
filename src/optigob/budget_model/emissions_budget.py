@@ -221,13 +221,14 @@ class EmissionsBudget:
         Calculates total CO2e emissions (kt).
         """
         static_ag_emission = self.static_ag_budget.get_total_static_ag_co2e()
+        livestock_emission = self.livestock_budget.get_total_co2e_emission()
         forest_emission = self.forest_budget.total_emission_offset()
         beccs_emission = self._get_total_beccs_co2e()
         other_land_emission = self.other_land_budget.get_wetland_restoration_emission_co2e()
         protein_crop_emission = self.protein_crops_budget.get_crop_emission_co2e()
         ad_ag_emission = self.bio_energy_budget.get_ad_ag_co2e_emission()
 
-        total_emission = (static_ag_emission + forest_emission + other_land_emission +
+        total_emission = (static_ag_emission + livestock_emission + forest_emission + other_land_emission +
                           beccs_emission + protein_crop_emission + ad_ag_emission)
 
         return total_emission
@@ -331,7 +332,7 @@ class EmissionsBudget:
         """
         return self._get_total_emission_co2e()
     
-    
+
     def get_split_gas_budget(self):
         """
         Returns the split gas budget (kt).
