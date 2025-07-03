@@ -2,9 +2,9 @@ AR: 5
 split_gas: true
 split_gas_frac: 0.1
 target_year: 2050
-abatement_type: "baseline"
-abatement_scenario: 1
-livestock_ratio_type: "beef_per_dairy"
+abatement_type: "frontier"
+abatement_scenario: 9
+livestock_ratio_type: "dairy_per_beef"
 livestock_ratio_value: 10
 forest_harvest_intensity: low
 afforestation_rate_kha_per_year: 25
@@ -14,7 +14,7 @@ beccs_included: true
 wetland_restored_frac: 0.5
 organic_soil_under_grass_frac: 0
 biomethane_included: true
-protein_crop_included: false
+protein_crop_included: true
 protein_crop_multiplier: 2
 pig_and_poultry_multiplier: 1.5
 baseline_year: 2020

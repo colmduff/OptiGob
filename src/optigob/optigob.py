@@ -72,7 +72,7 @@ class Optigob:
         self.econ_output = EconOutput(self.data_manager_class)
 
         self.split_gas = self.data_manager_class.get_split_gas()
-        
+
     def total_emission_co2e(self):
         """
         Returns the total CO2e emissions (kt).
@@ -532,5 +532,30 @@ class Optigob:
         data = {
             "scenario":self.get_substiution_emission_by_sector_n2o()
         }
+        return pd.DataFrame.from_dict(data, orient='columns')
+    
+
+    def get_livestock_population(self):
+        """
+        Returns the livestock population in number of animals for both baseline and scenario.
+
+        Returns:
+            dict: A dictionary with 'baseline' and 'scenario' as keys and 
+                  dictionaries of livestock populations as values.
+        """
+        return {
+            "baseline": self.econ_output.get_baseline_livestock_population(),
+            "scenario": self.econ_output.get_scenario_livestock_population()
+        }
+    
+    def get_livestock_population_df(self):
+        """
+        Returns the livestock population as a tidy DataFrame with 'baseline' and 
+        'scenario' as columns.
+
+        Returns:
+            pd.DataFrame: A DataFrame with 'baseline' and 'scenario' as columns.
+        """
+        data = self.get_livestock_population()
         return pd.DataFrame.from_dict(data, orient='columns')
 

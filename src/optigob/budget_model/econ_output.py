@@ -85,7 +85,16 @@ class EconOutput:
             "forest_biomass": lambda: 0,  # Forest biomass is not included in the baseline
         }
 
-        
+        self.scenario_population_methods = {
+            "beef": self.livestock_budget.get_beef_population,
+            "milk": self.livestock_budget.get_dairy_population,
+        }
+
+        self.baseline_population_methods = {
+            "beef": self.data_manager_class.get_baseline_dairy_population,
+            "milk": self.data_manager_class.get_baseline_beef_population,
+        }
+
 
     def get_total_scenario_protein_by_sector(self):
         """
@@ -126,3 +135,16 @@ class EconOutput:
             "baseline": {"hwp": baseline,},
             "scenario": {"hwp": scenario,}
         }
+    
+    def get_scenario_livestock_population(self, scale=10000):
+        """
+        Returns the Dairy and Beef population in number of animals.
+        """
+
+        return {sector: self.scenario_population_methods[sector]() for sector in self.scenario_population_methods}
+       
+    def get_baseline_livestock_population(self, scale=10000):
+        """
+        Returns the Dairy and Beef population in number of animals.
+        """
+        return {sector: self.baseline_population_methods[sector]() * scale for sector in self.baseline_population_methods}

@@ -355,3 +355,15 @@ class StaticAgBudget:
 
 
         return sheep_protein + pig_and_poultry_protein + crop_protein
+    
+    def get_pig_and_poultry_population(self):
+        """
+        Returns the population of pig and poultry in number of animals.
+
+        Returns:
+            float: Population of pig and poultry.
+        """
+        pig_and_poultry_population = self.data_manager_class.get_static_livestock_population_scaler(
+            year=self.target_year, system='Pig_Poultry', abatement=self.abatement_type
+        )
+        return pig_and_poultry_population["population"].item()

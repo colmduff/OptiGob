@@ -63,5 +63,12 @@ def main():
     print(optigob.check_net_zero_status())
 
     print(f"total emissions co2e: {optigob.total_emission_co2e()} kt")
+
+    print("#" * 50)
+    print("Livestock Population")
+
+    print(optigob.get_livestock_population())
+    print(optigob.get_livestock_population_df())
+
 if __name__ == '__main__':
     main()
