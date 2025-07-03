@@ -293,7 +293,7 @@ class EmissionsBudget:
         
         return total_emission
     
-    def _check_split_gas_net_zero_status(self):
+    def _check_split_gas_net_zero_status(self, tolerance=1):
         """
         Checks if the split gas budget is met.
         Returns:
@@ -304,7 +304,7 @@ class EmissionsBudget:
         emissions_total_n2o = self._get_total_emission_n2o()
 
         total_emission = ((emissions_total_n2o * self.data_manager_class.get_AR_gwp100_values("N2O")) + emissions_total_co2) + forest_emission
-        return total_emission <= 0
+        return total_emission <= tolerance
     
     def check_net_zero_status(self):
         """
@@ -317,14 +317,14 @@ class EmissionsBudget:
             "split_gas": self._check_split_gas_net_zero_status()
         }
 
-    def _check_net_zero_status(self):
+    def _check_net_zero_status(self, tolerance=1):
         """
         Checks if the net zero budget is met.
         Returns:
             bool: True if net zero budget is met, False otherwise.
         """
         emissions_total = self._get_total_emission_co2e()
-        return emissions_total <= 0
+        return emissions_total <= tolerance
     
     def get_total_emission_co2e(self):
         """
