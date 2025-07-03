@@ -86,13 +86,13 @@ class EconOutput:
         }
 
         self.scenario_population_methods = {
+            "dairy": self.livestock_budget.get_dairy_population,
             "beef": self.livestock_budget.get_beef_population,
-            "milk": self.livestock_budget.get_dairy_population,
         }
 
         self.baseline_population_methods = {
-            "beef": self.data_manager_class.get_baseline_dairy_population,
-            "milk": self.data_manager_class.get_baseline_beef_population,
+            "dairy": self.data_manager_class.get_baseline_dairy_population,
+            "beef": self.data_manager_class.get_baseline_beef_population,
         }
 
 
