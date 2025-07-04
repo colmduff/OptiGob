@@ -20,6 +20,12 @@ class LivestockOptimisation:
         self.data_manager_class = optigob_data_manager
         self.baseline_livestock = BaselineLivestock(self.data_manager_class)
 
+    def scalar(self,x):
+        # Utility to ensure value is a float
+        if hasattr(x, "item"):
+            return float(x.item())
+        return float(x)
+    
     def optimise_livestock_pop(self,
                                ratio_type,
                                ratio_value,
@@ -33,12 +39,8 @@ class LivestockOptimisation:
         Set up and solve the optimisation model.
         Returns an OptimisationResult object (like a dict).
         """
+       
         # ==== 1. Load and normalise all data up front ====
-        def scalar(x):
-            # Utility to ensure value is a float
-            if hasattr(x, "item"):
-                return float(x.item())
-            return float(x)
 
         dairy_scaler = self.data_manager_class.get_livestock_emission_scaler(
             year=year, system='Dairy', gas='CO2e', scenario=scenario, abatement=abatement
@@ -64,7 +66,7 @@ class LivestockOptimisation:
 
         total_beef_area = dairy_beef_area_scaler["area"] + beef_area_scaler["area"]
 
-        baseline_area = scalar(self.baseline_livestock.get_total_area())
+        baseline_area = self.scalar(self.baseline_livestock.get_total_area())
 
         # ==== 2. Build the Pyomo model ====
         model = ConcreteModel()
@@ -72,8 +74,8 @@ class LivestockOptimisation:
         model.y = Var(domain=NonNegativeReals)  # dairy
 
         model.area_constraint = Constraint(
-            expr=(model.x * scalar(total_beef_area) +
-                  model.y * scalar(dairy_area_scaler["area"]))
+            expr=(model.x * self.scalar(total_beef_area) +
+                  model.y * self.scalar(dairy_area_scaler["area"]))
                  <= (baseline_area - area_commitment)
         )
 
@@ -85,14 +87,14 @@ class LivestockOptimisation:
             raise ValueError(f"Invalid ratio_type: {ratio_type}. Must be 'dairy_per_beef' or 'beef_per_dairy'.")
 
         model.emissions_constraint = Constraint(
-            expr=(scalar(beef_scaler["value"]) * model.x +
-                  scalar(dairy_scaler["value"]) * model.y)
+            expr=(self.scalar(beef_scaler["value"]) * model.x +
+                  self.scalar(dairy_scaler["value"]) * model.y)
                  <= emissions_budget
         )
         if ch4_budget is not None:
             model.ch4_constraint = Constraint(
-                expr=(scalar(ch4_beef_scaler["value"]) * model.x +
-                      scalar(ch4_dairy_scaler["value"]) * model.y)
+                expr=(self.scalar(ch4_beef_scaler["value"]) * model.x +
+                      self.scalar(ch4_dairy_scaler["value"]) * model.y)
                     <= ch4_budget
             )
 
@@ -110,8 +112,8 @@ class LivestockOptimisation:
             print("Optimization infeasible: No feasible solution for the provided constraints.")
 
         # --- Otherwise, return the solution as usual, with status "ok" ---
-        total_dairy_animals = dairy_units * scalar(dairy_scaler["pop"])
-        total_beef_animals = beef_units * scalar(beef_scaler["pop"])
+        total_dairy_animals = dairy_units * self.scalar(dairy_scaler["pop"])
+        total_beef_animals = beef_units * self.scalar(beef_scaler["pop"])
 
         out = {
             "status": "ok",
@@ -120,14 +122,14 @@ class LivestockOptimisation:
             "Scenario": scenario,
             "Year": year,
             "Emissions_budget_CO2e": emissions_budget,
-            "Dairy_emissions_CO2e": scalar(dairy_scaler["value"]) * dairy_units,
-            "Beef_emissions_CO2e": scalar(beef_scaler["value"]) * beef_units
+            "Dairy_emissions_CO2e": self.scalar(dairy_scaler["value"]) * dairy_units,
+            "Beef_emissions_CO2e": self.scalar(beef_scaler["value"]) * beef_units
         }
         if ch4_budget is not None:
             out.update({
                 "CH4_budget": ch4_budget,
-                "Dairy_emissions_CH4": scalar(ch4_dairy_scaler["value"]) * dairy_units,
-                "Beef_emissions_CH4": scalar(ch4_beef_scaler["value"]) * beef_units
+                "Dairy_emissions_CH4": self.scalar(ch4_dairy_scaler["value"]) * dairy_units,
+                "Beef_emissions_CH4": self.scalar(ch4_beef_scaler["value"]) * beef_units
             })
         return OptimisationResult(out)
 

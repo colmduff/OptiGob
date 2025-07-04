@@ -70,5 +70,8 @@ def main():
     print(optigob.get_livestock_population())
     print(optigob.get_livestock_population_df())
 
+    print("#" * 50)
+    print("Livestock CH4 Emissions budget")
+    print(optigob.get_livestock_split_gas_ch4_emission_budget())
 if __name__ == '__main__':
     main()

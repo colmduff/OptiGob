@@ -92,6 +92,7 @@ class EmissionsBudget:
         self.biomethane_included = self.data_manager_class.get_biomethane_included()
         self.beccs_included = self.data_manager_class.get_beccs_included()
         self.split_gas_frac = self.data_manager_class.get_split_gas_fraction()
+
         self.emission_sectors = self.data_manager_class.get_emission_sectors()
 
         self.forest_budget = ForestBudget(self.data_manager_class)
@@ -142,6 +143,7 @@ class EmissionsBudget:
 
         }
 
+
         self.substitution_methods = {
             "CO2e": {
             "ad_substitution": self.substitution_budget.get_ad_substitution_co2e_emission,
@@ -187,17 +189,17 @@ class EmissionsBudget:
         Calculates total BECCS CH4 emissions (kt).
         """
         bio_energy_beccs_ch4 = self.bio_energy_budget.get_total_ccs_ch4_emission()
-        forest_beccs_ch4 = self.forest_budget.get_wood_ccs_offset()
-        return bio_energy_beccs_ch4 + forest_beccs_ch4
+
+        return bio_energy_beccs_ch4
     
     def _get_total_beccs_n2o(self):
         """
         Calculates total BECCS N2O emissions (kt).
         """
         bio_energy_beccs_n2o = self.bio_energy_budget.get_total_ccs_n2o_emission()
-        forest_beccs_n2o = self.forest_budget.get_wood_ccs_offset()
-        return bio_energy_beccs_n2o + forest_beccs_n2o
 
+        return bio_energy_beccs_n2o 
+    
     def _get_total_emission_co2e_budget(self):
         """
         Calculates total CO2e emissions (kt).
@@ -249,17 +251,6 @@ class EmissionsBudget:
         
         return total_emission
 
-
-    def _get_total_emission_ch4(self):
-        """
-        Calculates total CH4 emissions (kt).
-        """
-
-        static_ag_emission = self.static_ag_budget.get_total_static_ag_ch4()
-        other_land_emission = self.other_land_budget.get_wetland_restoration_emission_ch4()
-
-        return static_ag_emission + other_land_emission
-    
 
     def _get_total_emission_n2o(self):
         """
@@ -550,3 +541,9 @@ class EmissionsBudget:
                 result_dict[key] = 0
 
         return result_dict
+    
+    def get_total_livestock_ch4_emission_budget(self):
+        """
+        Returns total livestock split gas CH4 emissions (kt) budget.
+        """
+        return self.livestock_budget.get_split_gas_ch4_emission()

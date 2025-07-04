@@ -35,6 +35,7 @@ class BaselineOtherLand:
         self.data_manager_class = optigob_data_manager
 
         self.baseline_year = self.data_manager_class.get_baseline_year()
+        self.target_year = self.data_manager_class.get_target_year()
         self.wetland_restored_fraction = self.data_manager_class.get_wetland_restored_fraction()
         self.organic_soil_under_grass_fraction = self.data_manager_class.get_organic_soil_under_grass_fraction()
 
@@ -62,8 +63,9 @@ class BaselineOtherLand:
         Returns:
             float: The CH4 emissions value in kiloton.
         """
+        #CHANGE BACK TO BASELINE YEAR
         wetland_df = self.data_manager_class.get_organic_soil_emission_scaler(
-            target_year=self.baseline_year,
+            target_year=self.target_year,
             wetland_restored_frac=self.wetland_restored_fraction,
             organic_soil_under_grass_frac=self.organic_soil_under_grass_fraction
         )
