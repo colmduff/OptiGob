@@ -6,7 +6,7 @@ abatement_type: "frontier"
 abatement_scenario: 9
 livestock_ratio_type: "dairy_per_beef"
 livestock_ratio_value: 10
-forest_harvest_intensity: low
+forest_harvest_intensity: high
 afforestation_rate_kha_per_year: 16
 broadleaf_fraction: 0.3
 organic_soil_fraction: 0
