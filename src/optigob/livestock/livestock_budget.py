@@ -127,8 +127,6 @@ class LivestockBudget:
         self.split_gas_approach = self.data_manager_class.get_split_gas()
         self.split_gas_frac = self.data_manager_class.get_split_gas_fraction()
 
-        self.ch4_baseline = self.baseline_emission.get_total_ch4_emission()
-
         if self.split_gas_approach:
             self.ch4_budget = self.get_split_gas_ch4_emission()
 
@@ -184,7 +182,7 @@ class LivestockBudget:
         Returns:
             float: CH4 budget in kilotonnes (kt).
         """
-        return self.ch4_baseline * (1-self.split_gas_frac)
+        return self.baseline_emission.get_total_ch4_emission() * (1-self.split_gas_frac)
 
     def get_split_gas_ch4_emission(self):
         """

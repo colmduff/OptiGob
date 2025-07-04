@@ -103,7 +103,7 @@ class EmissionsBudget:
         self.substitution_budget = Substitution(self.data_manager_class)
 
         self.net_zero_budget = abs(self._get_total_emission_co2e_budget())
-        self.split_gas_budget = abs(self._split_gas_emissions_total_budget())
+        self.split_gas_budget = abs(self._split_gas_emissions_total_budget_co2e())
         self.livestock_budget = LivestockBudget(self.data_manager_class, 
                                                 self.net_zero_budget,
                                                 self.split_gas_budget)
@@ -182,6 +182,7 @@ class EmissionsBudget:
         """
         bio_energy_beccs_co2 = self.bio_energy_budget.get_total_ccs_co2_emission()
         forest_beccs_co2 = self.forest_budget.get_wood_ccs_offset()
+        
         return bio_energy_beccs_co2 + forest_beccs_co2
     
     def _get_total_beccs_ch4(self):
@@ -235,20 +236,18 @@ class EmissionsBudget:
 
         return total_emission
 
-    def _split_gas_emissions_total_budget(self):
+    def _split_gas_emissions_total_budget_co2e(self):
         """
-        Calculates total split gas emissions (kt).
+        Calculates total split gas emissions CO2e budget (kt).
         """
-        forest_emission = self.forest_budget.total_emission_offset()
-
-        total_emission_n2o = self._get_total_emission_n2o() 
+        forest_emission = self._get_total_forest_co2e()
+        total_emission_n2o = self._get_total_emission_n2o() * self.data_manager_class.get_AR_gwp100_values("N2O")
         total_emission_co2 = self._get_total_emission_co2()
-
-        total_emission = ((total_emission_n2o * self.data_manager_class.get_AR_gwp100_values("N2O")) + total_emission_co2) + forest_emission
+        total_emission = forest_emission + total_emission_n2o + total_emission_co2
 
         if total_emission > 0:
             total_emission = 0
-        
+       
         return total_emission
 
 
@@ -278,11 +277,21 @@ class EmissionsBudget:
         ad_ag_emission = self.bio_energy_budget.get_ad_ag_co2_emission()
         protein_crop_emission = self.protein_crops_budget.get_crop_emission_co2()
         beccs_emission = self._get_total_beccs_co2()
-
+        
         total_emission = (static_ag_emission + other_land_emission +
-                          beccs_emission + protein_crop_emission + ad_ag_emission)  
+                          beccs_emission + protein_crop_emission + ad_ag_emission )  
         
         return total_emission
+    
+    def _get_total_forest_co2e(self):
+        """
+        Calculates total forest and hwp CO2e emissions (kt).
+        """
+        forest_biomass = self.forest_budget.get_total_forest_offset()
+        hwp_biomass = self.forest_budget.get_hwp_offset()
+
+        return forest_biomass + hwp_biomass
+        
     
     def _check_split_gas_net_zero_status(self, tolerance=1):
         """
