@@ -42,10 +42,10 @@ class LivestockOptimisation:
        
         # ==== 1. Load and normalise all data up front ====
 
-        dairy_scaler = self.data_manager_class.get_livestock_emission_scaler(
+        co2e_dairy_scaler = self.data_manager_class.get_livestock_emission_scaler(
             year=year, system='Dairy', gas='CO2e', scenario=scenario, abatement=abatement
         )
-        beef_scaler = self.data_manager_class.get_livestock_emission_scaler(
+        co2e_beef_scaler = self.data_manager_class.get_livestock_emission_scaler(
             year=year, system='Beef', gas='CO2e', scenario=scenario, abatement=abatement
         )
         ch4_dairy_scaler = self.data_manager_class.get_livestock_emission_scaler(
@@ -54,6 +54,23 @@ class LivestockOptimisation:
         ch4_beef_scaler = self.data_manager_class.get_livestock_emission_scaler(
             year=year, system='Beef', gas='CH4', scenario=scenario, abatement=abatement
         )
+
+        co2_dairy_scaler = self.data_manager_class.get_livestock_emission_scaler(
+            year=year, system='Dairy', gas='CO2', scenario=scenario
+            , abatement=abatement
+        )
+        co2_beef_scaler = self.data_manager_class.get_livestock_emission_scaler(
+            year=year, system='Beef', gas='CO2', scenario=scenario, abatement=abatement
+        )
+
+        n2o_dairy_scaler = self.data_manager_class.get_livestock_emission_scaler(
+            year=year, system='Dairy', gas='N2O', scenario=scenario, abatement=abatement
+        )
+        n2o_beef_scaler = self.data_manager_class.get_livestock_emission_scaler(
+            year=year, system='Beef', gas='N2O', scenario=scenario, abatement=abatement
+        )
+
+        
         dairy_area_scaler = self.data_manager_class.get_livestock_area_scaler(
             year=year, system='Dairy', scenario=scenario, abatement=abatement
         )
@@ -67,6 +84,11 @@ class LivestockOptimisation:
         total_beef_area = dairy_beef_area_scaler["area"] + beef_area_scaler["area"]
 
         baseline_area = self.scalar(self.baseline_livestock.get_total_area())
+
+        n20_conversion_factor = self.data_manager_class.get_AR_gwp100_values("N2O")
+
+        split_gas_co2e_dairy = (n2o_dairy_scaler["value"]* n20_conversion_factor) + co2_dairy_scaler["value"]
+        split_gas_co2e_beef = (n2o_beef_scaler["value"] * n20_conversion_factor) + co2_beef_scaler["value"]
 
         # ==== 2. Build the Pyomo model ====
         model = ConcreteModel()
@@ -85,12 +107,19 @@ class LivestockOptimisation:
             model.ratio_constraint = Constraint(expr=model.x == ratio_value * model.y)
         else:
             raise ValueError(f"Invalid ratio_type: {ratio_type}. Must be 'dairy_per_beef' or 'beef_per_dairy'.")
-
-        model.emissions_constraint = Constraint(
-            expr=(self.scalar(beef_scaler["value"]) * model.x +
-                  self.scalar(dairy_scaler["value"]) * model.y)
-                 <= emissions_budget
-        )
+        
+        if ch4_budget is not None:
+            model.emissions_constraint = Constraint(
+                expr=(self.scalar(split_gas_co2e_beef) * model.x +
+                    self.scalar(split_gas_co2e_dairy) * model.y)
+                    <= emissions_budget
+            )
+        else:
+            model.emissions_constraint = Constraint(
+                expr=(self.scalar(co2e_beef_scaler["value"]) * model.x +
+                    self.scalar(co2e_dairy_scaler["value"]) * model.y)
+                    <= emissions_budget
+            )
         if ch4_budget is not None:
             model.ch4_constraint = Constraint(
                 expr=(self.scalar(ch4_beef_scaler["value"]) * model.x +
@@ -112,8 +141,8 @@ class LivestockOptimisation:
             print("Optimization infeasible: No feasible solution for the provided constraints.")
 
         # --- Otherwise, return the solution as usual, with status "ok" ---
-        total_dairy_animals = dairy_units * self.scalar(dairy_scaler["pop"])
-        total_beef_animals = beef_units * self.scalar(beef_scaler["pop"])
+        total_dairy_animals = dairy_units * self.scalar(co2e_dairy_scaler["pop"])
+        total_beef_animals = beef_units * self.scalar(co2e_beef_scaler["pop"])
 
         out = {
             "status": "ok",
@@ -122,8 +151,8 @@ class LivestockOptimisation:
             "Scenario": scenario,
             "Year": year,
             "Emissions_budget_CO2e": emissions_budget,
-            "Dairy_emissions_CO2e": self.scalar(dairy_scaler["value"]) * dairy_units,
-            "Beef_emissions_CO2e": self.scalar(beef_scaler["value"]) * beef_units
+            "Dairy_emissions_CO2e": self.scalar(co2e_dairy_scaler["value"]) * dairy_units,
+            "Beef_emissions_CO2e": self.scalar(co2e_beef_scaler["value"]) * beef_units
         }
         if ch4_budget is not None:
             out.update({

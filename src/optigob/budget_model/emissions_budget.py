@@ -264,7 +264,7 @@ class EmissionsBudget:
 
         total_emission = (static_ag_emission + other_land_emission +
                           beccs_emission + protein_crop_emission + ad_ag_emission)
-
+        
         return total_emission
 
     def _get_total_emission_co2(self):

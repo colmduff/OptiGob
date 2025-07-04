@@ -85,6 +85,22 @@ class Optigob:
 
         self.split_gas = self.data_manager_class.get_split_gas()
 
+    def get_livestock_co2e_emission_budget(self):
+        """
+        Retrieve the total livestock CO2e emissions (kt) budget available for the scenario.
+
+        Returns:
+            float: Total livestock CO2e emissions budget in kilotons.
+        """
+        if self.split_gas:
+            emission_budget = self.emission_budget._split_gas_emissions_total_budget_co2e()
+        else:
+            emission_budget = self.emission_budget._get_total_emission_co2e_budget()
+
+        return emission_budget
+            
+    
+
     def get_livestock_split_gas_ch4_emission_budget(self):
         """
         Retrieve the total livestock split gas CH4 emissions (kt) budget available for the scenario.
