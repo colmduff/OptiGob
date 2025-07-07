@@ -1,0 +1,1 @@
+"""BioEnergyBudget class for OptiGob bioenergy module."""
