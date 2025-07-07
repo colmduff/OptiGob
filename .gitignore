@@ -146,3 +146,6 @@ dmypy.json
 
 # Other 
 .databases
+
+#bash
+.env_activate.bash
