@@ -1038,6 +1038,15 @@ class OptiGobDataManager:
         """
         return self.standard_input_parameters.get("protein_crop_multiplier")
     
+    def get_beccs_willow_area_multiplier(self):
+        """
+        Retrieves the BECCS willow area multiplier from the SIP input file.
+
+        Returns:
+            float: The BECCS willow area multiplier.
+        """
+        return self.standard_input_parameters.get("beccs_willow_area_multiplier")
+    
     def get_pig_and_poultry_multiplier(self):
         """
         Retrieves the pig and poultry multiplier from the SIP input file.

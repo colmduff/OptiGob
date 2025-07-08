@@ -367,3 +367,5 @@ class StaticAgBudget:
             year=self.target_year, system='Pig_Poultry', abatement=self.abatement_type
         )
         return pig_and_poultry_population["population"].item()
+    
+    

@@ -92,11 +92,12 @@ class LandAreaBudget:
             "pig_and_poultry": self.static_ag_budget.get_pig_and_poultry_area,
             "static_crops": self.static_ag_budget.get_crop_area,
             "protein_crops": self.protein_crops_budget.get_crop_area if self.protein_crops_included else lambda: 0,
-            "beccs": self.bio_energy_budget.get_total_willow_area if self.beccs_included else lambda: 0,
+            "beccs_willow": self.bio_energy_budget.get_total_willow_area if self.beccs_included else lambda: 0,
             "anaerobic_digestion": self.bio_energy_budget.get_ad_ag_area if self.biomethane_included else lambda: 0,
             "managed forest": self.forest_budget.get_managed_forest_area,
             "afforestation": self.forest_budget.get_afforestation_area,
             "other_land_use": self.other_land_budget.get_total_other_land_area,
+            "available_area": self.get_remaining_area,  # Placeholder for remaining area
         }
 
         self.disaggregated_baseline_area_methods = {
@@ -106,11 +107,12 @@ class LandAreaBudget:
             "pig_and_poultry": self.baseline_static_ag.get_pig_and_poultry_area,
             "static_crops": self.baseline_static_ag.get_crop_area,
             "protein_crops": lambda: 0,  # Baseline does not include protein crops
-            "beccs": lambda: 0,  # Baseline does not include BECCS
+            "beccs_willow": lambda: 0,  # Baseline does not include BECCS
             "anaerobic_digestion": lambda: 0,  # Baseline does not include anaerobic digestion
             "managed forest": self.baseline_forest.get_managed_forest_area,
             "afforestation": lambda: 0,  # Baseline does not include afforestation
             "other_land_use": self.baseline_other_land.get_total_other_land_area,
+            "available_area": lambda: 0,  # Placeholder for remaining area
         }
 
         self.scenario_hnv_area_methods = {
@@ -178,7 +180,18 @@ class LandAreaBudget:
         """
         return {sector: self.scenario_area_methods[sector]() for sector in self.scenario_area_methods.keys()}
     
+    def get_remaining_area(self):
+        """
+        Returns the remaining area after subtracting scenario agriculture area from baseline agriculture area.
+        
+        Returns:
+            float: Remaining area in hectares.
+        """
+        baseline_agriculture_area = self.get_baseline_agriculture_area()
+        scenario_agriculture_area = self.get_scenario_agriculture_area()
 
+        return baseline_agriculture_area - scenario_agriculture_area
+    
     def get_total_scenario_land_area_by_disaggregated_sector(self):
         """
         Returns the total scenario land area by disaggregated sector in hectares.
@@ -186,7 +199,8 @@ class LandAreaBudget:
         Returns:
             dict: Total scenario land area by disaggregated sector in hectares.
         """
-        return {sector: self.disaggregated_scenario_area_methods[sector]() for sector in self.disaggregated_scenario_area_methods.keys()}
+
+        return {sector: self.disaggregated_scenario_area_methods[sector]() for sector in self.disaggregated_scenario_area_methods.keys()} 
     
     def get_total_baseline_land_area_by_disaggregated_sector(self):
         """

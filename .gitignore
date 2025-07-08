@@ -149,3 +149,7 @@ dmypy.json
 
 #bash
 .env_activate.bash
+
+#research files 
+sankey_diagram.html
+sankey.py

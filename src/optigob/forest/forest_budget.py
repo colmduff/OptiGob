@@ -159,6 +159,7 @@ class ForestBudget:
             organic_soil_frac=self.organic_soil_fraction,
             harvest=self.harvest_rate
         )
+
         return hwp_df["volume"].item()
     
     @zero_if_beccs_not_included

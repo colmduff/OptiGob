@@ -28,7 +28,8 @@ class ProteinCropsBudget:
         self.target_year = self.data_manager_class.get_target_year()
         self.abatement = self.data_manager_class.get_abatement_type()
         self.protein_crop_included = self.data_manager_class.get_protein_crop_included()
-        self.crop_area_multiplier = self.data_manager_class.get_protein_crop_multiplier() 
+        self.crop_area_multiplier = self.data_manager_class.get_protein_crop_multiplier()
+        self.crop_protein = self.data_manager_class.get_protein_content_scaler('crops')
 
 
     def zero_if_not_included(method):
@@ -109,6 +110,6 @@ class ProteinCropsBudget:
             abatement=self.abatement
         )
 
-        return crop_protein_yield_df["value"].item() * self.crop_area_multiplier
+        return (crop_protein_yield_df["value"].item() * self.crop_protein)* self.crop_area_multiplier
 
 

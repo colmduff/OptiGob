@@ -54,6 +54,7 @@ class BioEnergyBudget:
         self.organic_soil_fraction = self.data_manager_class.get_organic_soil_fraction_forest()
         self.broadleaf_fraction = self.data_manager_class.get_broadleaf_fraction()
         self.beccs_included = self.data_manager_class.get_beccs_included()
+        self.beccs_willow_area_multiplier = self.data_manager_class.get_beccs_willow_area_multiplier()
 
     def zero_if_biomethane_not_included(method):
         def wrapper(self, *args, **kwargs):
@@ -80,7 +81,7 @@ class BioEnergyBudget:
             ghg="CO2e"
         )
 
-        return willow_area["area"].item()
+        return willow_area["area"].item() * self.beccs_willow_area_multiplier
     
     @zero_if_beccs_not_included
     def get_willow_bioenergy_hnv_area(self):
@@ -93,7 +94,7 @@ class BioEnergyBudget:
             ghg="CO2e"
         )
 
-        return willow_area["hnv_area"].item()
+        return willow_area["hnv_area"].item() * self.beccs_willow_area_multiplier
 
     #AD methods
     @zero_if_biomethane_not_included
@@ -196,7 +197,7 @@ class BioEnergyBudget:
             ghg="CO2e"
         )
 
-        return willow_bioenergy_output["energy"].item()
+        return willow_bioenergy_output["energy"].item() * self.beccs_willow_area_multiplier
     
 
     def get_forest_bioenergy_output(self):
@@ -278,7 +279,7 @@ class BioEnergyBudget:
             ghg="CO2"
         )
 
-        return willow_beccs_co2_emission["emission_value"].item()
+        return willow_beccs_co2_emission["emission_value"].item() * self.beccs_willow_area_multiplier
     
 
     def get_total_ccs_co2_emission(self):

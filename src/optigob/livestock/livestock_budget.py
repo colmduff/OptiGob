@@ -483,7 +483,6 @@ class LivestockBudget:
             abatement=self.abatement
         )
 
-
         return dairy_area['area'] * self._get_scaled_dairy_population()
     
     def get_beef_cows_area(self):
@@ -506,9 +505,10 @@ class LivestockBudget:
             abatement=self.abatement
         )
 
-        total_area = beef_area['area'] + dairy_beef_area['area']
-
-        return total_area * self._get_scaled_beef_population()
+        total_beef_area = beef_area['area'] * self._get_scaled_beef_population() 
+        total_dairy_beef_area = dairy_beef_area['area'] * self._get_scaled_dairy_population()
+    
+        return total_beef_area + total_dairy_beef_area
 
 
     def get_total_area(self):
@@ -544,9 +544,11 @@ class LivestockBudget:
             abatement=self.abatement
         )
 
-        total_protein = (beef_protein["value"].item()  + dairy_beef_protein["value"].item()) * self._get_scaled_beef_population()
+        total_beef_protein = beef_protein["value"].item() * self._get_scaled_beef_population()
+                         
+        total_dairy_protein = dairy_beef_protein["value"].item() * self._get_scaled_dairy_population()
         
-        return total_protein * self._beef_protein
+        return (total_beef_protein + total_dairy_protein) * self._beef_protein
     
     
     def get_total_milk_protein(self):
