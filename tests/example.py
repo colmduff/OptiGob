@@ -77,5 +77,15 @@ def main():
     print("#" * 50)
     print("Livestock CO2e Emissions budget")
     print(optigob.get_livestock_co2e_emission_budget())
+
+    print("#" * 50)
+    print("AREA comparison")
+
+    df = optigob.get_disaggregated_total_land_area_by_sector_df()
+    print(df)
+    print("\nSum of each column:")
+    print(df.sum())
+
+
 if __name__ == '__main__':
     main()

@@ -74,7 +74,9 @@ class LandAreaBudget:
             "afforested": lambda: 0,
             "existing_forest": self.baseline_forest.get_managed_forest_area,
             "other_land_use": self.baseline_other_land.get_total_other_land_area,
-            "ad": lambda: 0
+            "ad": lambda: 0,
+            "protein_crops": lambda: 0,  # Baseline does not include protein crops
+            "beccs_willow": lambda: 0,  # Baseline does not include BECCS
         }
 
         self.scenario_area_methods = {
@@ -82,7 +84,10 @@ class LandAreaBudget:
             "afforested": self.forest_budget.get_afforestation_area,
             "existing_forest": self.forest_budget.get_managed_forest_area,
             "other_land_use": self.other_land_budget.get_total_other_land_area,
-            "ad": self.bio_energy_budget.get_total_biomethane_area if self.biomethane_included else lambda: 0
+            "ad": self.bio_energy_budget.get_total_biomethane_area if self.biomethane_included else lambda: 0,
+            "protein_crops": self.protein_crops_budget.get_crop_area if self.protein_crops_included else lambda: 0,
+            "beccs_willow": self.bio_energy_budget.get_total_willow_area if self.beccs_included else lambda: 0,
+
         }
 
         self.disaggregated_scenario_area_methods = {
@@ -97,7 +102,6 @@ class LandAreaBudget:
             "managed forest": self.forest_budget.get_managed_forest_area,
             "afforestation": self.forest_budget.get_afforestation_area,
             "other_land_use": self.other_land_budget.get_total_other_land_area,
-            "available_area": self.get_remaining_area,  # Placeholder for remaining area
         }
 
         self.disaggregated_baseline_area_methods = {
@@ -178,19 +182,9 @@ class LandAreaBudget:
         Returns:
             dict: Total scenario land area by sector in hectares.
         """
+
         return {sector: self.scenario_area_methods[sector]() for sector in self.scenario_area_methods.keys()}
     
-    def get_remaining_area(self):
-        """
-        Returns the remaining area after subtracting scenario agriculture area from baseline agriculture area.
-        
-        Returns:
-            float: Remaining area in hectares.
-        """
-        baseline_agriculture_area = self.get_baseline_agriculture_area()
-        scenario_agriculture_area = self.get_scenario_agriculture_area()
-
-        return baseline_agriculture_area - scenario_agriculture_area
     
     def get_total_scenario_land_area_by_disaggregated_sector(self):
         """
@@ -200,8 +194,17 @@ class LandAreaBudget:
             dict: Total scenario land area by disaggregated sector in hectares.
         """
 
-        return {sector: self.disaggregated_scenario_area_methods[sector]() for sector in self.disaggregated_scenario_area_methods.keys()} 
+        baseline_area = self.get_total_baseline_land_area_by_disaggregated_sector()
+        scenario_area = {sector: self.disaggregated_scenario_area_methods[sector]() for sector in self.disaggregated_scenario_area_methods.keys()} 
+
+        # Calculate the remaining area
+        remaining_area = sum(baseline_area.values()) - sum(scenario_area.values())
+
+        scenario_area["available_area"] = remaining_area
+        
+        return scenario_area
     
+
     def get_total_baseline_land_area_by_disaggregated_sector(self):
         """
         Returns the total baseline land area by disaggregated sector in hectares.
