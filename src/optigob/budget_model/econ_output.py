@@ -60,7 +60,6 @@ class EconOutput:
             "sheep": self.static_ag_budget.get_sheep_protein,
             "beef": self.livestock_budget.get_total_beef_protein,
             "milk": self.livestock_budget.get_total_milk_protein,
-            "crops": self.static_ag_budget.get_crop_protein,
             "protein_crops": self.protein.get_crop_protein_yield,
         }
 
@@ -69,7 +68,6 @@ class EconOutput:
             "sheep": self.baseline_static_ag.get_sheep_protein,
             "beef": self.baseline_livestock.get_total_beef_protein,
             "milk": self.baseline_livestock.get_total_milk_protein,
-            "crops": self.baseline_static_ag.get_crop_protein,
             "protein_crops": lambda:0,  # Protein crops are not included in the baseline
         }
 

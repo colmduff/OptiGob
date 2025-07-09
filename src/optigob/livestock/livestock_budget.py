@@ -132,6 +132,8 @@ class LivestockBudget:
 
         self._optomisation_outputs = None
 
+       
+
     def _get_total_area_commitment(self):
         """
         Calculate the total area commitment for all land uses that compete with livestock (rewetted, afforested, biomethane, willow, protein crops).
