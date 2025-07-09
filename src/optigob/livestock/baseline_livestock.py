@@ -253,9 +253,9 @@ class BaselineLivestock:
             abatement=self.abatement
         )
 
-        total_area = beef_area['area'] + dairy_beef_area['area']
+        total_area = (beef_area['area'] * self.beef_cows) + (dairy_beef_area['area'] * self.dairy_cows)
 
-        return total_area * self.beef_cows
+        return total_area
 
 
     def get_total_area(self):
@@ -291,7 +291,7 @@ class BaselineLivestock:
             abatement=self.abatement
         )
 
-        total_protein = ((beef_protein["value"].item() + dairy_beef_protein["value"].item()) * self.beef_cows) * self._beef_protein
+        total_protein = ((beef_protein["value"].item() * self.beef_cows) + (dairy_beef_protein["value"].item()) * self.dairy_cows) * self._beef_protein
         
         return total_protein
     
@@ -337,5 +337,5 @@ class BaselineLivestock:
             abatement=self.abatement
         )   
 
-        return beef_hnv_area["hnv_area"] + dairy_beef_hnv_area["hnv_area"] * self.beef_cows
+        return (beef_hnv_area["hnv_area"]* self.beef_cows) + (dairy_beef_hnv_area["hnv_area"] * self.dairy_cows)
     

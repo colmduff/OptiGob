@@ -590,6 +590,7 @@ class LivestockBudget:
             abatement=self.abatement
         )
 
-        total_area = beef_area['hnv_area'] + dairy_beef_area['hnv_area']
+        total_beef_area = (beef_area['hnv_area'] * self._get_scaled_beef_population())
+        total_dairy_area = (dairy_beef_area['hnv_area'] * self._get_scaled_dairy_population())
 
-        return total_area * self._get_scaled_beef_population()
+        return total_beef_area + total_dairy_area
