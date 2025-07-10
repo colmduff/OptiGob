@@ -15,7 +15,7 @@ beccs_willow_area_multiplier: 1.5
 wetland_restored_frac: 0.9
 organic_soil_under_grass_frac: 0.5
 biomethane_included: true
-protein_crop_included: true
+protein_crop_included: false
 protein_crop_multiplier: 0
 pig_and_poultry_multiplier: 1.2
 baseline_year: 2020

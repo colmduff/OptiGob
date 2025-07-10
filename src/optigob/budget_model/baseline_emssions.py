@@ -94,6 +94,7 @@ class BaselineEmission:
             float: Total CH4 emissions in kilotons (kt).
         """
         static_ag_emission = self.static_ag_baseline.get_total_static_ag_ch4()
+
         livestock_emission = self.livestock_baseline.get_total_ch4_emission()
 
         return static_ag_emission + livestock_emission
