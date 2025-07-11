@@ -147,12 +147,12 @@ class EmissionsBudget:
         self.substitution_methods = {
             "CO2e": {
             "ad_substitution": self.substitution_budget.get_ad_substitution_co2e_emission,
-            "forest_substitution": self.substitution_budget.get_forest_subsitution_offset_co2e,
+            "forest_substitution": self.substitution_budget.get_forest_substitution_offset_co2e,
             "willow_substitution": self.substitution_budget.get_willow_substitution_offset_co2e
             },
             "CO2": {
             "ad_substitution": self.substitution_budget.get_ad_substitution_co2_emission,
-            "forest_substitution": self.substitution_budget.get_forest_subsitution_offset_co2e,
+            "forest_substitution": self.substitution_budget.get_forest_substitution_offset_co2e,
             "willow_substitution": self.substitution_budget.get_willow_substitution_offset_co2e
             },
             "CH4": {

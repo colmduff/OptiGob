@@ -54,8 +54,8 @@ def main():
     print("#" * 50)
     print("Substitution")
 
-    print(optigob.get_substiution_emission_by_sector_co2e())
-    print(optigob.get_substiution_emission_by_sector_co2e_df())
+    print(optigob.get_substitution_emission_by_sector_co2e())
+    print(optigob.get_substitution_emission_by_sector_co2e_df())
     
     print("#" * 50)
     print("NZ Status")

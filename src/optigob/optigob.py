@@ -41,19 +41,19 @@ Methods:
     get_bioenergy_by_sector_df(self): Return bioenergy area as a tidy DataFrame.
     get_hwp_volume(self): Retrieve harvested wood product volume for both baseline and scenario.
     get_hwp_volume_df(self): Return harvested wood product volume as a tidy DataFrame.
-    get_substiution_emission_by_sector_co2e(self): Retrieve substitution emissions by sector for CO2e.
-    get_substiution_emission_by_sector_co2e_df(self): Return substitution emissions for CO2e as a tidy DataFrame.
-    get_substiution_emission_by_sector_co2(self): Retrieve substitution emissions by sector for CO2.
-    get_substiution_emission_by_sector_co2_df(self): Return substitution emissions for CO2 as a tidy DataFrame.
-    get_substiution_emission_by_sector_ch4(self): Retrieve substitution emissions by sector for CH4.
-    get_substiution_emission_by_sector_ch4_df(self): Return substitution emissions for CH4 as a tidy DataFrame.
-    get_substiution_emission_by_sector_n2o(self): Retrieve substitution emissions by sector for N2O.
-    get_substiution_emission_by_sector_n2o_df(self): Return substitution emissions for N2O as a tidy DataFrame.
+    get_substitution_emission_by_sector_co2e(self): Retrieve substitution emissions by sector for CO2e.
+    get_substitution_emission_by_sector_co2e_df(self): Return substitution emissions for CO2e as a tidy DataFrame.
+    get_substitution_emission_by_sector_co2(self): Retrieve substitution emissions by sector for CO2.
+    get_substitution_emission_by_sector_co2_df(self): Return substitution emissions for CO2 as a tidy DataFrame.
+    get_substitution_emission_by_sector_ch4(self): Retrieve substitution emissions by sector for CH4.
+    get_substitution_emission_by_sector_ch4_df(self): Return substitution emissions for CH4 as a tidy DataFrame.
+    get_substitution_emission_by_sector_n2o(self): Retrieve substitution emissions by sector for N2O.
+    get_substitution_emission_by_sector_n2o_df(self): Return substitution emissions for N2O as a tidy DataFrame.
     get_livestock_population(self): Retrieve livestock population for both baseline and scenario.
     get_livestock_population_df(self): Return livestock population as a tidy DataFrame.
 """
 
-from optigob.budget_model.baseline_emssions import BaselineEmission
+from optigob.budget_model.baseline_emissions import BaselineEmission
 from optigob.budget_model.emissions_budget import EmissionsBudget
 from optigob.budget_model.landarea_budget import LandAreaBudget
 from optigob.budget_model.econ_output import EconOutput
@@ -461,7 +461,7 @@ class Optigob:
         """
         return pd.DataFrame.from_dict(self.get_hwp_volume(), orient='columns')
 
-    def get_substiution_emission_by_sector_co2e(self):
+    def get_substitution_emission_by_sector_co2e(self):
         """
         Retrieve substitution emissions by sector for CO2e.
 
@@ -470,7 +470,7 @@ class Optigob:
         """
         return self.emission_budget.get_substitution_emission_co2e()
 
-    def get_substiution_emission_by_sector_co2e_df(self):
+    def get_substitution_emission_by_sector_co2e_df(self):
         """
         Return substitution emissions for CO2e as a tidy DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
 
@@ -478,13 +478,13 @@ class Optigob:
             pd.DataFrame: DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
         """
         data = {
-            "scenario": self.get_substiution_emission_by_sector_co2e()
+            "scenario": self.get_substitution_emission_by_sector_co2e()
         }
 
         return pd.DataFrame.from_dict(data, orient='columns')
 
 
-    def get_substiution_emission_by_sector_co2(self):
+    def get_substitution_emission_by_sector_co2(self):
         """
         Retrieve substitution emissions by sector for CO2.
 
@@ -493,7 +493,7 @@ class Optigob:
         """
         return self.emission_budget.get_substitution_emission_co2()
 
-    def get_substiution_emission_by_sector_co2_df(self):
+    def get_substitution_emission_by_sector_co2_df(self):
         """
         Return substitution emissions for CO2 as a tidy DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
 
@@ -501,11 +501,11 @@ class Optigob:
             pd.DataFrame: DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
         """
         data = {
-            "scenario":self.get_substiution_emission_by_sector_co2()
+            "scenario":self.get_substitution_emission_by_sector_co2()
         }
         return pd.DataFrame.from_dict(data, orient='columns')
 
-    def get_substiution_emission_by_sector_ch4(self):
+    def get_substitution_emission_by_sector_ch4(self):
         """
         Retrieve substitution emissions by sector for CH4.
 
@@ -514,7 +514,7 @@ class Optigob:
         """
         return self.emission_budget.get_substitution_emission_ch4()
 
-    def get_substiution_emission_by_sector_ch4_df(self):
+    def get_substitution_emission_by_sector_ch4_df(self):
         """
         Return substitution emissions for CH4 as a tidy DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
 
@@ -522,12 +522,12 @@ class Optigob:
             pd.DataFrame: DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
         """
         data = {
-            "scenario":self.get_substiution_emission_by_sector_ch4()
+            "scenario":self.get_substitution_emission_by_sector_ch4()
         }
         return pd.DataFrame.from_dict(data, orient='columns')
 
 
-    def get_substiution_emission_by_sector_n2o(self):
+    def get_substitution_emission_by_sector_n2o(self):
         """
         Retrieve substitution emissions by sector for N2O.
 
@@ -536,7 +536,7 @@ class Optigob:
         """
         return self.emission_budget.get_substitution_emission_n2o()
 
-    def get_substiution_emission_by_sector_n2o_df(self):
+    def get_substitution_emission_by_sector_n2o_df(self):
         """
         Return substitution emissions for N2O as a tidy DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
 
@@ -544,7 +544,7 @@ class Optigob:
             pd.DataFrame: DataFrame with sectors as rows and 'baseline' and 'scenario' as columns.
         """
         data = {
-            "scenario":self.get_substiution_emission_by_sector_n2o()
+            "scenario":self.get_substitution_emission_by_sector_n2o()
         }
         return pd.DataFrame.from_dict(data, orient='columns')
 
