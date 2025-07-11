@@ -1,5 +1,5 @@
 import unittest
-from optigob.budget_model.baseline_emssions import BaselineEmission
+from optigob.budget_model.baseline_emissions import BaselineEmission
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
 
 class TestBudget(unittest.TestCase):

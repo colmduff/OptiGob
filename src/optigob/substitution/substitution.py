@@ -14,7 +14,7 @@ Methods in Substitution:
     get_ad_substitution_ch4_emission(self): Returns the AD-Substitution CH4 emissions in kilotons.
     get_ad_substitution_n2o_emission(self): Returns the AD-Substitution N2O emissions in kilotons.
     get_ad_substitution_co2e_emission(self): Returns the AD-Substitution CO2e emissions in kilotons.
-    get_forest_subsitution_offset_co2e(self): Calculates the emission offset from forest substitution effects (in kt).
+    get_forest_substitution_offset_co2e(self): Calculates the emission offset from forest substitution effects (in kt).
     get_willow_substitution_offset_co2e(self): Calculates the willow substitution emission offset in kilotons.
 """
 
@@ -102,7 +102,7 @@ class Substitution:
         return filtered["emission_value"].item()
     
     
-    def get_forest_subsitution_offset_co2e(self):
+    def get_forest_substitution_offset_co2e(self):
         """
         Calculates the emission offset from substitution effects.
         """

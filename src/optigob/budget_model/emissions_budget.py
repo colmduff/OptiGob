@@ -23,7 +23,7 @@ Methods:
         Calculates the total CO2e emissions budget (kt) for net zero.
     _get_total_emission_co2e(self):
         Calculates the current total CO2e emissions (kt).
-    _split_gas_emissions_total_budget(self):
+    _split_gas_emissions_total_budget_co2e(self):
         Calculates the total split gas emissions budget (kt).
     _get_total_emission_ch4(self):
         Calculates the current total CH4 emissions (kt).
@@ -147,12 +147,12 @@ class EmissionsBudget:
         self.substitution_methods = {
             "CO2e": {
             "ad_substitution": self.substitution_budget.get_ad_substitution_co2e_emission,
-            "forest_substitution": self.substitution_budget.get_forest_subsitution_offset_co2e,
+            "forest_substitution": self.substitution_budget.get_forest_substitution_offset_co2e,
             "willow_substitution": self.substitution_budget.get_willow_substitution_offset_co2e
             },
             "CO2": {
             "ad_substitution": self.substitution_budget.get_ad_substitution_co2_emission,
-            "forest_substitution": self.substitution_budget.get_forest_subsitution_offset_co2e,
+            "forest_substitution": self.substitution_budget.get_forest_substitution_offset_co2e,
             "willow_substitution": self.substitution_budget.get_willow_substitution_offset_co2e
             },
             "CH4": {
@@ -261,6 +261,21 @@ class EmissionsBudget:
         ad_ag_emission = self.bio_energy_budget.get_ad_ag_n2o_emission()
         protein_crop_emission = self.protein_crops_budget.get_crop_emission_n2o()
         beccs_emission = self._get_total_beccs_n2o()
+
+        total_emission = (static_ag_emission + other_land_emission +
+                          beccs_emission + protein_crop_emission + ad_ag_emission)
+        
+        return total_emission
+
+    def _get_total_emission_ch4(self):
+        """
+        Calculates total CH4 emissions (kt).
+        """
+        static_ag_emission = self.static_ag_budget.get_total_static_ag_ch4()
+        other_land_emission = self.other_land_budget.get_wetland_restoration_emission_ch4()
+        beccs_emission = self._get_total_beccs_ch4()
+        protein_crop_emission = self.protein_crops_budget.get_crop_emission_ch4()
+        ad_ag_emission = self.bio_energy_budget.get_ad_ag_ch4_emission()
 
         total_emission = (static_ag_emission + other_land_emission +
                           beccs_emission + protein_crop_emission + ad_ag_emission)

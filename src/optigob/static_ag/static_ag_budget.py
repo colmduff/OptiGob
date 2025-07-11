@@ -288,7 +288,7 @@ class StaticAgBudget:
         crop_area = self.data_manager_class.get_crop_scaler(
             year=self.target_year, gas="CO2e", abatement=self.abatement_type
         )
-        return crop_area["area"].item()
+        return float(crop_area["area"].item())
 
     def get_total_static_ag_area(self):
         """

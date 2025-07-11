@@ -42,9 +42,9 @@ class TestSubstitution(unittest.TestCase):
         except Exception as e:
             self.fail(f"Exception raised: {e}")
 
-    def test_get_forest_subsitution_offset_co2e(self):
+    def test_get_forest_substitution_offset_co2e(self):
         try:
-            result = self.substitution.get_forest_subsitution_offset_co2e()
+            result = self.substitution.get_forest_substitution_offset_co2e()
             self.assertIsNotNone(result)
         except Exception as e:
             self.fail(f"Exception raised: {e}")

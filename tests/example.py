@@ -1,8 +1,17 @@
 from optigob.optigob import Optigob
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
-
+from optigob.input_helper import InputHelper
 
 def main():
+
+    print("#" * 50)
+    print("OptiGob Budget Model Input Combinations")
+
+    # Initialize the input helper
+    helper = InputHelper()
+
+    helper.print_readable_combos(12)
+
     data = './data/sip.yaml'
     # Initialize the data manager
     data_manager = OptiGobDataManager(data)
@@ -10,6 +19,9 @@ def main():
     # Create an instance of Optigob
     optigob = Optigob(data_manager)
 
+    print("#" * 50)
+    print("OptiGob Budget Model Input Combinations")
+    
     # Get baseline and target populations
     print("#" * 50)
     print("GHG Emissions by Sector")
@@ -54,8 +66,8 @@ def main():
     print("#" * 50)
     print("Substitution")
 
-    print(optigob.get_substiution_emission_by_sector_co2e())
-    print(optigob.get_substiution_emission_by_sector_co2e_df())
+    print(optigob.get_substitution_emission_by_sector_co2e())
+    print(optigob.get_substitution_emission_by_sector_co2e_df())
     
     print("#" * 50)
     print("NZ Status")

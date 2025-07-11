@@ -28,13 +28,16 @@ optigob/
 | [`optigob.py`](optigob.py)                                                             | Main interface: orchestrates optimization and outputs           |
 | [`resource_manager/optigob_data_manager.py`](resource_manager/optigob_data_manager.py) | Loads and validates input data                                  |
 | [`budget_model/emissions_budget.py`](budget_model/emissions_budget.py)                 | Calculates emissions under different scenarios                  |
+| [`budget_model/baseline_emissions.py`](budget_model/baseline_emissions.py)             | Provides baseline emissions by sector for all gases             |
 | [`budget_model/landarea_budget.py`](budget_model/landarea_budget.py)                   | Calculates total, disaggregated, and HNV land areas             |
 | [`budget_model/econ_output.py`](budget_model/econ_output.py)                           | Computes protein, HWP, and livestock population                 |
 | [`livestock/livestock_budget.py`](livestock/livestock_budget.py)                       | Livestock-specific calculations (emissions, land, protein)      |
 | [`forest/forest_budget.py`](forest/forest_budget.py)                                   | Forest land use and harvested wood outputs                      |
 | [`protein_crops/protein_crops_budget.py`](protein_crops/protein_crops_budget.py)       | Protein crop area/yield                                         |
 | [`bioenergy/bioenergy_budget.py`](bioenergy/bioenergy_budget.py)                       | Bioenergy land use and outputs                                  |
-| [`budget_model/substitution.py`](budget_model/substitution.py)                         | Calculates substitution impacts (e.g. fossil fuel replacements) |
+| [`other_land/other_land_budget.py`](other_land/other_land_budget.py)                   | Other land types and their contributions to area and emissions  |
+| [`static_ag/static_ag_budget.py`](static_ag/static_ag_budget.py)                       | Static agriculture sector calculations                           |
+| [`substitution/substitution.py`](substitution/substitution.py)                         | Calculates substitution impacts (e.g. fossil fuel replacements) |
 
 ## 🌟 What the Package Does
 

@@ -10,11 +10,11 @@ Classes:
 Methods:
     - __init__(self, optigob_data_manager, net_zero_budget=None, split_gas_budget=None): Initialize the LivestockBudget class and set up all required budgets, data managers, and scenario parameters.
     - _get_total_area_commitment(self): Calculate the total area commitment for all land uses that compete with livestock (rewetted, afforested, biomethane, willow, protein crops).
-    - _load_optomisation_outputs(self): Load and cache the livestock optimisation outputs if not already loaded.
+    - _load_optimisation_outputs(self): Load and cache the livestock optimisation outputs if not already loaded.
     - _get_total_non_livestock_emission_ch4(self): Calculate total CH4 emissions from all relevant land uses and sectors in the scenario.
     - get_ch4_budget(self): Calculate the CH4 budget for the scenario, based on baseline emissions and the split gas fraction.
     - get_split_gas_ch4_emission(self): Calculate the remaining CH4 budget after accounting for all scenario emissions, under the split gas approach.
-    - get_optomisation_outputs(self): Run the livestock population optimisation for the current scenario and constraints.
+    - get_optimisation_outputs(self): Run the livestock population optimisation for the current scenario and constraints.
     - get_dairy_population(self): Get the optimised dairy cow population for the scenario.
     - get_beef_population(self): Get the optimised beef cow population for the scenario.
     - _get_scaled_beef_population(self): Get the beef cow population, scaled by the emission scaler for the scenario.
@@ -40,7 +40,7 @@ Methods:
 """
 
 from optigob.livestock.livestock_optimisation import LivestockOptimisation
-from optigob.budget_model.baseline_emssions import BaselineEmission
+from optigob.budget_model.baseline_emissions import BaselineEmission
 from optigob.other_land.other_land_budget import OtherLandBudget
 from optigob.forest.forest_budget import ForestBudget
 from optigob.bioenergy.bioenergy_budget import BioEnergyBudget
@@ -81,7 +81,7 @@ class LivestockBudget:
         split_gas_frac (float): Fraction for split gas approach.
         ch4_baseline (float): Baseline CH4 emissions (kt).
         ch4_budget (float): CH4 budget for split gas approach (kt).
-        _optomisation_outputs (dict or None): Cached optimisation outputs.
+        _optimisation_outputs (dict or None): Cached optimisation outputs.
     """
     def __init__(self, optigob_data_manager,
                  net_zero_budget=None,
@@ -130,7 +130,7 @@ class LivestockBudget:
         if self.split_gas_approach:
             self.ch4_budget = self.get_split_gas_ch4_emission()
 
-        self._optomisation_outputs = None
+        self._optimisation_outputs = None
 
        
 
@@ -147,7 +147,7 @@ class LivestockBudget:
                 self.protein_crop_area+
                 self.willow_area))
 
-    def _load_optomisation_outputs(self):
+    def _load_optimisation_outputs(self):
         """
         Load and cache the livestock optimisation outputs if not already loaded.
 
@@ -155,10 +155,10 @@ class LivestockBudget:
             dict: Dictionary of optimisation results for livestock populations and constraints.
         """
         # Load optimization outputs if not already loaded.
-        if self._optomisation_outputs is None:
-            self._optomisation_outputs = self.get_optomisation_outputs()
+        if self._optimisation_outputs is None:
+            self._optimisation_outputs = self.get_optimisation_outputs()
 
-        return self._optomisation_outputs
+        return self._optimisation_outputs
     
 
     def _get_total_non_livestock_emission_ch4(self):
@@ -202,7 +202,7 @@ class LivestockBudget:
         return budget
 
 
-    def get_optomisation_outputs(self):
+    def get_optimisation_outputs(self):
         """
         Run the livestock population optimisation for the current scenario and constraints.
 
@@ -242,7 +242,7 @@ class LivestockBudget:
         Returns:
             float: Number of dairy cows.
         """
-        return self._load_optomisation_outputs()["Dairy_animals"]
+        return self._load_optimisation_outputs()["Dairy_animals"]
 
 
     def get_beef_population(self):
@@ -252,7 +252,7 @@ class LivestockBudget:
         Returns:
             float: Number of beef cows.
         """
-        return self._load_optomisation_outputs()["Beef_animals"]
+        return self._load_optimisation_outputs()["Beef_animals"]
     
     def _get_scaled_beef_population(self):
         """

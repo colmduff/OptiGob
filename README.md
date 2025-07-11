@@ -18,7 +18,7 @@ The `optigob` package is a modular land use and environmental assessment framewo
 ```
 optigob/
 ├── budget_model/
-│   ├── baseline_emssions.py
+│   ├── baseline_emissions.py
 │   ├── emissions_budget.py
 │   ├── landarea_budget.py
 │   ├── econ_output.py
@@ -48,7 +48,7 @@ optigob/
 - **optigob/optigob.py**: Central interface (`Optigob` class) for retrieving all model outputs. Orchestrates calls to all other modules and provides unified access to results as dictionaries or tidy DataFrames.
 - **resource_manager/optigob_data_manager.py**: Loads, validates, and provides access to all input data and configuration. Supplies data to all budget and output modules.
 - **budget_model/emissions_budget.py**: Calculates scenario emissions (CO2e, CO2, CH4, N2O) by sector, including substitution impacts. Handles net zero logic and split gas configuration.
-- **budget_model/baseline_emssions.py**: Provides baseline emissions by sector for all gases.
+- **budget_model/baseline_emissions.py**: Provides baseline emissions by sector for all gases.
 - **budget_model/landarea_budget.py**: Calculates land area (aggregated, disaggregated, HNV) by sector for baseline and scenario.
 - **budget_model/econ_output.py**: Calculates protein, bioenergy, harvested wood products, and livestock population by sector.
 - **budget_model/substitution.py**: Centralizes logic for substitution impacts (e.g., wood for fossil, protein crop substitution).
@@ -67,16 +67,17 @@ optigob/
    |-- [resource_manager/optigob_data_manager.py] <--- loads all input data
    |
    |-- [budget_model/emissions_budget.py] <--- uses data_manager, calls substitution.py
-   |-- [budget_model/baseline_emssions.py]
+   |-- [budget_model/baseline_emissions.py]
    |-- [budget_model/landarea_budget.py]
    |-- [budget_model/econ_output.py]
-   |-- [budget_model/substitution.py]
+   |-- [substitution/substitution.py]
    |
    |-- [protein_crops/protein_crops_budget.py]
    |-- [livestock/livestock_budget.py]
    |-- [forest/forest_budget.py]
    |-- [bioenergy/bioenergy_budget.py]
    |-- [other_land/other_land_budget.py]
+   |-- [static_ag/static_ag_budget.py]
    |
    |-- [database/] (data loaders)
 ```
@@ -113,8 +114,18 @@ Here is a short example of how to use the `Optigob` class:
 ```python
 from optigob.optigob import Optigob
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
+from optigob.input_helper import InputHelper
 
 def main():
+
+    print("#" * 50)
+    print("OptiGob Budget Model Input Combinations")
+
+    # Initialize the input helper
+    helper = InputHelper()
+
+    helper.print_readable_combos(12)
+
     data = './data/sip.yaml'
     # Initialize the data manager
     data_manager = OptiGobDataManager(data)
@@ -122,6 +133,9 @@ def main():
     # Create an instance of Optigob
     optigob = Optigob(data_manager)
 
+    print("#" * 50)
+    print("OptiGob Budget Model Input Combinations")
+    
     # Get baseline and target populations
     print("#" * 50)
     print("GHG Emissions by Sector")
@@ -166,8 +180,8 @@ def main():
     print("#" * 50)
     print("Substitution")
 
-    print(optigob.get_substiution_emission_by_sector_co2e())
-    print(optigob.get_substiution_emission_by_sector_co2e_df())
+    print(optigob.get_substitution_emission_by_sector_co2e())
+    print(optigob.get_substitution_emission_by_sector_co2e_df())
     
     print("#" * 50)
     print("NZ Status")
@@ -181,6 +195,23 @@ def main():
 
     print(optigob.get_livestock_population())
     print(optigob.get_livestock_population_df())
+
+    print("#" * 50)
+    print("Livestock CH4 Emissions budget")
+    print(optigob.get_livestock_split_gas_ch4_emission_budget())
+
+    print("#" * 50)
+    print("Livestock CO2e Emissions budget")
+    print(optigob.get_livestock_co2e_emission_budget())
+
+    print("#" * 50)
+    print("AREA comparison")
+
+    df = optigob.get_disaggregated_total_land_area_by_sector_df()
+    print(df)
+    print("\nSum of each column:")
+    print(df.sum())
+
 
 if __name__ == '__main__':
     main()

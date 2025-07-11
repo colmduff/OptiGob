@@ -15,9 +15,9 @@ Methods:
     get_kha_to_ha: Retrieves the conversion factor from square kilohectares to hectares.
     get_AR_gwp100_values: Retrieves the GWP values for each gas based on the AR value.
     get_emission_sectors: Retrieves the emission sectors.
-    get_livestock_emission_scaler: Retrieves the scaler value for a given year, system, gas, and scenario.
-    get_livestock_area_scaler: Retrieves the scaler value for a given year, system, and scenario.
-    get_livestock_protein_scaler: Retrieves the scaler value for a given year, system, and scenario.
+    get_livestock_emission_scaler: Retrieves the scaler value for a given year, system, gas, scenario, and abatement.
+    get_livestock_area_scaler: Retrieves the scaler value for a given year, system, scenario, and abatement.
+    get_livestock_protein_scaler: Retrieves the scaler value for a given year, system, item, scenario, and abatement.
     get_static_livestock_emission_scaler: Retrieves the static scaler value for a given year, system, gas, and abatement.
     get_static_livestock_area_scaler: Retrieves the static scaler value for a given year, system, and abatement.
     get_static_livestock_protein_scaler: Retrieves the static scaler value for a given year, system, and abatement.

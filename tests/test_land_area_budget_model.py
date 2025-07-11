@@ -49,8 +49,8 @@ class TestBudget(unittest.TestCase):
         print("Total Baseline Land Area by Disaggregated Sector:", result)
         self.assertIsInstance(result, dict)
 
-    def test_get_total_basline_hnv_land_area_disaggregated_by_sector(self):
-        result = self.budget.get_total_basline_hnv_land_area_disaggregated_by_sector()
+    def test_get_total_baseline_hnv_land_area_disaggregated_by_sector(self):
+        result = self.budget.get_total_baseline_hnv_land_area_disaggregated_by_sector()
         print("Total Baseline HNV Land Area by Disaggregated Sector:", result)
         self.assertIsInstance(result, dict)
 

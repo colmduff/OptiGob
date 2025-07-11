@@ -11,7 +11,7 @@ class TestBudget(unittest.TestCase):
 
     def test_emission_values(self):
         total_emission_co2e = self.budget._get_total_emission_co2e()
-        split_gas_emissions_total = self.budget._split_gas_emissions_total()
+        split_gas_emissions_total = self.budget._split_gas_emissions_total_budget_co2e()
         total_emission_ch4 = self.budget._get_total_emission_ch4()
         total_emission_n2o = self.budget._get_total_emission_n2o()
         total_emission_co2 = self.budget._get_total_emission_co2()

@@ -10,13 +10,14 @@ class TestLivestockOptimisation(unittest.TestCase):
 
     def test_optimise_livestock_pop(self):
         emissions_budget = 3000
+        area_commitment = 1000000  # Add missing area_commitment parameter
         dairy_beef_ratio = 2
         year = 2050
         scenario = 1
         abatement = "baseline"
 
         result = self.optimiser.optimise_livestock_pop(
-            dairy_beef_ratio, year, scenario, abatement, emissions_budget
+            "dairy_per_beef", dairy_beef_ratio, year, scenario, abatement, emissions_budget, area_commitment
         )
 
         dairy_units = result["Dairy_animals"]
@@ -38,6 +39,7 @@ class TestLivestockOptimisation(unittest.TestCase):
 
     def test_optimise_with_ch4_budget(self):
         emissions_budget = 5000
+        area_commitment = 1000000  # Add missing area_commitment parameter
         ch4_budget = 350
         dairy_beef_ratio = 2
         year = 2050
@@ -45,7 +47,7 @@ class TestLivestockOptimisation(unittest.TestCase):
         abatement = "baseline"
 
         result = self.optimiser.optimise_livestock_pop(
-            dairy_beef_ratio, year, scenario, abatement, emissions_budget, ch4_budget
+            "dairy_per_beef", dairy_beef_ratio, year, scenario, abatement, emissions_budget, area_commitment, ch4_budget
         )
 
         dairy_units = result["Dairy_animals"]
@@ -73,13 +75,14 @@ class TestLivestockOptimisation(unittest.TestCase):
 
     def test_optimise_different_scenario(self):
         emissions_budget = 3000
+        area_commitment = 1000000  # Add missing area_commitment parameter
         dairy_beef_ratio = 3
         year = 2050
         scenario = 2
         abatement = "baseline"
 
         result = self.optimiser.optimise_livestock_pop(
-            dairy_beef_ratio, year, scenario, abatement, emissions_budget
+            "dairy_per_beef", dairy_beef_ratio, year, scenario, abatement, emissions_budget, area_commitment
         )
 
         dairy_units = result["Dairy_animals"]
