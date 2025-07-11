@@ -151,6 +151,6 @@ dmypy.json
 .env_activate.bash
 
 #research files and folders
-/joss_paper
+#/joss_paper
 sankey_diagram.html
 sankey.py
