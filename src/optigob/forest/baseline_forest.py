@@ -4,11 +4,13 @@ This module provides the BaselineForest class for managing forest data and calcu
 Classes:
     BaselineForest: Manages forest data and calculates forest offsets.
 
-Methods:
-    __init__(optigob_data_manager): Initializes the BaselineForest with a data manager.
-    get_managed_forest_offset(): Returns the managed forest emission offset in kt.
-    get_total_forest_offset(): Returns the total forest emission offset in kt.
-    get_managed_forest_area(): Returns the managed forest area in hectares.
+Methods in BaselineForest:
+    __init__(self, optigob_data_manager): Initializes the BaselineForest with a data manager.
+    get_managed_forest_offset(self): Returns the managed forest emission offset in kt.
+    get_total_forest_offset(self): Returns the total forest emission offset in kt.
+    get_managed_forest_area(self): Returns the managed forest area in hectares.
+    get_managed_forest_hnv_area(self): Returns the HNV managed forest area in hectares.
+    get_hwp_volume(self): Returns the harvested wood product volume in cubic meters.
 """
 
 class BaselineForest:
@@ -23,6 +25,7 @@ class BaselineForest:
 
         self.baseline_year = self.data_manager_class.get_baseline_year()
         self.harvest_rate = "low"
+
 
     def get_managed_forest_offset(self):
         """
@@ -59,4 +62,26 @@ class BaselineForest:
             target_year=self.baseline_year,
             harvest=self.harvest_rate
         )
-        return managed_forest_df["area_ha"].item()
+        return managed_forest_df["area"].item()
+    
+    def get_managed_forest_hnv_area(self):
+        """
+        Returns the managed forest high nature value area in hectares.
+
+        Returns:
+            float: The managed forest high nature value area in hectares.
+        """
+        managed_forest_df = self.data_manager_class.get_static_forest_scaler(
+            target_year=self.baseline_year,
+            harvest=self.harvest_rate
+        )
+        return managed_forest_df["hnv_area"].item()
+    
+    def get_hwp_volume(self):
+        """
+        Retrieves the volume of harvested wood products (in cubic meters).
+
+        NOTE: This method currently returns 0 as a placeholder.
+        """
+
+        return 0

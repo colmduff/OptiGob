@@ -104,6 +104,11 @@ class TestForestBudget(unittest.TestCase):
         print(f"TOTAL milk protein: {result}")
         self.assertIsNotNone(result)
 
+    def test_get_hnv_area(self):
+        hnv_area = self.livestock_budget.get_hnv_area()
+        print(f"HNV Area: {hnv_area}")
+        self.assertIsNotNone(hnv_area)
+
 
 if __name__ == '__main__':
     unittest.main()

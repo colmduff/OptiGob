@@ -92,5 +92,10 @@ class TestBaselineLivestock(unittest.TestCase):
         print(f"TOTAL milk protein: {result}")
         self.assertIsNotNone(result)
 
+    def test_get_hnv_area(self):
+        result = self.baseline.get_hnv_area()
+        print(f"hnv area: {result}")
+        self.assertIsNotNone(result)
+
 if __name__ == '__main__':
     unittest.main()

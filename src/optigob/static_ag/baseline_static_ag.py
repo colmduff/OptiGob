@@ -48,6 +48,10 @@ class BaselineStaticAg:
         self.baseline_year = self.data_manager_class.get_baseline_year()
         self.abatement_type = "baseline"
 
+        self.pig_and_poultry_protein = self.data_manager_class.get_protein_content_scaler('pig')
+        self.sheep_protein = self.data_manager_class.get_protein_content_scaler('sheep')
+        self.crop_protein = self.data_manager_class.get_protein_content_scaler('crops')
+
 
     def get_pig_and_poultry_co2_emission(self):
         """
@@ -271,7 +275,7 @@ class BaselineStaticAg:
             year=self.baseline_year, system='Sheep', abatement=self.abatement_type
         )
 
-        return sheep_area["value"].item()
+        return sheep_area["area"].item()
     
     def get_pig_and_poultry_area(self):
         """
@@ -284,7 +288,7 @@ class BaselineStaticAg:
             year=self.baseline_year, system='Pig_Poultry', abatement=self.abatement_type
         )
 
-        return pig_and_poultry_area["value"].item()
+        return pig_and_poultry_area["area"].item()
     
     def get_crop_area(self):
         """
@@ -297,7 +301,7 @@ class BaselineStaticAg:
             year=self.baseline_year,gas="CO2e", abatement=self.abatement_type
         )
 
-        return crop_area["area_ha"].item()
+        return crop_area["area"].item()
 
 
     def get_total_static_ag_area(self):
@@ -325,7 +329,7 @@ class BaselineStaticAg:
             year=self.baseline_year, system='Sheep', item='meat',abatement=self.abatement_type
         )
 
-        return sheep_protein["value"].item()
+        return sheep_protein["value"].item() * self.sheep_protein
     
 
     def get_pig_and_poultry_protein(self):
@@ -339,7 +343,18 @@ class BaselineStaticAg:
             year=self.baseline_year, system='Pig_Poultry',item='meat', abatement=self.abatement_type
         )
 
-        return pig_and_poultry_protein["value"].item()
+        return pig_and_poultry_protein["value"].item() * self.pig_and_poultry_protein
+    
+    def get_crop_protein(self):
+        """
+        Get the protein value for Crop systems.
+
+        Returns:
+            float: The protein value in kg.
+        """
+        crop_area = self.get_crop_area()
+
+        return crop_area * self.crop_protein
     
     def get_total_static_ag_protein(self):
         """
@@ -350,5 +365,7 @@ class BaselineStaticAg:
         """
         sheep_protein = self.get_sheep_protein()
         pig_and_poultry_protein = self.get_pig_and_poultry_protein()
+        crop_protein = self.get_crop_protein()
 
-        return sheep_protein + pig_and_poultry_protein
+        return sheep_protein + pig_and_poultry_protein + crop_protein
+    

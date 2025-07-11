@@ -29,7 +29,7 @@ class TestDataManager(unittest.TestCase):
         self.assertIsNotNone(static_forest_scalers)
 
     def test_get_ccs_scalers(self):
-        ccs_scalers = self.data_manager.get_ccs_scaler_table()
+        ccs_scalers = self.data_manager.get_wood_ccs_scaler_table()
         print(ccs_scalers)
         self.assertIsNotNone(ccs_scalers)
 
@@ -42,6 +42,12 @@ class TestDataManager(unittest.TestCase):
         substitution_scalers = self.data_manager.get_substitution_scaler_table()
         print(substitution_scalers)
         self.assertIsNotNone(substitution_scalers)
+
+    def test_get_protein_content_scalers(self):
+        protein_content_scalers = self.data_manager.get_protein_content_scaler_table()
+        print(protein_content_scalers)
+        self.assertIsNotNone(protein_content_scalers)
+
 
 class TestLivestockScalerDataManager(unittest.TestCase):
     def setUp(self):
@@ -80,7 +86,7 @@ class TestForestScalerDataManager(unittest.TestCase):
         self.assertIsNotNone(static_forest_scalers)
 
     def test_get_ccs_scalers(self):
-        ccs_scalers = self.data_manager.get_ccs_scaler(
+        ccs_scalers = self.data_manager.get_wood_ccs_scaler(
             target_year=2050,
             affor_rate=2,
             broadleaf_frac=0.5,
@@ -143,6 +149,8 @@ class TestForestScalerDataManager(unittest.TestCase):
         )
         print(crop_emission_scalers)
         self.assertIsNotNone(crop_emission_scalers)
+
+
 
 
 if __name__ == '__main__':

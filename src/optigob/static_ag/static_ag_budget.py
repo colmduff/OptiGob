@@ -50,6 +50,14 @@ class StaticAgBudget:
         self.target_year = self.data_manager_class.get_target_year()
         self.abatement_type = self.data_manager_class.get_abatement_type()
 
+        self.pig_and_poultry_protein = self.data_manager_class.get_protein_content_scaler('pig')
+        self.sheep_protein = self.data_manager_class.get_protein_content_scaler('sheep')
+        self.crop_protein = self.data_manager_class.get_protein_content_scaler('crops')
+
+        self._pig_poultry_multiplier = self.data_manager_class.get_pig_and_poultry_multiplier()
+
+
+
     def get_pig_and_poultry_co2_emission(self):
         """
         Returns CO2 emissions for pig and poultry.
@@ -256,7 +264,7 @@ class StaticAgBudget:
         sheep_area = self.data_manager_class.get_static_livestock_area_scaler(
             year=self.target_year, system='Sheep', abatement=self.abatement_type
         )
-        return sheep_area["value"].item()
+        return sheep_area["area"].item()
     
     def get_pig_and_poultry_area(self):
         """
@@ -268,7 +276,7 @@ class StaticAgBudget:
         pig_and_poultry_area = self.data_manager_class.get_static_livestock_area_scaler(
             year=self.target_year, system='Pig_Poultry', abatement=self.abatement_type
         )
-        return pig_and_poultry_area["value"].item()
+        return pig_and_poultry_area["area"].item()
     
     def get_crop_area(self):
         """
@@ -280,7 +288,7 @@ class StaticAgBudget:
         crop_area = self.data_manager_class.get_crop_scaler(
             year=self.target_year, gas="CO2e", abatement=self.abatement_type
         )
-        return crop_area["area_ha"].item()
+        return crop_area["area"].item()
 
     def get_total_static_ag_area(self):
         """
@@ -306,7 +314,7 @@ class StaticAgBudget:
             year=self.target_year, system='Sheep', item='meat',abatement=self.abatement_type
         )
 
-        return sheep_protein["value"].item()
+        return sheep_protein["value"].item() * self.sheep_protein
     
 
     def get_pig_and_poultry_protein(self):
@@ -320,8 +328,20 @@ class StaticAgBudget:
             year=self.target_year, system='Pig_Poultry', item='meat', abatement=self.abatement_type
         )
 
-        return pig_and_poultry_protein["value"].item()
+        return pig_and_poultry_protein["value"].item() * self.pig_and_poultry_protein * self._pig_poultry_multiplier
     
+    def get_crop_protein(self):
+        """
+        Get the protein value for crop systems.
+
+        Returns:
+            float: The protein value in kg.
+        """
+        crop_area = self.get_crop_area()
+
+        return crop_area * self.crop_protein
+
+
     def get_total_static_ag_protein(self):
         """
         Get the total protein value for all static agricultural systems.
@@ -331,5 +351,21 @@ class StaticAgBudget:
         """
         sheep_protein = self.get_sheep_protein()
         pig_and_poultry_protein = self.get_pig_and_poultry_protein()
+        crop_protein = self.get_crop_protein()
 
-        return sheep_protein + pig_and_poultry_protein
+
+        return sheep_protein + pig_and_poultry_protein + crop_protein
+    
+    def get_pig_and_poultry_population(self):
+        """
+        Returns the population of pig and poultry in number of animals.
+
+        Returns:
+            float: Population of pig and poultry.
+        """
+        pig_and_poultry_population = self.data_manager_class.get_static_livestock_population_scaler(
+            year=self.target_year, system='Pig_Poultry', abatement=self.abatement_type
+        )
+        return pig_and_poultry_population["population"].item()
+    
+    

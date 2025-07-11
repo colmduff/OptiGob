@@ -11,17 +11,81 @@ def main():
     optigob = Optigob(data_manager)
 
     # Get baseline and target populations
+    print("#" * 50)
+    print("GHG Emissions by Sector")
     print(optigob.get_total_emissions_co2e_by_sector())
 
     print(optigob.get_total_emissions_co2e_by_sector_df())
 
-    print(optigob.get_total_land_area_by_sector())
+    print("#" * 50)
+    print("Aggregated Total Land Area by Sector")
 
-    print(optigob.get_total_land_area_by_sector_df())
+    print(optigob.get_aggregated_total_land_area_by_sector())
+    print(optigob.get_aggregated_total_land_area_by_sector_df())
+
+    print("#" * 50)
+    print("Protein by Sector")
 
     print(optigob.get_total_protein_by_sector())
-
     print(optigob.get_total_protein_by_sector_df())
+
+    print("#" * 50)
+    print("Area by Sector")
+    
+    print(optigob.get_disaggregated_total_land_area_by_sector())
+    print(optigob.get_disaggregated_total_land_area_by_sector_df())
+
+    print("#" * 50)
+    print("High Nature Value (HNV) Land Area by Sector")
+
+    print(optigob.get_total_hnv_land_area_by_sector())
+    print(optigob.get_total_hnv_land_area_by_sector_df())
+
+    print("#" * 50)
+    print("Bioenergy by Sector")
+    print(optigob.get_bioenergy_by_sector())
+    print(optigob.get_bioenergy_by_sector_df())
+
+    print("#" * 50)
+    print("HWP")
+    print(optigob.get_hwp_volume())
+    print(optigob.get_hwp_volume_df())
+
+    print("#" * 50)
+    print("Substitution")
+
+    print(optigob.get_substiution_emission_by_sector_co2e())
+    print(optigob.get_substiution_emission_by_sector_co2e_df())
+    
+    print("#" * 50)
+    print("NZ Status")
+
+    print(optigob.check_net_zero_status())
+
+    print(f"total emissions co2e: {optigob.total_emission_co2e()} kt")
+
+    print("#" * 50)
+    print("Livestock Population")
+
+    print(optigob.get_livestock_population())
+    print(optigob.get_livestock_population_df())
+
+    print("#" * 50)
+    print("Livestock CH4 Emissions budget")
+    print(optigob.get_livestock_split_gas_ch4_emission_budget())
+
+    print("#" * 50)
+    print("Livestock CO2e Emissions budget")
+    print(optigob.get_livestock_co2e_emission_budget())
+
+    print("#" * 50)
+    print("AREA comparison")
+
+    df = optigob.get_disaggregated_total_land_area_by_sector_df()
+    print(df)
+    print("\nSum of each column:")
+    print(df.sum())
+
 
 if __name__ == '__main__':
     main()

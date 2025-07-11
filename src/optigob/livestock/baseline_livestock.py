@@ -45,6 +45,9 @@ class BaselineLivestock:
         self.scenario = 1
         self.abatement = "baseline"
 
+        self._milk_protein = self.data_manager_class.get_protein_content_scaler("milk")
+        self._beef_protein = self.data_manager_class.get_protein_content_scaler("beef")
+
     def get_dairy_cows_co2_emission(self):
         """
         Calculate the CO2 emissions for dairy cows.
@@ -219,19 +222,14 @@ class BaselineLivestock:
         Returns:
             float: The area usage for dairy cows.
         """
-        dairy_data = self.data_manager_class.get_livestock_area_scaler(
+        dairy_area = self.data_manager_class.get_livestock_area_scaler(
             year=self.baseline_year,
-            system=['Dairy','Dairy+Beef'],
+            system='Dairy',
             scenario=self.scenario,
             abatement=self.abatement
         )
 
-        dairy_area = dairy_data[dairy_data["system"] == "Dairy"]["value"].item()
-        dairy_beef_area = dairy_data[dairy_data["system"] == "Dairy+Beef"]["value"].item()
-
-        total_area = dairy_area + dairy_beef_area
-
-        return total_area * self.dairy_cows
+        return dairy_area['area'] * self.dairy_cows
     
     def get_beef_cows_area(self):
         """
@@ -247,8 +245,17 @@ class BaselineLivestock:
             abatement=self.abatement
         )
 
+                # Extracting the area for Dairy and Dairy+Beef systems
+        dairy_beef_area = self.data_manager_class.get_livestock_area_scaler(
+            year=self.baseline_year,
+            system='Dairy+Beef',
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
 
-        return beef_area['value'].item() * self.beef_cows
+        total_area = (beef_area['area'] * self.beef_cows) + (dairy_beef_area['area'] * self.dairy_cows)
+
+        return total_area
 
 
     def get_total_area(self):
@@ -284,7 +291,7 @@ class BaselineLivestock:
             abatement=self.abatement
         )
 
-        total_protein = beef_protein["value"].item() * self.beef_cows + dairy_beef_protein["value"].item() * self.dairy_cows
+        total_protein = ((beef_protein["value"].item() * self.beef_cows) + (dairy_beef_protein["value"].item()) * self.dairy_cows) * self._beef_protein
         
         return total_protein
     
@@ -304,6 +311,31 @@ class BaselineLivestock:
             abatement=self.abatement
         )
 
-        total_protein = dairy_protein["value"].item() * self.dairy_cows
+        total_protein = (dairy_protein["value"].item() * self.dairy_cows) * self._milk_protein
         
         return total_protein
+    
+    def get_hnv_area(self):
+        """
+        Calculate the area of high nature value (HNV) managed by beef cows.
+
+        Returns:
+            float: The HNV area in hectares.
+        """
+
+        beef_hnv_area = self.data_manager_class.get_livestock_area_scaler(
+            year=self.baseline_year,
+            system='Beef',
+            scenario=self.scenario,
+            abatement=self.abatement
+        )
+
+        dairy_beef_hnv_area = self.data_manager_class.get_livestock_area_scaler(
+            year=self.baseline_year,
+            system='Dairy+Beef',
+            scenario=self.scenario,
+            abatement=self.abatement
+        )   
+
+        return (beef_hnv_area["hnv_area"]* self.beef_cows) + (dairy_beef_hnv_area["hnv_area"] * self.dairy_cows)
+    
