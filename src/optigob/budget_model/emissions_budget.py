@@ -23,7 +23,7 @@ Methods:
         Calculates the total CO2e emissions budget (kt) for net zero.
     _get_total_emission_co2e(self):
         Calculates the current total CO2e emissions (kt).
-    _split_gas_emissions_total_budget(self):
+    _split_gas_emissions_total_budget_co2e(self):
         Calculates the total split gas emissions budget (kt).
     _get_total_emission_ch4(self):
         Calculates the current total CH4 emissions (kt).
@@ -233,17 +233,6 @@ class EmissionsBudget:
 
         total_emission = (static_ag_emission + livestock_emission + forest_emission + other_land_emission +
                           beccs_emission + protein_crop_emission + ad_ag_emission)
-
-        return total_emission
-
-    def _split_gas_emissions_total(self):
-        """
-        Calculates current total split gas emissions CO2e (kt).
-        """
-        forest_emission = self._get_total_forest_co2e()
-        total_emission_n2o = self._get_total_emission_n2o() * self.data_manager_class.get_AR_gwp100_values("N2O")
-        total_emission_co2 = self._get_total_emission_co2()
-        total_emission = forest_emission + total_emission_n2o + total_emission_co2
 
         return total_emission
 
