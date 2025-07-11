@@ -1,0 +1,450 @@
+optigob.budget_model.emissions_budget
+=====================================
+
+.. py:module:: optigob.budget_model.emissions_budget
+
+.. autoapi-nested-parse::
+
+   Emissions Budget Module
+   =======================
+
+   This module defines the EmissionsBudget class, which calculates and aggregates emissions budgets and categories
+   across all sectors using the optigob_data_manager. Emissions are returned in kilotons (kt).
+
+   Class:
+       EmissionsBudget: Calculates total and sectoral emissions (CO2e, CO2, CH4, N2O), net zero and split gas budgets, and substitution emissions.
+
+   .. method:: __init__(self, optigob_data_manager)
+
+      
+      Initializes the EmissionsBudget with the provided data manager and sets up all sectoral budget classes and emission methods.
+
+   .. method:: _get_total_beccs_co2e(self)
+
+      
+      Calculates total BECCS CO2e emissions (kt).
+
+   .. method:: _get_total_beccs_co2(self)
+
+      
+      Calculates total BECCS CO2 emissions (kt).
+
+   .. method:: _get_total_beccs_ch4(self)
+
+      
+      Calculates total BECCS CH4 emissions (kt).
+
+   .. method:: _get_total_beccs_n2o(self)
+
+      
+      Calculates total BECCS N2O emissions (kt).
+
+   .. method:: _get_total_emission_co2e_budget(self)
+
+      
+      Calculates the total CO2e emissions budget (kt) for net zero.
+
+   .. method:: _get_total_emission_co2e(self)
+
+      
+      Calculates the current total CO2e emissions (kt).
+
+   .. method:: _split_gas_emissions_total_budget_co2e(self)
+
+      
+      Calculates the total split gas emissions budget (kt).
+
+   .. method:: _get_total_emission_ch4(self)
+
+      
+      Calculates the current total CH4 emissions (kt).
+
+   .. method:: _get_total_emission_n2o(self)
+
+      
+      Calculates the current total N2O emissions (kt).
+
+   .. method:: _get_total_emission_co2(self)
+
+      
+      Calculates the current total CO2 emissions (kt).
+
+   .. method:: _check_net_zero_status(self)
+
+      
+      Checks if the net zero budget is met (returns True/False).
+
+   .. method:: check_status(self)
+
+      
+      Returns a dict with the status of net zero and split gas budgets.
+
+   .. method:: _check_split_gas_net_zero_status(self)
+
+      
+      Checks if the split gas budget is met (returns True/False).
+
+   .. method:: get_split_gas_budget(self)
+
+      
+      Returns the split gas budget (kt).
+
+   .. method:: get_net_zero_budget(self)
+
+      
+      Returns the net zero budget (kt).
+
+   .. method:: total_agriculture_co2e_emission(self)
+
+      
+      Calculates total agriculture CO2e emissions (kt).
+
+   .. method:: total_agriculture_co2_emission(self)
+
+      
+      Calculates total agriculture CO2 emissions (kt).
+
+   .. method:: get_total_agriculture_ch4_emission(self)
+
+      
+      Calculates total agriculture CH4 emissions (kt).
+
+   .. method:: get_total_agriculture_n2o_emission(self)
+
+      
+      Calculates total agriculture N2O emissions (kt).
+
+   .. method:: get_co2e_emission_categories(self)
+
+      
+      Returns CO2e emissions by sector/category (kt).
+
+   .. method:: get_co2_emission_categories(self)
+
+      
+      Returns CO2 emissions by sector/category (kt).
+
+   .. method:: get_ch4_emission_categories(self)
+
+      
+      Returns CH4 emissions by sector/category (kt).
+
+   .. method:: get_n2o_emission_categories(self)
+
+      
+      Returns N2O emissions by sector/category (kt).
+
+   .. method:: get_total_co2e_emission(self)
+
+      
+      Returns total CO2e emissions (kt) summed across all sectors.
+
+   .. method:: get_total_co2_emission(self)
+
+      
+      Returns total CO2 emissions (kt) summed across all sectors.
+
+   .. method:: get_total_ch4_emission(self)
+
+      
+      Returns total CH4 emissions (kt) summed across all sectors.
+
+   .. method:: get_total_n2o_emission(self)
+
+      
+      Returns total N2O emissions (kt) summed across all sectors.
+
+   .. method:: get_substitution_emission_co2e(self)
+
+      
+      Returns substitution emissions for CO2e by category (kt).
+
+   .. method:: get_substitution_emission_co2(self)
+
+      
+      Returns substitution emissions for CO2 by category (kt).
+
+   .. method:: get_substitution_emission_ch4(self)
+
+      
+      Returns substitution emissions for CH4 by category (kt).
+
+   .. method:: get_substitution_emission_n2o(self)
+
+      
+      Returns substitution emissions for N2O by category (kt).
+      
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.budget_model.emissions_budget.EmissionsBudget
+
+
+Module Contents
+---------------
+
+.. py:class:: EmissionsBudget(optigob_data_manager)
+
+   .. py:attribute:: data_manager_class
+
+
+   .. py:attribute:: biomethane_included
+
+
+   .. py:attribute:: beccs_included
+
+
+   .. py:attribute:: split_gas_frac
+
+
+   .. py:attribute:: emission_sectors
+
+
+   .. py:attribute:: forest_budget
+
+
+   .. py:attribute:: bio_energy_budget
+
+
+   .. py:attribute:: other_land_budget
+
+
+   .. py:attribute:: static_ag_budget
+
+
+   .. py:attribute:: protein_crops_budget
+
+
+   .. py:attribute:: substitution_budget
+
+
+   .. py:attribute:: net_zero_budget
+
+
+   .. py:attribute:: split_gas_budget
+
+
+   .. py:attribute:: livestock_budget
+
+
+   .. py:attribute:: emission_methods
+
+
+   .. py:attribute:: substitution_methods
+
+
+   .. py:method:: _get_total_beccs_co2e()
+
+      Calculates total BECCS CO2e emissions (kt).
+
+
+
+   .. py:method:: _get_total_beccs_co2()
+
+      Calculates total BECCS CO2 emissions (kt).
+
+
+
+   .. py:method:: _get_total_beccs_ch4()
+
+      Calculates total BECCS CH4 emissions (kt).
+
+
+
+   .. py:method:: _get_total_beccs_n2o()
+
+      Calculates total BECCS N2O emissions (kt).
+
+
+
+   .. py:method:: _get_total_emission_co2e_budget()
+
+      Calculates total CO2e emissions (kt).
+
+
+
+   .. py:method:: _get_total_emission_co2e()
+
+      Calculates total CO2e emissions (kt).
+
+
+
+   .. py:method:: _split_gas_emissions_total_budget_co2e()
+
+      Calculates total split gas emissions CO2e budget (kt).
+
+
+
+   .. py:method:: _get_total_emission_n2o()
+
+      Calculates total N2O emissions (kt).
+
+
+
+   .. py:method:: _get_total_emission_ch4()
+
+      Calculates total CH4 emissions (kt).
+
+
+
+   .. py:method:: _get_total_emission_co2()
+
+      Calculates total CO2 emissions (kt).
+
+
+
+   .. py:method:: _get_total_forest_co2e()
+
+      Calculates total forest and hwp CO2e emissions (kt).
+
+
+
+   .. py:method:: _check_split_gas_net_zero_status(tolerance=1)
+
+      Checks if the split gas budget is met.
+      :returns: True if split gas budget is met, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: check_net_zero_status()
+
+      Checks the status of the emissions budget.
+      :returns: A dictionary with keys 'net_zero' and 'split_gas' indicating the status.
+      :rtype: dict
+
+
+
+   .. py:method:: _check_net_zero_status(tolerance=1)
+
+      Checks if the net zero budget is met.
+      :returns: True if net zero budget is met, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: get_total_emission_co2e()
+
+      Returns the total CO2e emissions (kt).
+
+
+
+   .. py:method:: get_split_gas_budget()
+
+      Returns the split gas budget (kt).
+
+
+
+   .. py:method:: get_net_zero_budget()
+
+      Returns the net zero budget (kt).
+
+
+
+   .. py:method:: total_agriculture_co2e_emission()
+
+      Calculates total agriculture CO2e emissions (kt).
+
+
+
+   .. py:method:: total_agriculture_co2_emission()
+
+      Calculates total agriculture CO2 emissions (kt).
+
+
+
+   .. py:method:: get_total_agriculture_ch4_emission()
+
+      Calculates total agriculture CH4 emissions (kt).
+
+
+
+   .. py:method:: get_total_agriculture_n2o_emission()
+
+      Calculates total agriculture N2O emissions (kt).
+
+
+
+   .. py:method:: get_co2e_emission_categories()
+
+      Returns CO2e emissions by category (kt).
+
+
+
+   .. py:method:: get_co2_emission_categories()
+
+      Returns CO2 emissions by category (kt).
+
+
+
+   .. py:method:: get_ch4_emission_categories()
+
+      Returns CH4 emissions by category (kt).
+
+
+
+   .. py:method:: get_n2o_emission_categories()
+
+      Returns N2O emissions by category (kt).
+
+
+
+   .. py:method:: get_total_co2e_emission()
+
+      Returns total CO2e emissions (kt).
+
+
+
+   .. py:method:: get_total_co2_emission()
+
+      Returns total CO2 emissions (kt).
+
+
+
+   .. py:method:: get_total_ch4_emission()
+
+      Returns total CH4 emissions (kt).
+
+
+
+   .. py:method:: get_total_n2o_emission()
+
+      Returns total N2O emissions (kt).
+
+
+
+   .. py:method:: get_substitution_emission_co2e()
+
+      Returns substitution emissions for CO2e by category (kt).
+
+
+
+   .. py:method:: get_substitution_emission_co2()
+
+      Returns substitution emissions for CO2 by category (kt).
+
+
+
+   .. py:method:: get_substitution_emission_ch4()
+
+      Returns substitution emissions for CH4 by category (kt).
+
+
+
+   .. py:method:: get_substitution_emission_n2o()
+
+      Returns substitution emissions for N2O by category (kt).
+
+
+
+   .. py:method:: get_total_livestock_ch4_emission_budget()
+
+      Returns total livestock split gas CH4 emissions (kt) budget.
+
+
+

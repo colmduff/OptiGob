@@ -1,0 +1,163 @@
+optigob.budget_model.baseline_emissions
+=======================================
+
+.. py:module:: optigob.budget_model.baseline_emissions
+
+.. autoapi-nested-parse::
+
+   baseline_emissions
+   ==================
+
+   This module calculates baseline emissions for various sectors including agriculture, existing forests, and other land uses.
+   All emissions are returned in kilotons (kt).
+
+   Classes:
+       BaselineEmission: Manages and calculates baseline emissions for different sectors.
+
+   Methods in BaselineEmission:
+       __init__(self, optigob_data_manager): Initializes the BaselineEmission class with data manager.
+       total_agriculture_co2e_emission(self): Calculates total CO2e emissions for agriculture.
+       total_agriculture_co2_emission(self): Calculates total CO2 emissions for agriculture.
+       get_total_agriculture_ch4_emission(self): Calculates total CH4 emissions for agriculture.
+       get_total_agriculture_n2o_emission(self): Calculates total N2O emissions for agriculture.
+       get_co2e_emission_categories(self): Returns CO2e emissions for all categories.
+       get_co2_emission_categories(self): Returns CO2 emissions for all categories.
+       get_ch4_emission_categories(self): Returns CH4 emissions for all categories.
+       get_n2o_emission_categories(self): Returns N2O emissions for all categories.
+       get_total_ch4_emission(self): Calculates total CH4 emissions for all sectors.
+       get_total_n2o_emission(self): Calculates total N2O emissions for all sectors.
+       get_total_co2_emission(self): Calculates total CO2 emissions for all sectors.
+       get_total_co2e_emission(self): Calculates total CO2e emissions for all sectors.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.budget_model.baseline_emissions.BaselineEmission
+
+
+Module Contents
+---------------
+
+.. py:class:: BaselineEmission(optigob_data_manager)
+
+   .. py:attribute:: data_manager_class
+
+
+   .. py:attribute:: forest_baseline
+
+
+   .. py:attribute:: other_land_baseline
+
+
+   .. py:attribute:: static_ag_baseline
+
+
+   .. py:attribute:: livestock_baseline
+
+
+   .. py:attribute:: emission_sectors
+
+
+   .. py:attribute:: emission_methods
+
+
+   .. py:method:: total_agriculture_co2e_emission()
+
+      Calculates total CO2e emissions for agriculture.
+      :returns: Total CO2e emissions in kilotons (kt).
+      :rtype: float
+
+
+
+   .. py:method:: total_agriculture_co2_emission()
+
+      Calculates total CO2 emissions for agriculture.
+      :returns: Total CO2 emissions in kilotons (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_agriculture_ch4_emission()
+
+      Calculates total CH4 emissions for agriculture.
+      :returns: Total CH4 emissions in kilotons (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_agriculture_n2o_emission()
+
+      Calculates total N2O emissions for agriculture.
+      :returns: Total N2O emissions in kilotons (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_co2e_emission_categories()
+
+      Returns CO2e emissions for all categories.
+      :returns: CO2e emissions in kilotons (kt) for each category.
+      :rtype: dict
+
+
+
+   .. py:method:: get_co2_emission_categories()
+
+      Returns CO2 emissions for all categories.
+      :returns: CO2 emissions in kilotons (kt) for each category.
+      :rtype: dict
+
+
+
+   .. py:method:: get_ch4_emission_categories()
+
+      Returns CH4 emissions for all categories.
+      :returns: CH4 emissions in kilotons (kt) for each category.
+      :rtype: dict
+
+
+
+   .. py:method:: get_n2o_emission_categories()
+
+      Returns N2O emissions for all categories.
+      :returns: N2O emissions in kilotons (kt) for each category.
+      :rtype: dict
+
+
+
+   .. py:method:: get_total_ch4_emission()
+
+      Calculates total CH4 emissions for all sectors.
+      :returns: Total CH4 emissions in kilotons (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_n2o_emission()
+
+      Calculates total N2O emissions for all sectors.
+      :returns: Total N2O emissions in kilotons (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_co2_emission()
+
+      Calculates total CO2 emissions for all sectors.
+      :returns: Total CO2 emissions in kilotons (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_co2e_emission()
+
+      Calculates total CO2e emissions for all sectors.
+      :returns: Total CO2e emissions in kilotons (kt).
+      :rtype: float
+
+
+

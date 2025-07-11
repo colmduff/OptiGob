@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.bioenergy.bioenergy_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optigob.bioenergy.bioenergy_budget</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optigob.bioenergy.bioenergy_budget</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">biomethane_budget</span>
+<span class="sd">=================</span>
+
+<span class="sd">This module contains the BioEnergyBudget class, which is used to calculate various biomethane-related metrics</span>
+<span class="sd">such as area, emissions, and energy output for different types of anaerobic digestion (AD) processes, willow bioenergy, and BECCS.</span>
+
+<span class="sd">Class:</span>
+<span class="sd">    BioEnergyBudget: Calculates area, emissions, and energy output for AD, willow, and BECCS.</span>
+
+<span class="sd">Methods in BioEnergyBudget:</span>
+<span class="sd">    __init__(self, optigob_data_manager): Initializes the BioEnergyBudget with the given data manager.</span>
+<span class="sd">    get_ad_ag_area(self): Returns the AD-Ag area in hectares.</span>
+<span class="sd">    get_ad_substitution_area(self): Returns the AD-Substitution area in hectares.</span>
+<span class="sd">    get_ad_ccs_area(self): Returns the AD-CCS area in hectares.</span>
+<span class="sd">    get_total_biomethane_area(self): Returns the total biomethane area in hectares.</span>
+<span class="sd">    get_ad_ag_co2_emission(self): Returns the AD-Ag CO2 emissions in kilotons.</span>
+<span class="sd">    get_ad_substitution_co2_emission(self): Returns the AD-Substitution CO2 emissions in kilotons.</span>
+<span class="sd">    get_ad_ccs_co2_emission(self): Returns the AD-CCS CO2 emissions in kilotons.</span>
+<span class="sd">    get_ad_ag_ch4_emission(self): Returns the AD-Ag CH4 emissions in kilotons.</span>
+<span class="sd">    get_ad_substitution_ch4_emission(self): Returns the AD-Substitution CH4 emissions in kilotons.</span>
+<span class="sd">    get_ad_ccs_ch4_emission(self): Returns the AD-CCS CH4 emissions in kilotons.</span>
+<span class="sd">    get_ad_ag_n2o_emission(self): Returns the AD-Ag N2O emissions in kilotons.</span>
+<span class="sd">    get_ad_substitution_n2o_emission(self): Returns the AD-Substitution N2O emissions in kilotons.</span>
+<span class="sd">    get_ad_ccs_n2o_emission(self): Returns the AD-CCS N2O emissions in kilotons.</span>
+<span class="sd">    get_ad_ag_co2e_emission(self): Returns the AD-Ag CO2e emissions in kilotons.</span>
+<span class="sd">    get_ad_substitution_co2e_emission(self): Returns the AD-Substitution CO2e emissions in kilotons.</span>
+<span class="sd">    get_ad_ccs_co2e_emission(self): Returns the AD-CCS CO2e emissions in kilotons.</span>
+<span class="sd">    get_biomethane_co2e_total(self): Returns the total CO2e emissions from biomethane in kilotons.</span>
+<span class="sd">    get_biomethane_co2_total(self): Returns the total CO2 emissions from biomethane in kilotons.</span>
+<span class="sd">    get_biomethane_ch4_total(self): Returns the total CH4 emissions from biomethane in kilotons.</span>
+<span class="sd">    get_biomethane_n2o_total(self): Returns the total N2O emissions from biomethane in kilotons.</span>
+<span class="sd">    get_total_willow_area(self): Returns the total willow area in hectares.</span>
+<span class="sd">    get_willow_bioenergy_hnv_area(self): Returns the willow bioenergy HNV area in hectares.</span>
+<span class="sd">    get_ad_bioenergy_output(self): Returns the AD energy output in MWh.</span>
+<span class="sd">    get_willow_bioenergy_output(self): Returns the Willow bioenergy output in MWh.</span>
+<span class="sd">    get_willow_beccs_co2_emission(self): Returns the CO2 emissions from Willow BECCS in kilotons.</span>
+<span class="sd">    get_total_ccs_co2_emission(self): Returns the total CO2 emissions from CCS in kilotons.</span>
+<span class="sd">    get_total_ccs_co2e_emission(self): Returns the total CO2e emissions from CCS in kilotons.</span>
+<span class="sd">    get_total_ccs_ch4_emission(self): Returns the total CH4 emissions from CCS in kilotons.</span>
+<span class="sd">    get_total_ccs_n2o_emission(self): Returns the total N2O emissions from CCS in kilotons.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BioEnergyBudget">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BioEnergyBudget</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optigob_data_manager</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span> <span class="o">=</span> <span class="n">optigob_data_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_target_year</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">biomethane_included</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_biomethane_included</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_beccs_included</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">afforestation_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_afforestation_rate_kha_per_year</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">harvest_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_forest_harvest_intensity</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_fraction_forest</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">broadleaf_fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_broadleaf_fraction</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_beccs_included</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beccs_willow_area_multiplier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_beccs_willow_area_multiplier</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BioEnergyBudget.zero_if_biomethane_not_included">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.zero_if_biomethane_not_included">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">zero_if_biomethane_not_included</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">biomethane_included</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="BioEnergyBudget.zero_if_beccs_not_included">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.zero_if_beccs_not_included">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">zero_if_beccs_not_included</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_total_willow_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_total_willow_area">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_willow_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total willow area in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">willow_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_willow_bioenergy_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;bioenergy_substitution&quot;</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s2">&quot;CO2e&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">willow_area</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_willow_area_multiplier</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_willow_bioenergy_hnv_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_willow_bioenergy_hnv_area">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_willow_bioenergy_hnv_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the willow bioenergy area in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">willow_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_willow_bioenergy_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;bioenergy_substitution&quot;</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s2">&quot;CO2e&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">willow_area</span><span class="p">[</span><span class="s2">&quot;hnv_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_willow_area_multiplier</span></div>
+
+
+    <span class="c1">#AD methods</span>
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ag_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ag_area">[docs]</a>
+    <span class="nd">@zero_if_biomethane_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ag_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-Ag area in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ag_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ag_area</span><span class="p">[(</span><span class="n">ad_ag_area</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-Ag&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ag_area</span><span class="p">[</span><span class="s2">&quot;unit&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;area_ha&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_total_biomethane_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_total_biomethane_area">[docs]</a>
+    <span class="nd">@zero_if_biomethane_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_biomethane_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total biomethane area in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ag_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ad_ag_area</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ad_ag_area</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ag_co2_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ag_co2_emission">[docs]</a>
+    <span class="nd">@zero_if_biomethane_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ag_co2_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-Ag CO2 emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ag_co2_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ag_co2_emission</span><span class="p">[(</span><span class="n">ad_ag_co2_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-Ag&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ag_co2_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CO2&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ag_ch4_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ag_ch4_emission">[docs]</a>
+    <span class="nd">@zero_if_biomethane_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ag_ch4_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-Ag CH4 emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ag_ch4_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ag_ch4_emission</span><span class="p">[(</span><span class="n">ad_ag_ch4_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-Ag&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ag_ch4_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CH4&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ag_n2o_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ag_n2o_emission">[docs]</a>
+    <span class="nd">@zero_if_biomethane_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ag_n2o_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-Ag N2O emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ag_n2o_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ag_n2o_emission</span><span class="p">[(</span><span class="n">ad_ag_n2o_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-Ag&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ag_n2o_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;N2O&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ag_co2e_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ag_co2e_emission">[docs]</a>
+    <span class="nd">@zero_if_biomethane_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ag_co2e_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-Ag CO2e emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ag_co2e_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ag_co2e_emission</span><span class="p">[(</span><span class="n">ad_ag_co2e_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-Ag&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ag_co2e_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CO2e&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+    <span class="c1">#Energy methods</span>
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_bioenergy_output">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_bioenergy_output">[docs]</a>
+    <span class="nd">@zero_if_biomethane_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_bioenergy_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD energy output in MWh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_energy_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_energy_output</span><span class="p">[(</span><span class="n">ad_energy_output</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-Ag&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_energy_output</span><span class="p">[</span><span class="s2">&quot;energy_unit&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;MWh&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_energy_output</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CO2e&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_willow_bioenergy_output">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_willow_bioenergy_output">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_willow_bioenergy_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the Willow bioenergy output in MWh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">willow_bioenergy_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_willow_bioenergy_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;bioenergy_substitution&quot;</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s2">&quot;CO2e&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">willow_bioenergy_output</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_willow_area_multiplier</span></div>
+
+    
+
+<div class="viewcode-block" id="BioEnergyBudget.get_forest_bioenergy_output">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_forest_bioenergy_output">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_forest_bioenergy_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the forest bioenergy output in MWh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">forest_bioenergy_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_substitution_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">affor_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">afforestation_rate</span><span class="p">,</span>
+            <span class="n">broadleaf_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">broadleaf_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_fraction</span><span class="p">,</span>
+            <span class="n">harvest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">harvest_rate</span>
+        <span class="p">)</span>
+
+
+        <span class="k">return</span> <span class="n">forest_bioenergy_output</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+
+    <span class="c1">#CCS methods</span>
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ccs_co2_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ccs_co2_emission">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ccs_co2_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-CCS CO2 emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_co2_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ccs_co2_emission</span><span class="p">[(</span><span class="n">ad_ccs_co2_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-CCS&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ccs_co2_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CO2&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ccs_ch4_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ccs_ch4_emission">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ccs_ch4_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-CCS CH4 emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_ch4_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ccs_ch4_emission</span><span class="p">[(</span><span class="n">ad_ccs_ch4_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-CCS&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ccs_ch4_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CH4&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ccs_n2o_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ccs_n2o_emission">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ccs_n2o_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-CCS N2O emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_n2o_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ccs_n2o_emission</span><span class="p">[(</span><span class="n">ad_ccs_n2o_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-CCS&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ccs_n2o_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;N2O&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_ad_ccs_co2e_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_ad_ccs_co2e_emission">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_ccs_co2e_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the AD-CCS CO2e emissions in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_co2e_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_ad_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">ad_ccs_co2e_emission</span><span class="p">[(</span><span class="n">ad_ccs_co2e_emission</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AD-CCS&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ad_ccs_co2e_emission</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CO2e&quot;</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_willow_beccs_co2_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_willow_beccs_co2_emission">[docs]</a>
+    <span class="nd">@zero_if_beccs_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_willow_beccs_co2_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the CO2 emissions from Willow BECCS in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">willow_beccs_co2_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_willow_bioenergy_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;beccs&quot;</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s2">&quot;CO2&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">willow_beccs_co2_emission</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_willow_area_multiplier</span></div>
+
+    
+
+<div class="viewcode-block" id="BioEnergyBudget.get_total_ccs_co2_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_total_ccs_co2_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_ccs_co2_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total CO2 emissions from CCS in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_co2_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ad_ccs_co2_emission</span><span class="p">()</span>
+        <span class="n">willow_beccs_co2_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_willow_beccs_co2_emission</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ad_ccs_co2_emission</span> <span class="o">+</span> <span class="n">willow_beccs_co2_emission</span></div>
+
+    
+
+<div class="viewcode-block" id="BioEnergyBudget.get_total_ccs_co2e_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_total_ccs_co2e_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_ccs_co2e_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total CO2e emissions from CCS in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_co2e_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ad_ccs_co2e_emission</span><span class="p">()</span>
+        <span class="n">willow_beccs_co2_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_willow_beccs_co2_emission</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ad_ccs_co2e_emission</span> <span class="o">+</span> <span class="n">willow_beccs_co2_emission</span></div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_total_ccs_ch4_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_total_ccs_ch4_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_ccs_ch4_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total CH4 emissions from CCS in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_ch4_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ad_ccs_ch4_emission</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ad_ccs_ch4_emission</span> </div>
+
+    
+<div class="viewcode-block" id="BioEnergyBudget.get_total_ccs_n2o_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget.get_total_ccs_n2o_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_ccs_n2o_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total N2O emissions from CCS in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ad_ccs_n2o_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ad_ccs_n2o_emission</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ad_ccs_n2o_emission</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

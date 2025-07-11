@@ -1,0 +1,90 @@
+optigob.forest.baseline_forest
+==============================
+
+.. py:module:: optigob.forest.baseline_forest
+
+.. autoapi-nested-parse::
+
+   This module provides the BaselineForest class for managing forest data and calculating offsets.
+
+   Classes:
+       BaselineForest: Manages forest data and calculates forest offsets.
+
+   Methods in BaselineForest:
+       __init__(self, optigob_data_manager): Initializes the BaselineForest with a data manager.
+       get_managed_forest_offset(self): Returns the managed forest emission offset in kt.
+       get_total_forest_offset(self): Returns the total forest emission offset in kt.
+       get_managed_forest_area(self): Returns the managed forest area in hectares.
+       get_managed_forest_hnv_area(self): Returns the HNV managed forest area in hectares.
+       get_hwp_volume(self): Returns the harvested wood product volume in cubic meters.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.forest.baseline_forest.BaselineForest
+
+
+Module Contents
+---------------
+
+.. py:class:: BaselineForest(optigob_data_manager)
+
+   .. py:attribute:: data_manager_class
+
+
+   .. py:attribute:: baseline_year
+
+
+   .. py:attribute:: harvest_rate
+      :value: 'low'
+
+
+
+   .. py:method:: get_managed_forest_offset()
+
+      Returns the managed forest emission offset in kt.
+
+      :returns: The managed forest emission offset in kilotons.
+      :rtype: float
+
+
+
+   .. py:method:: get_total_forest_offset()
+
+      Returns the total forest emission offset in kt.
+
+      :returns: The total forest emission offset in kilotons.
+      :rtype: float
+
+
+
+   .. py:method:: get_managed_forest_area()
+
+      Returns the managed forest area in hectares.
+
+      :returns: The managed forest area in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_managed_forest_hnv_area()
+
+      Returns the managed forest high nature value area in hectares.
+
+      :returns: The managed forest high nature value area in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_hwp_volume()
+
+      Retrieves the volume of harvested wood products (in cubic meters).
+
+      NOTE: This method currently returns 0 as a placeholder.
+
+
+

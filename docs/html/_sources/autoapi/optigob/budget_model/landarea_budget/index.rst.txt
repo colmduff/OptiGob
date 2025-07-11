@@ -1,0 +1,182 @@
+optigob.budget_model.landarea_budget
+====================================
+
+.. py:module:: optigob.budget_model.landarea_budget
+
+.. autoapi-nested-parse::
+
+   landarea_budget
+   ===============
+
+   This module defines the LandAreaBudget class, which is responsible for calculating
+   the baseline and scenario land areas by sector. The calculations include areas for
+   agriculture, afforested land, existing forests, other land use, protein crops, and anaerobic digestion (AD).
+
+   Classes:
+       LandAreaBudget: Manages the land area budgets for different sectors.
+
+   Methods in LandAreaBudget:
+       __init__(self, optigob_data_manager): Initializes the LandAreaBudget with the provided data manager.
+       get_baseline_agriculture_area(self): Returns the total baseline agriculture area in hectares.
+       get_total_baseline_land_area_by_sector(self): Returns the total baseline land area by sector in hectares.
+       get_scenario_agriculture_area(self): Returns the total scenario agriculture area in hectares.
+       get_total_scenario_land_area_by_sector(self): Returns the total scenario land area by sector in hectares.
+       get_baseline_hnv_area_by_sector(self): Returns the baseline HNV area by sector.
+       get_scenario_hnv_area_by_sector(self): Returns the scenario HNV area by sector.
+       get_baseline_land_area_agg(self): Returns aggregated baseline land area.
+       get_scenario_land_area_agg(self): Returns aggregated scenario land area.
+       get_baseline_land_area_disagg(self): Returns disaggregated baseline land area.
+       get_scenario_land_area_disagg(self): Returns disaggregated scenario land area.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.budget_model.landarea_budget.LandAreaBudget
+
+
+Module Contents
+---------------
+
+.. py:class:: LandAreaBudget(optigob_data_manager)
+
+   .. py:attribute:: data_manager_class
+
+
+   .. py:attribute:: biomethane_included
+
+
+   .. py:attribute:: protein_crops_included
+
+
+   .. py:attribute:: beccs_included
+
+
+   .. py:attribute:: split_gas_frac
+
+
+   .. py:attribute:: forest_budget
+
+
+   .. py:attribute:: bio_energy_budget
+
+
+   .. py:attribute:: other_land_budget
+
+
+   .. py:attribute:: static_ag_budget
+
+
+   .. py:attribute:: protein_crops_budget
+
+
+   .. py:attribute:: emission_budget
+
+
+   .. py:attribute:: livestock_budget
+
+
+   .. py:attribute:: baseline_livestock
+
+
+   .. py:attribute:: baseline_forest
+
+
+   .. py:attribute:: baseline_static_ag
+
+
+   .. py:attribute:: baseline_other_land
+
+
+   .. py:attribute:: baseline_area_methods
+
+
+   .. py:attribute:: scenario_area_methods
+
+
+   .. py:attribute:: disaggregated_scenario_area_methods
+
+
+   .. py:attribute:: disaggregated_baseline_area_methods
+
+
+   .. py:attribute:: scenario_hnv_area_methods
+
+
+   .. py:attribute:: baseline_hnv_area_methods
+
+
+   .. py:method:: get_baseline_agriculture_area()
+
+      Returns the total baseline agriculture area in hectares.
+
+      :returns: Total baseline agriculture area in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_total_baseline_land_area_by_aggregated_sector()
+
+      Returns the total baseline land area by sector in hectares.
+
+      :returns: Total baseline land area by sector in hectares.
+      :rtype: dict
+
+
+
+   .. py:method:: get_scenario_agriculture_area()
+
+      Returns the total scenario agriculture area in hectares.
+
+      :returns: Total scenario agriculture area in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_total_scenario_land_area_by_aggregated_sector()
+
+      Returns the total scenario land area by sector in hectares.
+
+      :returns: Total scenario land area by sector in hectares.
+      :rtype: dict
+
+
+
+   .. py:method:: get_total_scenario_land_area_by_disaggregated_sector()
+
+      Returns the total scenario land area by disaggregated sector in hectares.
+
+      :returns: Total scenario land area by disaggregated sector in hectares.
+      :rtype: dict
+
+
+
+   .. py:method:: get_total_baseline_land_area_by_disaggregated_sector()
+
+      Returns the total baseline land area by disaggregated sector in hectares.
+
+      :returns: Total baseline land area by disaggregated sector in hectares.
+      :rtype: dict
+
+
+
+   .. py:method:: get_total_baseline_hnv_land_area_disaggregated_by_sector()
+
+      Returns the total baseline HNV land area by disaggregated sector in hectares.
+      :returns: Total baseline HNV land area by disaggregated sector in hectares.
+      :rtype: dict
+
+
+
+   .. py:method:: get_total_scenario_hnv_land_area_disaggregated_by_sector()
+
+      Returns the total scenario HNV land area by disaggregated sector in hectares.
+
+      :returns: Total scenario HNV land area by disaggregated sector in hectares.
+      :rtype: dict
+
+
+

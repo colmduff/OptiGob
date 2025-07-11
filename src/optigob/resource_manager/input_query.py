@@ -11,6 +11,7 @@ Methods in InputQuery:
     __init__(self): Initializes the InputQuery class and underlying data manager.
     get_organic_soil_input_combos(self): Returns all valid organic soil input combinations as a list of dicts.
     get_forest_input_combos(self): Returns all valid forest input combinations as a list of dicts.
+    get_abatement_and_productivity_input_combos(self): Returns all valid abatement and productivity input combinations as a list of dicts.
     get_all_input_combos(self): Returns a dict of all valid input combinations for major coupled parameters.
     get_all_input_combos_df(self): Returns a pandas DataFrame of all valid input combinations for major coupled parameters.
 
@@ -82,6 +83,29 @@ class InputQuery():
         )
         return combos
     
+    def get_abatement_and_productivity_input_combos(self):
+        """
+        Retrieves all valid input combinations for abatement and productivity scenarios.
+        Returns:
+            list: A list of abatement and productivity input combinations.
+        """
+
+        livestock_protein_df = self.data_manager.get_livestock_protein_scaler_table().copy()
+
+        combo_cols = ["abatement", 
+                      "scenario"]
+        
+        names = {"abatement_type": "abatement",
+                 "abatement_scenario": "scenario"}
+        
+        combos = (
+            livestock_protein_df[combo_cols]
+            .drop_duplicates()
+            .rename(columns=names)
+            .to_dict(orient="records")
+        )
+        return combos
+    
     def get_all_input_combos(self):
         """
         Returns a dict of all valid input combinations for major coupled parameters.
@@ -90,10 +114,12 @@ class InputQuery():
         """
         return {
             "forest": self.get_forest_input_combos(),
-            "organic_soil": self.get_organic_soil_input_combos()
+            "organic_soil": self.get_organic_soil_input_combos(),
+            "abatement_and_productivity": self.get_abatement_and_productivity_input_combos(),
             # Add others as needed
         }
     
+
     def get_all_input_combos_df(self):
         """
         Returns a DataFrame of all valid input combinations for major coupled parameters.

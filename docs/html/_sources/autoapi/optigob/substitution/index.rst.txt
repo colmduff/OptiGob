@@ -1,0 +1,15 @@
+optigob.substitution
+====================
+
+.. py:module:: optigob.substitution
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/optigob/substitution/substitution/index
+
+

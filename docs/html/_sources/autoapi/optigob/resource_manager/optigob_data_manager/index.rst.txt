@@ -1,0 +1,1022 @@
+optigob.resource_manager.optigob_data_manager
+=============================================
+
+.. py:module:: optigob.resource_manager.optigob_data_manager
+
+.. autoapi-nested-parse::
+
+   optigob_data_manager
+   ====================
+
+   This module provides the OptiGobDataManager class, which is responsible for managing and retrieving
+   various data scalers related to livestock emissions, forest management, and other land use sectors.
+   The class interacts with a database to load and cache scaler values, and provides methods to retrieve
+   these values based on specific parameters.
+
+   Classes:
+       OptiGobDataManager: Manages and retrieves data scalers for various sectors.
+
+   .. method:: get_ha_to_kha
+
+      Retrieves the conversion factor from hectares to kilohectares.
+
+   .. method:: get_kha_to_ha
+
+      Retrieves the conversion factor from square kilohectares to hectares.
+
+   .. method:: get_AR_gwp100_values
+
+      Retrieves the GWP values for each gas based on the AR value.
+
+   .. method:: get_emission_sectors
+
+      Retrieves the emission sectors.
+
+   .. method:: get_livestock_emission_scaler
+
+      Retrieves the scaler value for a given year, system, gas, scenario, and abatement.
+
+   .. method:: get_livestock_area_scaler
+
+      Retrieves the scaler value for a given year, system, scenario, and abatement.
+
+   .. method:: get_livestock_protein_scaler
+
+      Retrieves the scaler value for a given year, system, item, scenario, and abatement.
+
+   .. method:: get_static_livestock_emission_scaler
+
+      Retrieves the static scaler value for a given year, system, gas, and abatement.
+
+   .. method:: get_static_livestock_area_scaler
+
+      Retrieves the static scaler value for a given year, system, and abatement.
+
+   .. method:: get_static_livestock_protein_scaler
+
+      Retrieves the static scaler value for a given year, system, and abatement.
+
+   .. method:: get_forest_scaler
+
+      Retrieves the scaler value for a given year and forest management parameters.
+
+   .. method:: get_static_forest_scaler
+
+      Retrieves the static scaler value for a given year and harvest intensity.
+
+   .. method:: get_ccs_scaler
+
+      Retrieves the CCS scaler value for a given year and forest management parameters.
+
+   .. method:: get_hwp_scaler
+
+      Retrieves the HWP scaler value for a given year and forest management parameters.
+
+   .. method:: get_substitution_scaler
+
+      Retrieves the substitution scaler value for a given year and forest management parameters.
+
+   .. method:: get_organic_soil_emission_scaler
+
+      Retrieves the organic soil emission scaler value for a given year and land management parameters.
+
+   .. method:: get_organic_soil_area_scaler
+
+      Retrieves the organic soil area scaler value for a given year and land management parameters.
+
+   .. method:: get_ad_area_scaler
+
+      Retrieves the AD area scaler value for a given year and land management parameters.
+
+   .. method:: get_ad_emission_scaler
+
+      Retrieves the AD emission scaler value for a given year.
+
+   .. method:: get_crop_scaler
+
+      Retrieves the crop scaler value for a given year, gas, and abatement.
+
+   .. method:: get_baseline_year
+
+      Retrieves the baseline year from the SIP input file.
+
+   .. method:: get_target_year
+
+      Retrieves the target year from the SIP input file.
+
+   .. method:: get_abatement_scenario
+
+      Retrieves the abatement scenario from the SIP input file.
+
+   .. method:: get_dairy_beef_ratio
+
+      Retrieves the dairy to beef ratio from the SIP input file.
+
+   .. method:: get_forest_harvest_intensity
+
+      Retrieves the forest harvest intensity from the SIP input file.
+
+   .. method:: get_afforestation_rate_kha_per_year
+
+      Retrieves the afforestation rate in kha per year from the SIP input file.
+
+   .. method:: get_broadleaf_fraction
+
+      Retrieves the broadleaf fraction from the SIP input file.
+
+   .. method:: get_organic_soil_fraction_forest
+
+      Retrieves the organic soil fraction for forest from the SIP input file.
+
+   .. method:: get_beccs_included
+
+      Retrieves whether BECCS is included from the SIP input file.
+
+   .. method:: get_wetland_restored_fraction
+
+      Retrieves the wetland restored fraction from the SIP input file.
+
+   .. method:: get_organic_soil_under_grass_fraction
+
+      Retrieves the organic soil under grass fraction from the SIP input file.
+
+   .. method:: get_biomethane_included
+
+      Retrieves whether biomethane is included from the SIP input file.
+
+   .. method:: get_abatement_type
+
+      Retrieves the abatement type from the SIP input file.
+
+   .. method:: get_AR
+
+      Retrieves the AR value from the SIP input file.
+
+   .. method:: get_split_gas
+
+      Retrieves whether split gas is used from the SIP input file.
+
+   .. method:: get_split_gas_fraction
+
+      Retrieves the split gas fraction from the SIP input file.
+
+   .. method:: get_baseline_dairy_population
+
+      Retrieves the baseline dairy population from the SIP input file.
+
+   .. method:: get_baseline_beef_population
+
+      Retrieves the baseline beef population from the SIP input file.
+      
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.resource_manager.optigob_data_manager.OptiGobDataManager
+
+
+Module Contents
+---------------
+
+.. py:class:: OptiGobDataManager(sip)
+
+   .. py:attribute:: db_manager
+
+
+   .. py:attribute:: _livestock_emission_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _livestock_area_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _livestock_protein_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _forest_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _static_forest_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _wood_ccs_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _hwp_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _substitution_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _organic_soil_emission_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _organic_soil_area_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _ad_area_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _ad_emission_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _crop_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _static_livestock_emission_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _static_livestock_area_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _static_livestock_protein_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _protein_crop_emission_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _protein_crop_protein_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _protein_content_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _willow_bioenergy_scalers
+      :value: None
+
+
+
+   .. py:attribute:: _ha_to_kha
+      :value: 0.001
+
+
+
+   .. py:attribute:: _kha_to_ha
+      :value: 1000.0
+
+
+
+   .. py:attribute:: _AR_VALUES
+
+
+   .. py:attribute:: emission_sectors
+      :value: ['agriculture', 'existing_forest', 'afforestation', 'hwp', 'other_land_use', 'ad', 'beccs']
+
+
+
+   .. py:method:: get_ha_to_kha()
+
+      Retrieves the conversion factor from hectares to square kilometers.
+
+      :returns: The conversion factor.
+      :rtype: float
+
+
+
+   .. py:method:: get_kha_to_ha()
+
+      Retrieves the conversion factor from square kilometers to hectares.
+
+      :returns: The conversion factor.
+      :rtype: float
+
+
+
+   .. py:method:: get_AR_gwp100_values(gas)
+
+      Retrieves the GWP values for each gas based on the AR value.
+
+      :param gas: The gas identifier (e.g., "CO2", "CH4", "N2O").
+      :type gas: str
+
+      :returns: The GWP values for each gas.
+      :rtype: dict
+
+
+
+   .. py:method:: get_emission_sectors()
+
+      Retrieves the emission sectors.
+
+      :returns: The emission sectors.
+      :rtype: list
+
+
+
+   .. py:method:: _load_livestock_emission_scalers()
+
+      Loads and caches the livestock scalers from the database.
+
+
+
+   .. py:method:: _load_static_livestock_emission_scalers()
+
+      Loads and caches the static livestock scalers from the database.
+
+
+
+   .. py:method:: _load_livestock_area_scalers()
+
+      Loads and caches the livestock area scalers from the database.
+
+
+
+   .. py:method:: _load_static_livestock_area_scalers()
+
+      Loads and caches the static livestock area scalers from the database.
+
+
+
+   .. py:method:: _load_livestock_protein_scalers()
+
+      Loads and caches the livestock protein scalers from the database.
+
+
+
+   .. py:method:: _load_static_livestock_protein_scalers()
+
+      Loads and caches the static livestock protein scalers from the database.
+
+
+
+   .. py:method:: _load_forest_scalers()
+
+      Loads and caches the forest scalers from the database.
+
+
+
+   .. py:method:: _load_static_forest_scalers()
+
+      Loads and caches the static forest scalers from the database.
+
+
+
+   .. py:method:: _load_wood_ccs_scalers()
+
+      Loads and caches the CCS scalers from the database.
+
+
+
+   .. py:method:: _load_hwp_scalers()
+
+      Loads and caches the HWP scalers from the database.
+
+
+
+   .. py:method:: _load_substitution_scalers()
+
+      Loads and caches the substitution scalers from the database.
+
+
+
+   .. py:method:: _load_organic_soil_emission_scalers()
+
+      Loads and caches the organic soil emission scalers from the database.
+
+
+
+   .. py:method:: _load_organic_soil_area_scalers()
+
+      Loads and caches the organic soil area scalers from the database.
+
+
+
+   .. py:method:: _load_ad_area_scalers()
+
+      Loads and caches the AD area scalers from the database.
+
+
+
+   .. py:method:: _load_ad_emission_scalers()
+
+      Loads and caches the AD emission scalers from the database.
+
+
+
+   .. py:method:: _load_crop_scalers()
+
+      Loads and caches the crop scalers from the database.
+
+
+
+   .. py:method:: _load_protein_crop_emission_scalers()
+
+      Loads and caches the protein crop emission scalers from the database.
+
+
+
+   .. py:method:: _load_protein_crop_protein_scalers()
+
+      Loads and caches the protein crop protein scalers from the database.
+
+
+
+   .. py:method:: _load_protein_content_scalers()
+
+      Loads and caches the protein content scalers from the database.
+
+
+
+   .. py:method:: _load_willow_bioenergy_scalers()
+
+      Loads and caches the willow bioenergy scalers from the database.
+
+
+
+   .. py:method:: get_livestock_emission_scaler(year, system, gas, scenario, abatement)
+
+      Retrieves the scaler value for a given year, system, gas, and scenario.
+
+      :param year: The year of interest.
+      :type year: int
+      :param system: The system identifier.
+      :type system: str
+      :param gas: The gas identifier.
+      :type gas: str
+      :param scenario: The scenario identifier.
+      :type scenario: int
+      :param abatement: The abatement identifier.
+      :type abatement: int
+
+      :returns: The scaler value and additional information.
+      :rtype: dict
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_livestock_area_scaler(year, system, scenario, abatement)
+
+      Retrieves the scaler value for a given year, system, and scenario.
+
+      :param year: The year of interest.
+      :type year: int
+      :param system: The system identifier(s).
+      :type system: str or list
+      :param scenario: The scenario identifier.
+      :type scenario: int
+      :param abatement: The abatement identifier.
+      :type abatement: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_livestock_protein_scaler(year, system, item, scenario, abatement)
+
+      Retrieves the scaler value for a given year, system, and scenario.
+
+      :param year: The year of interest.
+      :type year: int
+      :param system: The system identifier.
+      :type system: str
+      :param item: The item identifier.
+      :type item: str
+      :param scenario: The scenario identifier.
+      :type scenario: int
+      :param abatement: The abatement identifier.
+      :type abatement: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_static_livestock_emission_scaler(year, system, gas, abatement)
+
+      Retrieves the static scaler value for a given year, system, gas, and abatement.
+
+      :param year: The year of interest.
+      :type year: int
+      :param system: The system identifier.
+      :type system: str
+      :param gas: The gas identifier.
+      :type gas: str
+      :param abatement: The abatement identifier.
+      :type abatement: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_static_livestock_area_scaler(year, system, abatement)
+
+      Retrieves the static scaler value for a given year, system, and abatement.
+
+      :param year: The year of interest.
+      :type year: int
+      :param system: The system identifier.
+      :type system: str
+      :param abatement: The abatement identifier.
+      :type abatement: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_static_livestock_protein_scaler(year, system, item, abatement)
+
+      Retrieves the static scaler value for a given year, system, and abatement.
+
+      :param year: The year of interest.
+      :type year: int
+      :param system: The system identifier.
+      :type system: str
+      :param item: The item identifier.
+      :type item: str
+      :param abatement: The abatement identifier.
+      :type abatement: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_forest_scaler(target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest)
+
+      Retrieves the scaler value for a given year and forest management parameters.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+      :param affor_rate: The afforestation rate in kha per year.
+      :type affor_rate: float
+      :param broadleaf_frac: The fraction of broadleaf trees.
+      :type broadleaf_frac: float
+      :param organic_soil_frac: The fraction of organic soil.
+      :type organic_soil_frac: float
+      :param harvest: The forest harvest intensity.
+      :type harvest: float
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_static_forest_scaler(target_year, harvest)
+
+      Retrieves the static scaler value for a given year and harvest intensity.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+      :param harvest: The forest harvest intensity.
+      :type harvest: float
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_wood_ccs_scaler(target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest)
+
+      Retrieves the CCS scaler value for a given year and forest management parameters.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+      :param affor_rate: The afforestation rate in kha per year.
+      :type affor_rate: float
+      :param broadleaf_frac: The fraction of broadleaf trees.
+      :type broadleaf_frac: float
+      :param organic_soil_frac: The fraction of organic soil.
+      :type organic_soil_frac: float
+      :param harvest: The forest harvest intensity.
+      :type harvest: float
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_hwp_scaler(target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest)
+
+      Retrieves the HWP scaler value for a given year and forest management parameters.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+      :param affor_rate: The afforestation rate in kha per year.
+      :type affor_rate: float
+      :param broadleaf_frac: The fraction of broadleaf trees.
+      :type broadleaf_frac: float
+      :param organic_soil_frac: The fraction of organic soil.
+      :type organic_soil_frac: float
+      :param harvest: The forest harvest intensity.
+      :type harvest: float
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_substitution_scaler(target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest)
+
+      Retrieves the substitution scaler value for a given year and forest management parameters.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+      :param affor_rate: The afforestation rate in kha per year.
+      :type affor_rate: float
+      :param broadleaf_frac: The fraction of broadleaf trees.
+      :type broadleaf_frac: float
+      :param organic_soil_frac: The fraction of organic soil.
+      :type organic_soil_frac: float
+      :param harvest: The forest harvest intensity.
+      :type harvest: float
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_organic_soil_emission_scaler(target_year, wetland_restored_frac, organic_soil_under_grass_frac)
+
+      Retrieves the organic soil emission scaler value for a given year and land management parameters.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+      :param wetland_restored_frac: The fraction of wetland restored.
+      :type wetland_restored_frac: float
+      :param organic_soil_under_grass_frac: The fraction of organic soil under grass.
+      :type organic_soil_under_grass_frac: float
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_organic_soil_area_scaler(target_year, wetland_restored_frac, organic_soil_under_grass_frac)
+
+      Retrieves the organic soil area scaler value for a given year and land management parameters.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+      :param wetland_restored_frac: The fraction of wetland restored.
+      :type wetland_restored_frac: float
+      :param organic_soil_under_grass_frac: The fraction of organic soil under grass.
+      :type organic_soil_under_grass_frac: float
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_ad_area_scaler(target_year)
+
+      Retrieves the AD area scaler value for a given year.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_ad_emission_scaler(target_year)
+
+      Retrieves the AD emission scaler value for a given year.
+
+      :param target_year: The year of interest.
+      :type target_year: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_crop_scaler(year, gas, abatement)
+
+      Retrieves the crop scaler value for a given year, gas, and abatement.
+
+      :param year: The year of interest.
+      :type year: int
+      :param gas: The gas identifier.
+      :type gas: str
+      :param abatement: The abatement identifier.
+      :type abatement: int
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_protein_crop_emission_scaler(year, ghg, abatement)
+
+      Retrieves the protein crop emission scaler value for a given year, crop, gas, and abatement.
+
+
+
+   .. py:method:: get_protein_crop_protein_scaler(year, abatement)
+
+      Retrieves the protein crop protein scaler value for a given year, crop, and abatement.
+
+
+
+   .. py:method:: get_protein_content_scaler(type)
+
+      Retrieves the protein content scaler value.
+
+      :returns: The DataFrame containing the protein content scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_willow_bioenergy_scaler(year, type, ghg)
+
+      Retrieves the willow bioenergy scaler value for a given year, type, and gas.
+
+      :param year: The year of interest.
+      :type year: int
+      :param type: The type of willow bioenergy.
+      :type type: str
+      :param ghg: The greenhouse gas identifier.
+      :type ghg: str
+
+      :returns: The filtered DataFrame containing the scaler values.
+      :rtype: DataFrame
+
+      :raises ValueError: If no matching row is found.
+
+
+
+   .. py:method:: get_baseline_year()
+
+      Retrieves the baseline year from the SIP input file.
+
+      :returns: The baseline year.
+      :rtype: int
+
+
+
+   .. py:method:: get_target_year()
+
+      Retrieves the target year from the SIP input file.
+
+      :returns: The target year.
+      :rtype: int
+
+
+
+   .. py:method:: get_abatement_scenario()
+
+      Retrieves the abatement scenario from the SIP input file.
+
+      :returns: The abatement scenario.
+      :rtype: str
+
+
+
+   .. py:method:: get_livestock_ratio_type()
+
+      Retrieves the livestock ratio type from the SIP input file.
+
+      :returns: The livestock ratio type.
+      :rtype: str
+
+
+
+   .. py:method:: get_livestock_ratio_value()
+
+      Retrieves the livestock ratio from the SIP input file.
+
+      :returns: The livestock ratio.
+      :rtype: float
+
+
+
+   .. py:method:: get_forest_harvest_intensity()
+
+      Retrieves the forest harvest intensity from the SIP input file.
+
+      :returns: The forest harvest intensity.
+      :rtype: float
+
+
+
+   .. py:method:: get_afforestation_rate_kha_per_year()
+
+      Retrieves the afforestation rate in kha per year from the SIP input file.
+
+      :returns: The afforestation rate in kha per year.
+      :rtype: float
+
+
+
+   .. py:method:: get_broadleaf_fraction()
+
+      Retrieves the broadleaf fraction from the SIP input file.
+
+      :returns: The broadleaf fraction.
+      :rtype: float
+
+
+
+   .. py:method:: get_organic_soil_fraction_forest()
+
+      Retrieves the organic soil fraction for forest from the SIP input file.
+
+      :returns: The organic soil fraction for forest.
+      :rtype: float
+
+
+
+   .. py:method:: get_beccs_included()
+
+      Retrieves whether BECCS is included from the SIP input file.
+
+      :returns: True if BECCS is included, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: get_wetland_restored_fraction()
+
+      Retrieves the wetland restored fraction from the SIP input file.
+
+      :returns: The wetland restored fraction.
+      :rtype: float
+
+
+
+   .. py:method:: get_organic_soil_under_grass_fraction()
+
+      Retrieves the organic soil under grass fraction from the SIP input file.
+
+      :returns: The organic soil under grass fraction.
+      :rtype: float
+
+
+
+   .. py:method:: get_biomethane_included()
+
+      Retrieves whether biomethane is included from the SIP input file.
+
+      :returns: True if biomethane is included, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: get_abatement_type()
+
+      Retrieves the abatement type from the SIP input file.
+
+      :returns: The abatement type.
+      :rtype: str
+
+
+
+   .. py:method:: get_AR()
+
+      Retrieves the AR value from the SIP input file.
+
+      :returns: The AR value.
+      :rtype: str
+
+
+
+   .. py:method:: get_split_gas()
+
+      Retrieves whether split gas is used from the SIP input file.
+
+      :returns: True if split gas is used, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: get_split_gas_fraction()
+
+      Retrieves the split gas fraction from the SIP input file.
+
+      :returns: The split gas fraction.
+      :rtype: float
+
+
+
+   .. py:method:: get_protein_crop_included()
+
+      Retrieves whether protein crop is included from the SIP input file.
+
+      :returns: True if protein crop is included, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: get_protein_crop_multiplier()
+
+      Retrieves the protein crop multiplier from the SIP input file.
+
+      :returns: The protein crop multiplier.
+      :rtype: float
+
+
+
+   .. py:method:: get_beccs_willow_area_multiplier()
+
+      Retrieves the BECCS willow area multiplier from the SIP input file.
+
+      :returns: The BECCS willow area multiplier.
+      :rtype: float
+
+
+
+   .. py:method:: get_pig_and_poultry_multiplier()
+
+      Retrieves the pig and poultry multiplier from the SIP input file.
+
+      :returns: The pig and poultry multiplier.
+      :rtype: float
+
+
+
+   .. py:method:: get_baseline_dairy_population()
+
+      Retrieves the baseline dairy population from the SIP input file.
+
+      :returns: The baseline dairy population.
+      :rtype: int
+
+
+
+   .. py:method:: get_baseline_beef_population()
+
+      Retrieves the baseline beef population from the SIP input file.
+
+      :returns: The baseline beef population.
+      :rtype: int
+
+
+

@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.3 (11/07/2025)
+
+- Added `InputHelper` class for user-friendly querying and filtering of valid input parameter combinations for scenarios.
+- Added `input_helper.py` module and comprehensive documentation for input query utilities.
+- Added new test files for `InputQuery` and `InputHelper` (prints all combos and filtering to screen).
+- Improved and standardized module-level and class-level docstrings for `input_query.py` and related modules.
+- Added draw.io-compatible architecture diagram (flow.xml) for model documentation.
+- Expanded and clarified README with module structure, architecture, and usage examples.
+- Improved scenario and baseline area accounting and documentation in `landarea_budget.py`.
+- Updated and expanded test coverage for input query and helper utilities.
+- Minor bug fixes and documentation improvements across multiple modules.
+
 ## v0.1.2 (23/03/2025)
 
 - added additional testing, all tests passing

@@ -1,0 +1,671 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.static_ag.baseline_static_ag &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="optigob.static_ag.static_ag_budget" href="../static_ag_budget/index.html" />
+    <link rel="prev" title="optigob.static_ag" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../input_variables.html">OptiGob Input Variables Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">optigob</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../bioenergy/index.html">optigob.bioenergy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../budget_model/index.html">optigob.budget_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../database/index.html">optigob.database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../forest/index.html">optigob.forest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../input_helper/index.html">optigob.input_helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../livestock/index.html">optigob.livestock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optigob/index.html">optigob.optigob</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../other_land/index.html">optigob.other_land</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../protein_crops/index.html">optigob.protein_crops</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../resource_manager/index.html">optigob.resource_manager</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">optigob.static_ag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../substitution/index.html">optigob.substitution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">optigob</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">optigob.static_ag</a></li>
+      <li class="breadcrumb-item active">optigob.static_ag.baseline_static_ag</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/optigob/static_ag/baseline_static_ag/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-optigob.static_ag.baseline_static_ag">
+<span id="optigob-static-ag-baseline-static-ag"></span><h1>optigob.static_ag.baseline_static_ag<a class="headerlink" href="#module-optigob.static_ag.baseline_static_ag" title="Link to this heading"></a></h1>
+<p>This module defines the BaselineStaticAg class, which is responsible for calculating
+various types of emissions (CO2, CH4, N2O, and CO2e) and areas for different agricultural
+systems (Pig_Poultry, Sheep, and Crops) based on baseline data. The class interacts with
+an OptigobDataManager instance to retrieve necessary data for these calculations.</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><p>BaselineStaticAg: A class to calculate emissions and areas for static agricultural systems.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_pig_and_poultry_co2_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_pig_and_poultry_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_pig_and_poultry_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2 emission for Pig and Poultry systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_pig_and_poultry_ch4_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_pig_and_poultry_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_pig_and_poultry_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CH4 emission for Pig and Poultry systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_pig_and_poultry_n2o_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_pig_and_poultry_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_pig_and_poultry_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the N2O emission for Pig and Poultry systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_pig_and_poultry_co2e_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_pig_and_poultry_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_pig_and_poultry_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2e emission for Pig and Poultry systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_sheep_co2_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_sheep_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_sheep_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2 emission for Sheep systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_sheep_ch4_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_sheep_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_sheep_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CH4 emission for Sheep systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_sheep_n2o_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_sheep_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_sheep_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the N2O emission for Sheep systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_sheep_co2e_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_sheep_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_sheep_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2e emission for Sheep systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_crop_co2_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_crop_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_crop_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2 emission for Crop systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_crop_ch4_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_crop_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_crop_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CH4 emission for Crop systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_crop_n2o_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_crop_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_crop_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the N2O emission for Crop systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_crop_co2e_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_crop_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_crop_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2e emission for Crop systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_total_static_ag_co2e">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_total_static_ag_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_total_static_ag_co2e" title="Link to this definition"></a></dt>
+<dd><p>Get the total CO2e emission for all static agricultural systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_total_static_ag_co2">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_total_static_ag_co2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_total_static_ag_co2" title="Link to this definition"></a></dt>
+<dd><p>Get the total CO2 emission for all static agricultural systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_total_static_ag_ch4">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_total_static_ag_ch4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_total_static_ag_ch4" title="Link to this definition"></a></dt>
+<dd><p>Get the total CH4 emission for all static agricultural systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_total_static_ag_n2o">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_total_static_ag_n2o</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_total_static_ag_n2o" title="Link to this definition"></a></dt>
+<dd><p>Get the total N2O emission for all static agricultural systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_sheep_area">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_sheep_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_sheep_area" title="Link to this definition"></a></dt>
+<dd><p>Get the area for Sheep systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_pig_and_poultry_area">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_pig_and_poultry_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_pig_and_poultry_area" title="Link to this definition"></a></dt>
+<dd><p>Get the area for Pig and Poultry systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_crop_area">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_crop_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_crop_area" title="Link to this definition"></a></dt>
+<dd><p>Get the area for Crop systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_total_static_ag_area">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_total_static_ag_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_total_static_ag_area" title="Link to this definition"></a></dt>
+<dd><p>Get the total area for all static agricultural systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_sheep_protein">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_sheep_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_sheep_protein" title="Link to this definition"></a></dt>
+<dd><p>Get the protein value for Sheep systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_pig_and_poultry_protein">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_pig_and_poultry_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_pig_and_poultry_protein" title="Link to this definition"></a></dt>
+<dd><p>Get the protein value for Pig and Poultry systems.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.get_total_static_ag_protein">
+<span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">get_total_static_ag_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.get_total_static_ag_protein" title="Link to this definition"></a></dt>
+<dd><p>Get the total protein value for all static agricultural systems.</p>
+</dd></dl>
+
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg" title="optigob.static_ag.baseline_static_ag.BaselineStaticAg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaselineStaticAg</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optigob.static_ag.baseline_static_ag.</span></span><span class="sig-name descname"><span class="pre">BaselineStaticAg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optigob_data_manager</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.data_manager_class">
+<span class="sig-name descname"><span class="pre">data_manager_class</span></span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.data_manager_class" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.baseline_year">
+<span class="sig-name descname"><span class="pre">baseline_year</span></span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.baseline_year" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.abatement_type">
+<span class="sig-name descname"><span class="pre">abatement_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'baseline'</span></em><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.abatement_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.pig_and_poultry_protein">
+<span class="sig-name descname"><span class="pre">pig_and_poultry_protein</span></span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.pig_and_poultry_protein" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.sheep_protein">
+<span class="sig-name descname"><span class="pre">sheep_protein</span></span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.sheep_protein" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.crop_protein">
+<span class="sig-name descname"><span class="pre">crop_protein</span></span><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.crop_protein" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_co2_emission">
+<span class="sig-name descname"><span class="pre">get_pig_and_poultry_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_pig_and_poultry_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2 emission for Pig and Poultry systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_pig_and_poultry_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_pig_and_poultry_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CH4 emission for Pig and Poultry systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CH4 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_pig_and_poultry_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_pig_and_poultry_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the N2O emission for Pig and Poultry systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The N2O emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_co2e_emission">
+<span class="sig-name descname"><span class="pre">get_pig_and_poultry_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_pig_and_poultry_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2e emission for Pig and Poultry systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2e emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_co2_emission">
+<span class="sig-name descname"><span class="pre">get_sheep_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_sheep_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2 emission for Sheep systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_sheep_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_sheep_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CH4 emission for Sheep systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CH4 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_sheep_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_sheep_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the N2O emission for Sheep systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The N2O emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_co2e_emission">
+<span class="sig-name descname"><span class="pre">get_sheep_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_sheep_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2e emission for Sheep systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2e emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_co2_emission">
+<span class="sig-name descname"><span class="pre">get_crop_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_crop_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2 emission for Crop systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_crop_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_crop_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CH4 emission for Crop systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CH4 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_crop_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_crop_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the N2O emission for Crop systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The N2O emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_co2e_emission">
+<span class="sig-name descname"><span class="pre">get_crop_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_crop_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Get the CO2e emission for Crop systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2e emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_co2e">
+<span class="sig-name descname"><span class="pre">get_total_static_ag_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_total_static_ag_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_co2e" title="Link to this definition"></a></dt>
+<dd><p>Get the total CO2e emission for all static agricultural systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total CO2e emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_co2">
+<span class="sig-name descname"><span class="pre">get_total_static_ag_co2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_total_static_ag_co2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_co2" title="Link to this definition"></a></dt>
+<dd><p>Get the total CO2 emission for all static agricultural systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total CO2 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_ch4">
+<span class="sig-name descname"><span class="pre">get_total_static_ag_ch4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_total_static_ag_ch4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_ch4" title="Link to this definition"></a></dt>
+<dd><p>Get the total CH4 emission for all static agricultural systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total CH4 emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_n2o">
+<span class="sig-name descname"><span class="pre">get_total_static_ag_n2o</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_total_static_ag_n2o"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_n2o" title="Link to this definition"></a></dt>
+<dd><p>Get the total N2O emission for all static agricultural systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total N2O emission value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_area">
+<span class="sig-name descname"><span class="pre">get_sheep_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_sheep_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_area" title="Link to this definition"></a></dt>
+<dd><p>Get the area for Sheep systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area value in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_area">
+<span class="sig-name descname"><span class="pre">get_pig_and_poultry_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_pig_and_poultry_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_area" title="Link to this definition"></a></dt>
+<dd><p>Get the area for Pig and Poultry systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area value in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_area">
+<span class="sig-name descname"><span class="pre">get_crop_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_crop_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_area" title="Link to this definition"></a></dt>
+<dd><p>Get the area for Crop systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area value in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_area">
+<span class="sig-name descname"><span class="pre">get_total_static_ag_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_total_static_ag_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_area" title="Link to this definition"></a></dt>
+<dd><p>Get the total area for all static agricultural systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total area value in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_protein">
+<span class="sig-name descname"><span class="pre">get_sheep_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_sheep_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_sheep_protein" title="Link to this definition"></a></dt>
+<dd><p>Get the protein value for Sheep systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The protein value in kg.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_protein">
+<span class="sig-name descname"><span class="pre">get_pig_and_poultry_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_pig_and_poultry_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_pig_and_poultry_protein" title="Link to this definition"></a></dt>
+<dd><p>Get the protein value for Pig and Poultry systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The protein value in kg.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_protein">
+<span class="sig-name descname"><span class="pre">get_crop_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_crop_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_crop_protein" title="Link to this definition"></a></dt>
+<dd><p>Get the protein value for Crop systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The protein value in kg.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_protein">
+<span class="sig-name descname"><span class="pre">get_total_static_ag_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/static_ag/baseline_static_ag.html#BaselineStaticAg.get_total_static_ag_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.static_ag.baseline_static_ag.BaselineStaticAg.get_total_static_ag_protein" title="Link to this definition"></a></dt>
+<dd><p>Get the total protein value for all static agricultural systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total protein value in kg.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="optigob.static_ag" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../static_ag_budget/index.html" class="btn btn-neutral float-right" title="optigob.static_ag.static_ag_budget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+optigob.other_land.other_land_budget
+====================================
+
+.. py:module:: optigob.other_land.other_land_budget
+
+.. autoapi-nested-parse::
+
+   other_land_budget
+   =================
+
+   This module contains the OtherLandBudget class, which is responsible for calculating various emissions and areas related to wetland restoration and organic soil management.
+
+   Class:
+       OtherLandBudget: Calculates emissions and areas for wetland restoration and organic soils.
+
+   Methods in OtherLandBudget:
+       __init__(self, optigob_data_manager): Initializes the OtherLandBudget class with the provided data manager.
+       get_wetland_restoration_emission_co2e(self): Calculates and returns the CO2e emissions from wetland restoration.
+       get_wetland_restoration_emission_ch4(self): Calculates and returns the CH4 emissions from wetland restoration.
+       get_wetland_restoration_emission_n2o(self): Calculates and returns the N2O emissions from wetland restoration.
+       get_wetland_restoration_emission_co2(self): Calculates and returns the CO2 emissions from wetland restoration.
+       get_drained_organic_soil_area(self): Calculates and returns the area of drained organic soil.
+       get_rewetted_organic_area(self): Calculates and returns the area of rewetted organic soil.
+       get_drained_wetland_area(self): Calculates and returns the area of drained wetland.
+       get_rewetted_wetland_area(self): Calculates and returns the area of rewetted wetland.
+       get_total_other_land_area(self): Calculates and returns the total area of other land, including drained and rewetted organic soil and wetland.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.other_land.other_land_budget.OtherLandBudget
+
+
+Module Contents
+---------------
+
+.. py:class:: OtherLandBudget(optigob_data_manager)
+
+   .. py:attribute:: data_manager_class
+
+
+   .. py:attribute:: target_year
+
+
+   .. py:attribute:: wetland_restored_fraction
+
+
+   .. py:attribute:: organic_soil_under_grass_fraction
+
+
+   .. py:method:: get_wetland_restoration_emission_co2e()
+
+      Calculates and returns the CO2e emissions from wetland restoration.
+
+      :returns: The CO2e emissions value.
+      :rtype: float
+
+
+
+   .. py:method:: get_wetland_restoration_emission_ch4()
+
+      Calculates and returns the CH4 emissions from wetland restoration.
+
+      :returns: The CH4 emissions value.
+      :rtype: float
+
+
+
+   .. py:method:: get_wetland_restoration_emission_n2o()
+
+      Calculates and returns the N2O emissions from wetland restoration.
+
+      :returns: The N2O emissions value.
+      :rtype: float
+
+
+
+   .. py:method:: get_wetland_restoration_emission_co2()
+
+      Calculates and returns the CO2 emissions from wetland restoration.
+
+      :returns: The CO2 emissions value.
+      :rtype: float
+
+
+
+   .. py:method:: get_drained_organic_soil_area()
+
+      Calculates and returns the area of drained organic soil.
+
+      :returns: The area of drained organic soil in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_rewetted_organic_area()
+
+      Calculates and returns the area of rewetted organic soil.
+
+      :returns: The area of rewetted organic soil in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_drained_wetland_area()
+
+      Calculates and returns the area of drained wetland.
+
+      :returns: The area of drained wetland in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_rewetted_wetland_area()
+
+      Calculates and returns the area of rewetted wetland.
+
+      :returns: The area of rewetted wetland in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_near_natural_wetland_area()
+
+      Calculates and returns the area of near-natural wetland.
+
+      :returns: The area of near-natural wetland in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_total_other_land_area()
+
+      Calculates and returns the total area of other land, including drained and rewetted organic soil and wetland.
+
+      :returns: The total area of other land in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_rewetted_organic_hnv_area()
+
+      Returns the area of rewetted high nature value (HNV) organic soil.
+
+      :returns: The area of rewetted HNV organic soil in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_rewetted_wetland_hnv_area()
+
+      Returns the area of rewetted high nature value (HNV) wetland.
+
+      :returns: The area of rewetted HNV wetland in hectares.
+      :rtype: float
+
+
+
+   .. py:method:: get_near_natural_wetland_hnv_area()
+
+      Returns the area of near-natural high nature value (HNV) wetland.
+
+      :returns: The area of near-natural HNV wetland in hectares.
+      :rtype: float
+
+
+

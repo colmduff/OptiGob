@@ -1,0 +1,84 @@
+optigob.input_helper
+====================
+
+.. py:module:: optigob.input_helper
+
+.. autoapi-nested-parse::
+
+   input_helper.py
+   ==============
+
+   This module provides the InputHelper class, which offers a user-friendly interface for querying and exploring valid input parameter combinations for scenario analysis in the OptiGob framework. It wraps the InputQuery class and provides additional convenience methods for users to inspect, filter, and display possible input combinations for use with the Optigob API.
+
+   Typical usage example:
+       helper = InputHelper()
+       helper.print_all_combos()
+       df = helper.get_combos_df()
+       combos = helper.get_combos_dict()
+       filtered = helper.filter_combos(input_type="forest", broadleaf_frac=0.5)
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.input_helper.InputHelper
+
+
+Module Contents
+---------------
+
+.. py:class:: InputHelper
+
+   InputHelper class for querying and displaying valid input parameter combinations for Optigob scenarios.
+   Provides convenience methods to print, filter, and retrieve input combos as DataFrames or dicts.
+
+
+   .. py:attribute:: query
+
+
+   .. py:method:: get_combos_dict()
+
+      Returns all valid input combinations as a dictionary.
+      :returns: {input_type: [combo_dict, ...], ...}
+      :rtype: dict
+
+
+
+   .. py:method:: get_combos_df()
+
+      Returns all valid input combinations as a pandas DataFrame.
+      :returns: DataFrame with all input combinations and input_type column.
+      :rtype: pd.DataFrame
+
+
+
+   .. py:method:: print_all_combos()
+
+      Prints all valid input combinations to the screen, grouped by input type.
+
+
+
+   .. py:method:: filter_combos(input_type=None, **kwargs)
+
+      Filters input combinations by input_type and/or parameter values.
+      :param input_type: Filter by input type (e.g., 'forest', 'organic_soil').
+      :type input_type: str, optional
+      :param \*\*kwargs: Additional key-value pairs to filter on (e.g., broadleaf_frac=0.5).
+
+      :returns: Filtered DataFrame of input combinations.
+      :rtype: pd.DataFrame
+
+
+
+   .. py:method:: print_readable_combos(max_rows_per_type=10)
+
+      Prints a nicely formatted, readable summary of valid input combinations,
+      grouped by input type. Limits rows per input type for readability.
+      :param max_rows_per_type: Maximum number of combos to show per input type.
+      :type max_rows_per_type: int
+
+
+

@@ -1,0 +1,1387 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.resource_manager.optigob_data_manager &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../resource_manager.html">optigob.resource_manager</a></li>
+      <li class="breadcrumb-item active">optigob.resource_manager.optigob_data_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optigob.resource_manager.optigob_data_manager</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">optigob_data_manager</span>
+<span class="sd">====================</span>
+
+<span class="sd">This module provides the OptiGobDataManager class, which is responsible for managing and retrieving</span>
+<span class="sd">various data scalers related to livestock emissions, forest management, and other land use sectors.</span>
+<span class="sd">The class interacts with a database to load and cache scaler values, and provides methods to retrieve</span>
+<span class="sd">these values based on specific parameters.</span>
+
+<span class="sd">Classes:</span>
+<span class="sd">    OptiGobDataManager: Manages and retrieves data scalers for various sectors.</span>
+
+<span class="sd">Methods:</span>
+<span class="sd">    get_ha_to_kha: Retrieves the conversion factor from hectares to kilohectares.</span>
+<span class="sd">    get_kha_to_ha: Retrieves the conversion factor from square kilohectares to hectares.</span>
+<span class="sd">    get_AR_gwp100_values: Retrieves the GWP values for each gas based on the AR value.</span>
+<span class="sd">    get_emission_sectors: Retrieves the emission sectors.</span>
+<span class="sd">    get_livestock_emission_scaler: Retrieves the scaler value for a given year, system, gas, scenario, and abatement.</span>
+<span class="sd">    get_livestock_area_scaler: Retrieves the scaler value for a given year, system, scenario, and abatement.</span>
+<span class="sd">    get_livestock_protein_scaler: Retrieves the scaler value for a given year, system, item, scenario, and abatement.</span>
+<span class="sd">    get_static_livestock_emission_scaler: Retrieves the static scaler value for a given year, system, gas, and abatement.</span>
+<span class="sd">    get_static_livestock_area_scaler: Retrieves the static scaler value for a given year, system, and abatement.</span>
+<span class="sd">    get_static_livestock_protein_scaler: Retrieves the static scaler value for a given year, system, and abatement.</span>
+<span class="sd">    get_forest_scaler: Retrieves the scaler value for a given year and forest management parameters.</span>
+<span class="sd">    get_static_forest_scaler: Retrieves the static scaler value for a given year and harvest intensity.</span>
+<span class="sd">    get_ccs_scaler: Retrieves the CCS scaler value for a given year and forest management parameters.</span>
+<span class="sd">    get_hwp_scaler: Retrieves the HWP scaler value for a given year and forest management parameters.</span>
+<span class="sd">    get_substitution_scaler: Retrieves the substitution scaler value for a given year and forest management parameters.</span>
+<span class="sd">    get_organic_soil_emission_scaler: Retrieves the organic soil emission scaler value for a given year and land management parameters.</span>
+<span class="sd">    get_organic_soil_area_scaler: Retrieves the organic soil area scaler value for a given year and land management parameters.</span>
+<span class="sd">    get_ad_area_scaler: Retrieves the AD area scaler value for a given year and land management parameters.</span>
+<span class="sd">    get_ad_emission_scaler: Retrieves the AD emission scaler value for a given year.</span>
+<span class="sd">    get_crop_scaler: Retrieves the crop scaler value for a given year, gas, and abatement.</span>
+<span class="sd">    get_baseline_year: Retrieves the baseline year from the SIP input file.</span>
+<span class="sd">    get_target_year: Retrieves the target year from the SIP input file.</span>
+<span class="sd">    get_abatement_scenario: Retrieves the abatement scenario from the SIP input file.</span>
+<span class="sd">    get_dairy_beef_ratio: Retrieves the dairy to beef ratio from the SIP input file.</span>
+<span class="sd">    get_forest_harvest_intensity: Retrieves the forest harvest intensity from the SIP input file.</span>
+<span class="sd">    get_afforestation_rate_kha_per_year: Retrieves the afforestation rate in kha per year from the SIP input file.</span>
+<span class="sd">    get_broadleaf_fraction: Retrieves the broadleaf fraction from the SIP input file.</span>
+<span class="sd">    get_organic_soil_fraction_forest: Retrieves the organic soil fraction for forest from the SIP input file.</span>
+<span class="sd">    get_beccs_included: Retrieves whether BECCS is included from the SIP input file.</span>
+<span class="sd">    get_wetland_restored_fraction: Retrieves the wetland restored fraction from the SIP input file.</span>
+<span class="sd">    get_organic_soil_under_grass_fraction: Retrieves the organic soil under grass fraction from the SIP input file.</span>
+<span class="sd">    get_biomethane_included: Retrieves whether biomethane is included from the SIP input file.</span>
+<span class="sd">    get_abatement_type: Retrieves the abatement type from the SIP input file.</span>
+<span class="sd">    get_AR: Retrieves the AR value from the SIP input file.</span>
+<span class="sd">    get_split_gas: Retrieves whether split gas is used from the SIP input file.</span>
+<span class="sd">    get_split_gas_fraction: Retrieves the split gas fraction from the SIP input file.</span>
+<span class="sd">    get_baseline_dairy_population: Retrieves the baseline dairy population from the SIP input file.</span>
+<span class="sd">    get_baseline_beef_population: Retrieves the baseline beef population from the SIP input file.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.resource_manager.database_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatabaseManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.resource_manager.import_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImportFactory</span>  <span class="c1"># Import the ImportFactory</span>
+
+<div class="viewcode-block" id="OptiGobDataManager">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptiGobDataManager</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sip</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the OptiGobDataManager.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            sip (str or dict): A file path to a JSON, YAML, CSV file or a dictionary containing</span>
+<span class="sd">                               the standard input parameters. Expected keys are:</span>
+<span class="sd">                               - &quot;baseline_year&quot;</span>
+<span class="sd">                               - &quot;target_year&quot;</span>
+<span class="sd">                               - &quot;abatement_scenario&quot;</span>
+<span class="sd">                               - &quot;gas&quot;</span>
+<span class="sd">                               - &quot;emissions_budget&quot;</span>
+<span class="sd">                               - &quot;dairy_beef_ratio&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If sip is a string, assume it&#39;s a file path and load the configuration using ImportFactory.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sip</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span> <span class="o">=</span> <span class="n">ImportFactory</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="n">sip</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span> <span class="o">=</span> <span class="n">sip</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span> <span class="o">=</span> <span class="n">DatabaseManager</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_emission_scalers</span> <span class="o">=</span> <span class="kc">None</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_area_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_protein_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_forest_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_static_forest_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wood_ccs_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hwp_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_substitution_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_emission_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_area_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ad_area_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ad_emission_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crop_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_emission_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_area_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_protein_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_emission_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_protein_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_protein_content_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_willow_bioenergy_scalers</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ha_to_kha</span> <span class="o">=</span> <span class="mf">1e-3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kha_to_ha</span> <span class="o">=</span> <span class="mf">1e3</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_AR_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;AR5&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;CO2&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;CH4&quot;</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>
+                <span class="s2">&quot;N2O&quot;</span><span class="p">:</span> <span class="mi">265</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;AR6&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;CO2&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;CH4&quot;</span><span class="p">:</span> <span class="mi">27</span><span class="p">,</span>
+                <span class="s2">&quot;N2O&quot;</span><span class="p">:</span> <span class="mi">273</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;agriculture&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;existing_forest&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;afforestation&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hwp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;other_land_use&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ad&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;beccs&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="OptiGobDataManager.get_ha_to_kha">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_ha_to_kha">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ha_to_kha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the conversion factor from hectares to square kilometers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The conversion factor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ha_to_kha</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_kha_to_ha">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_kha_to_ha">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_kha_to_ha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the conversion factor from square kilometers to hectares.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The conversion factor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kha_to_ha</span></div>
+
+    
+
+<div class="viewcode-block" id="OptiGobDataManager.get_AR_gwp100_values">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_AR_gwp100_values">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_AR_gwp100_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gas</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the GWP values for each gas based on the AR value.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            gas (str): The gas identifier (e.g., &quot;CO2&quot;, &quot;CH4&quot;, &quot;N2O&quot;).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The GWP values for each gas.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_AR_VALUES</span><span class="p">[</span><span class="s2">&quot;AR&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_AR</span><span class="p">())][</span><span class="n">gas</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_emission_sectors">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_emission_sectors">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_emission_sectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the emission sectors.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The emission sectors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager._load_livestock_emission_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_livestock_emission_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_livestock_emission_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the livestock scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_emission_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_emission_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_livestock_emission_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_emission_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_static_livestock_emission_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_static_livestock_emission_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_static_livestock_emission_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the static livestock scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_emission_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_emission_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_static_livestock_emission_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_emission_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_livestock_area_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_livestock_area_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_livestock_area_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the livestock area scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_area_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_area_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_livestock_area_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_area_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_static_livestock_area_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_static_livestock_area_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_static_livestock_area_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the static livestock area scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_area_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_area_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_static_livestock_area_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_area_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_livestock_protein_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_livestock_protein_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_livestock_protein_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the livestock protein scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_protein_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_protein_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_livestock_protein_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_livestock_protein_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_static_livestock_protein_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_static_livestock_protein_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_static_livestock_protein_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the static livestock protein scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_protein_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_protein_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_static_livestock_protein_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_livestock_protein_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_forest_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_forest_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_forest_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the forest scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forest_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_forest_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_forest_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forest_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_static_forest_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_static_forest_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_static_forest_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the static forest scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_forest_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_static_forest_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_static_forest_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_static_forest_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_wood_ccs_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_wood_ccs_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_wood_ccs_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the CCS scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wood_ccs_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wood_ccs_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_wood_ccs_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wood_ccs_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_hwp_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_hwp_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_hwp_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the HWP scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hwp_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_hwp_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_hwp_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hwp_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_substitution_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_substitution_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_substitution_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the substitution scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_substitution_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_substitution_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_substitution_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_substitution_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager._load_organic_soil_emission_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_organic_soil_emission_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_organic_soil_emission_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the organic soil emission scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_emission_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_emission_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_organic_soil_emission_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_emission_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_organic_soil_area_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_organic_soil_area_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_organic_soil_area_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the organic soil area scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_area_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_area_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_organic_soil_area_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_ad_area_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_ad_area_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_ad_area_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the AD area scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ad_area_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ad_area_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_ad_area_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ad_area_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_ad_emission_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_ad_emission_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_ad_emission_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the AD emission scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ad_emission_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ad_emission_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_ad_emission_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ad_emission_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_crop_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_crop_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_crop_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the crop scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crop_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_crop_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_crop_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crop_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_protein_crop_emission_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_protein_crop_emission_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_protein_crop_emission_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the protein crop emission scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_emission_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_emission_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_protein_crop_emission_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_emission_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager._load_protein_crop_protein_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_protein_crop_protein_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_protein_crop_protein_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the protein crop protein scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_protein_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_protein_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_protein_crop_protein_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protein_crop_protein_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager._load_protein_content_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_protein_content_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_protein_content_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the protein content scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protein_content_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_protein_content_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_protein_content_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protein_content_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager._load_willow_bioenergy_scalers">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager._load_willow_bioenergy_scalers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_willow_bioenergy_scalers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and caches the willow bioenergy scalers from the database.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_willow_bioenergy_scalers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_willow_bioenergy_scalers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_manager</span><span class="o">.</span><span class="n">get_willow_bioengery_scaler_table</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_willow_bioenergy_scalers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+    
+
+<div class="viewcode-block" id="OptiGobDataManager.get_livestock_emission_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_livestock_emission_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_livestock_emission_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the scaler value for a given year, system, gas, and scenario.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            system (str): The system identifier.</span>
+<span class="sd">            gas (str): The gas identifier.</span>
+<span class="sd">            scenario (int): The scenario identifier.</span>
+<span class="sd">            abatement (int): The abatement identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The scaler value and additional information.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_livestock_emission_scalers</span><span class="p">()</span>
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">system</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">gas</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scenario&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">scenario</span><span class="p">)</span> <span class="o">&amp;</span> 
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="n">system</span><span class="p">,</span> 
+                  <span class="s2">&quot;gas&quot;</span><span class="p">:</span> <span class="n">gas</span><span class="p">,</span> 
+                  <span class="s2">&quot;scenario&quot;</span><span class="p">:</span> <span class="n">scenario</span><span class="p">,</span> 
+                  <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span> 
+                  <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                  <span class="s2">&quot;pop&quot;</span><span class="p">:</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;pop&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()}</span>
+        <span class="k">return</span> <span class="n">output</span>            </div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_livestock_area_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_livestock_area_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_livestock_area_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the scaler value for a given year, system, and scenario.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            system (str or list): The system identifier(s).</span>
+<span class="sd">            scenario (int): The scenario identifier.</span>
+<span class="sd">            abatement (int): The abatement identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_livestock_area_scalers</span><span class="p">()</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">]</span><span class="o">==</span> <span class="n">system</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scenario&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">scenario</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;system&quot;</span><span class="p">:</span> <span class="n">system</span><span class="p">,</span> 
+                  <span class="s2">&quot;scenario&quot;</span><span class="p">:</span> <span class="n">scenario</span><span class="p">,</span> 
+                  <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span>
+                  <span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                  <span class="s2">&quot;hnv_area&quot;</span><span class="p">:</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;hnv_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()}</span>
+        <span class="k">return</span> <span class="n">output</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_livestock_protein_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_livestock_protein_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_livestock_protein_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the scaler value for a given year, system, and scenario.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            system (str): The system identifier.</span>
+<span class="sd">            item (str): The item identifier.</span>
+<span class="sd">            scenario (int): The scenario identifier.</span>
+<span class="sd">            abatement (int): The abatement identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_livestock_protein_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">system</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;item&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">item</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scenario&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">scenario</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_static_livestock_emission_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_static_livestock_emission_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_static_livestock_emission_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                            <span class="n">year</span><span class="p">,</span>
+                                            <span class="n">system</span><span class="p">,</span> 
+                                            <span class="n">gas</span><span class="p">,</span> 
+                                            <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the static scaler value for a given year, system, gas, and abatement.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            system (str): The system identifier.</span>
+<span class="sd">            gas (str): The gas identifier.</span>
+<span class="sd">            abatement (int): The abatement identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_static_livestock_emission_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">system</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">gas</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scenario&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_static_livestock_area_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_static_livestock_area_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_static_livestock_area_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                        <span class="n">year</span><span class="p">,</span>
+                                        <span class="n">system</span><span class="p">,</span>
+                                        <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the static scaler value for a given year, system, and abatement.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            system (str): The system identifier.</span>
+<span class="sd">            abatement (int): The abatement identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_static_livestock_area_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">system</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scenario&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_static_livestock_protein_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_static_livestock_protein_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_static_livestock_protein_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the static scaler value for a given year, system, and abatement.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            system (str): The system identifier.</span>
+<span class="sd">            item (str): The item identifier.</span>
+<span class="sd">            abatement (int): The abatement identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_static_livestock_protein_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;system&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">system</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;item&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">item</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scenario&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_forest_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_forest_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_forest_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_year</span><span class="p">,</span> <span class="n">affor_rate</span><span class="p">,</span> <span class="n">broadleaf_frac</span><span class="p">,</span> <span class="n">organic_soil_frac</span><span class="p">,</span> <span class="n">harvest</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the scaler value for a given year and forest management parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">            affor_rate (float): The afforestation rate in kha per year.</span>
+<span class="sd">            broadleaf_frac (float): The fraction of broadleaf trees.</span>
+<span class="sd">            organic_soil_frac (float): The fraction of organic soil.</span>
+<span class="sd">            harvest (float): The forest harvest intensity.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_forest_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;affor_rate_kha-yr&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">affor_rate</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;broadleaf_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">broadleaf_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;organic_soil_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">organic_soil_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;harvest&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">harvest</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_static_forest_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_static_forest_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_static_forest_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_year</span><span class="p">,</span><span class="n">harvest</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the static scaler value for a given year and harvest intensity.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">            harvest (float): The forest harvest intensity.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_static_forest_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;harvest&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">harvest</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_wood_ccs_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_wood_ccs_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_wood_ccs_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">target_year</span><span class="p">,</span> <span class="n">affor_rate</span><span class="p">,</span> <span class="n">broadleaf_frac</span><span class="p">,</span> <span class="n">organic_soil_frac</span><span class="p">,</span> <span class="n">harvest</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the CCS scaler value for a given year and forest management parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">            affor_rate (float): The afforestation rate in kha per year.</span>
+<span class="sd">            broadleaf_frac (float): The fraction of broadleaf trees.</span>
+<span class="sd">            organic_soil_frac (float): The fraction of organic soil.</span>
+<span class="sd">            harvest (float): The forest harvest intensity.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_wood_ccs_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;affor_rate_kha-yr&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">affor_rate</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;broadleaf_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">broadleaf_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;organic_soil_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">organic_soil_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;harvest&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">harvest</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_hwp_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_hwp_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_hwp_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">target_year</span><span class="p">,</span> <span class="n">affor_rate</span><span class="p">,</span> <span class="n">broadleaf_frac</span><span class="p">,</span> <span class="n">organic_soil_frac</span><span class="p">,</span> <span class="n">harvest</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the HWP scaler value for a given year and forest management parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">            affor_rate (float): The afforestation rate in kha per year.</span>
+<span class="sd">            broadleaf_frac (float): The fraction of broadleaf trees.</span>
+<span class="sd">            organic_soil_frac (float): The fraction of organic soil.</span>
+<span class="sd">            harvest (float): The forest harvest intensity.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_hwp_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;affor_rate_kha-yr&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">affor_rate</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;broadleaf_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">broadleaf_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;organic_soil_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">organic_soil_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;harvest&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">harvest</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_substitution_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_substitution_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_substitution_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">target_year</span><span class="p">,</span> <span class="n">affor_rate</span><span class="p">,</span> <span class="n">broadleaf_frac</span><span class="p">,</span> <span class="n">organic_soil_frac</span><span class="p">,</span> <span class="n">harvest</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the substitution scaler value for a given year and forest management parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">            affor_rate (float): The afforestation rate in kha per year.</span>
+<span class="sd">            broadleaf_frac (float): The fraction of broadleaf trees.</span>
+<span class="sd">            organic_soil_frac (float): The fraction of organic soil.</span>
+<span class="sd">            harvest (float): The forest harvest intensity.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_substitution_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;affor_rate_kha-yr&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">affor_rate</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;broadleaf_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">broadleaf_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;organic_soil_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">organic_soil_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;harvest&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">harvest</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_organic_soil_emission_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_organic_soil_emission_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_organic_soil_emission_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                                         <span class="n">target_year</span><span class="p">,</span>
+                                        <span class="n">wetland_restored_frac</span><span class="p">,</span> 
+                                        <span class="n">organic_soil_under_grass_frac</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the organic soil emission scaler value for a given year and land management parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">            wetland_restored_frac (float): The fraction of wetland restored.</span>
+<span class="sd">            organic_soil_under_grass_frac (float): The fraction of organic soil under grass.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_organic_soil_emission_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;wetland_restored_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">wetland_restored_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;organic_soil_under_grass_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">organic_soil_under_grass_frac</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_organic_soil_area_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_organic_soil_area_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_organic_soil_area_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                    <span class="n">target_year</span><span class="p">,</span>
+                                    <span class="n">wetland_restored_frac</span><span class="p">,</span>
+                                    <span class="n">organic_soil_under_grass_frac</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the organic soil area scaler value for a given year and land management parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">            wetland_restored_frac (float): The fraction of wetland restored.</span>
+<span class="sd">            organic_soil_under_grass_frac (float): The fraction of organic soil under grass.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_organic_soil_area_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;wetland_restored_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">wetland_restored_frac</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;organic_soil_under_grass_frac&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">organic_soil_under_grass_frac</span><span class="p">)</span>
+        <span class="p">]</span>
+
+
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_ad_area_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_ad_area_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_area_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_year</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the AD area scaler value for a given year.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_ad_area_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_ad_emission_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_ad_emission_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ad_emission_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_year</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the AD emission scaler value for a given year.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            target_year (int): The year of interest.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_ad_emission_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_year</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_crop_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_crop_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the crop scaler value for a given year, gas, and abatement.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            gas (str): The gas identifier.</span>
+<span class="sd">            abatement (int): The abatement identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_crop_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">gas</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;scenario&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> 
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_protein_crop_emission_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_protein_crop_emission_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_protein_crop_emission_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">ghg</span><span class="p">,</span><span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the protein crop emission scaler value for a given year, crop, gas, and abatement.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_protein_crop_emission_scalers</span><span class="p">()</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>           
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ghg</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching protein crop emission scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_protein_crop_protein_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_protein_crop_protein_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_protein_crop_protein_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">abatement</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the protein crop protein scaler value for a given year, crop, and abatement.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_protein_crop_protein_scalers</span><span class="p">()</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;abatement&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">abatement</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching protein crop protein scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_protein_content_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_protein_content_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_protein_content_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the protein content scaler value.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The DataFrame containing the protein content scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_protein_content_scalers</span><span class="p">()</span>
+        <span class="c1"># Filter the DataFrame based on the provided type.</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">type</span><span class="p">][</span><span class="s2">&quot;conversion&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching protein content scaler found.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_willow_bioenergy_scaler">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_willow_bioenergy_scaler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_willow_bioenergy_scaler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">ghg</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the willow bioenergy scaler value for a given year, type, and gas.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            year (int): The year of interest.</span>
+<span class="sd">            type (str): The type of willow bioenergy.</span>
+<span class="sd">            ghg (str): The greenhouse gas identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame: The filtered DataFrame containing the scaler values.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no matching row is found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_willow_bioenergy_scalers</span><span class="p">()</span>
+
+        <span class="c1"># Filter the DataFrame based on the provided parameters.</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">type</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ghg</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">filtered</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No matching scaler found for the provided parameters.&quot;</span><span class="p">)</span>
+        <span class="c1"># Return the scaler value; if more than one row matches, we take the first.</span>
+        <span class="k">return</span> <span class="n">filtered</span></div>
+
+
+    <span class="c1"># Getter methods for the input parameters.</span>
+<div class="viewcode-block" id="OptiGobDataManager.get_baseline_year">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_baseline_year">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_baseline_year</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the baseline year from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The baseline year.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;baseline_year&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_target_year">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_target_year">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_target_year</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the target year from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The target year.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;target_year&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_abatement_scenario">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_abatement_scenario">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_abatement_scenario</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the abatement scenario from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The abatement scenario.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;abatement_scenario&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_livestock_ratio_type">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_livestock_ratio_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_livestock_ratio_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the livestock ratio type from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The livestock ratio type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;livestock_ratio_type&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_livestock_ratio_value">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_livestock_ratio_value">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_livestock_ratio_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the livestock ratio from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The livestock ratio.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;livestock_ratio_value&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_forest_harvest_intensity">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_forest_harvest_intensity">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_forest_harvest_intensity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the forest harvest intensity from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The forest harvest intensity.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;forest_harvest_intensity&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_afforestation_rate_kha_per_year">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_afforestation_rate_kha_per_year">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_afforestation_rate_kha_per_year</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the afforestation rate in kha per year from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The afforestation rate in kha per year.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;afforestation_rate_kha_per_year&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_broadleaf_fraction">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_broadleaf_fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_broadleaf_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the broadleaf fraction from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The broadleaf fraction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;broadleaf_fraction&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_organic_soil_fraction_forest">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_organic_soil_fraction_forest">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_organic_soil_fraction_forest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the organic soil fraction for forest from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The organic soil fraction for forest.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;organic_soil_fraction&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_beccs_included">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_beccs_included">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_beccs_included</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves whether BECCS is included from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if BECCS is included, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;beccs_included&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_wetland_restored_fraction">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_wetland_restored_fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_wetland_restored_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the wetland restored fraction from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The wetland restored fraction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wetland_restored_frac&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_organic_soil_under_grass_fraction">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_organic_soil_under_grass_fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_organic_soil_under_grass_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the organic soil under grass fraction from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The organic soil under grass fraction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;organic_soil_under_grass_frac&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_biomethane_included">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_biomethane_included">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_biomethane_included</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves whether biomethane is included from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if biomethane is included, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;biomethane_included&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OptiGobDataManager.get_abatement_type">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_abatement_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_abatement_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the abatement type from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The abatement type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;abatement_type&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_AR">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_AR">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_AR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the AR value from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The AR value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AR&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_split_gas">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_split_gas">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_split_gas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves whether split gas is used from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if split gas is used, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;split_gas&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_split_gas_fraction">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_split_gas_fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_split_gas_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the split gas fraction from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The split gas fraction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;split_gas_frac&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_protein_crop_included">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_protein_crop_included">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_protein_crop_included</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves whether protein crop is included from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if protein crop is included, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;protein_crop_included&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_protein_crop_multiplier">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_protein_crop_multiplier">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_protein_crop_multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the protein crop multiplier from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The protein crop multiplier.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;protein_crop_multiplier&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_beccs_willow_area_multiplier">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_beccs_willow_area_multiplier">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_beccs_willow_area_multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the BECCS willow area multiplier from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The BECCS willow area multiplier.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;beccs_willow_area_multiplier&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_pig_and_poultry_multiplier">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_pig_and_poultry_multiplier">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pig_and_poultry_multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the pig and poultry multiplier from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The pig and poultry multiplier.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pig_and_poultry_multiplier&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_baseline_dairy_population">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_baseline_dairy_population">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_baseline_dairy_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the baseline dairy population from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The baseline dairy population.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;baseline_dairy_pop&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="OptiGobDataManager.get_baseline_beef_population">
+<a class="viewcode-back" href="../../../autoapi/optigob/resource_manager/optigob_data_manager/index.html#optigob.resource_manager.optigob_data_manager.OptiGobDataManager.get_baseline_beef_population">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_baseline_beef_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the baseline beef population from the SIP input file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The baseline beef population.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">standard_input_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;baseline_beef_pop&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

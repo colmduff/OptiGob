@@ -1,0 +1,644 @@
+optigob.livestock.livestock_budget
+==================================
+
+.. py:module:: optigob.livestock.livestock_budget
+
+.. autoapi-nested-parse::
+
+   livestock_budget
+   ================
+
+   This module contains the LivestockBudget class, which is responsible for managing and optimizing livestock populations, emissions, protein yields, and land use within the FORESIGHT framework. The class integrates with data managers and optimization models to compute livestock-related budgets and outputs under various scenarios.
+
+   Classes:
+       - LivestockBudget: Manages and optimizes livestock populations, emissions, protein, and land use.
+
+   .. method:: - __init__(self, optigob_data_manager, net_zero_budget=None, split_gas_budget=None)
+
+      Initialize the LivestockBudget class and set up all required budgets, data managers, and scenario parameters.
+
+   .. method:: - _get_total_area_commitment(self)
+
+      Calculate the total area commitment for all land uses that compete with livestock (rewetted, afforested, biomethane, willow, protein crops).
+
+   .. method:: - _load_optimisation_outputs(self)
+
+      Load and cache the livestock optimisation outputs if not already loaded.
+
+   .. method:: - _get_total_non_livestock_emission_ch4(self)
+
+      Calculate total CH4 emissions from all relevant land uses and sectors in the scenario.
+
+   .. method:: - get_ch4_budget(self)
+
+      Calculate the CH4 budget for the scenario, based on baseline emissions and the split gas fraction.
+
+   .. method:: - get_split_gas_ch4_emission(self)
+
+      Calculate the remaining CH4 budget after accounting for all scenario emissions, under the split gas approach.
+
+   .. method:: - get_optimisation_outputs(self)
+
+      Run the livestock population optimisation for the current scenario and constraints.
+
+   .. method:: - get_dairy_population(self)
+
+      Get the optimised dairy cow population for the scenario.
+
+   .. method:: - get_beef_population(self)
+
+      Get the optimised beef cow population for the scenario.
+
+   .. method:: - _get_scaled_beef_population(self)
+
+      Get the beef cow population, scaled by the emission scaler for the scenario.
+
+   .. method:: - _get_scaled_dairy_population(self)
+
+      Get the dairy cow population, scaled by the emission scaler for the scenario.
+
+   .. method:: - get_dairy_cows_co2_emission(self)
+
+      Calculate the total CO2 emissions from dairy cows for the scenario.
+
+   .. method:: - get_dairy_cows_ch4_emission(self)
+
+      Calculate the total CH4 emissions from dairy cows for the scenario.
+
+   .. method:: - get_dairy_cows_n2o_emission(self)
+
+      Calculate the total N2O emissions from dairy cows for the scenario.
+
+   .. method:: - get_dairy_cows_co2e_emission(self)
+
+      Calculate the total CO2e emissions from dairy cows for the scenario.
+
+   .. method:: - get_beef_cows_co2_emission(self)
+
+      Calculate the total CO2 emissions from beef cows for the scenario.
+
+   .. method:: - get_beef_cows_ch4_emission(self)
+
+      Calculate the total CH4 emissions from beef cows for the scenario.
+
+   .. method:: - get_beef_cows_n2o_emission(self)
+
+      Calculate the total N2O emissions from beef cows for the scenario.
+
+   .. method:: - get_beef_cows_co2e_emission(self)
+
+      Calculate the total CO2e emissions from beef cows for the scenario.
+
+   .. method:: - get_total_co2_emission(self)
+
+      Calculate the total CO2 emissions from all livestock (dairy and beef) for the scenario.
+
+   .. method:: - get_total_ch4_emission(self)
+
+      Calculate the total CH4 emissions from all livestock (dairy and beef) for the scenario.
+
+   .. method:: - get_total_n2o_emission(self)
+
+      Calculate the total N2O emissions from all livestock (dairy and beef) for the scenario.
+
+   .. method:: - get_total_co2e_emission(self)
+
+      Calculate the total CO2e emissions from all livestock (dairy and beef) for the scenario.
+
+   .. method:: - get_dairy_cows_area(self)
+
+      Calculate the total land area required for dairy cows.
+
+   .. method:: - get_beef_cows_area(self)
+
+      Calculate the total land area required for beef cows.
+
+   .. method:: - get_total_area(self)
+
+      Calculate the total land area required for all livestock (dairy and beef).
+
+   .. method:: - get_total_beef_protein(self)
+
+      Calculate the total protein production from beef and dairy+beef systems for the scenario.
+
+   .. method:: - get_total_milk_protein(self)
+
+      Calculate the total milk protein production from dairy cows for the scenario.
+
+   .. method:: - get_hnv_area(self)
+
+      Calculate the area of high nature value (HNV) grassland managed by beef cows, including both beef and dairy+beef systems.
+      
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.livestock.livestock_budget.LivestockBudget
+
+
+Module Contents
+---------------
+
+.. py:class:: LivestockBudget(optigob_data_manager, net_zero_budget=None, split_gas_budget=None)
+
+   The LivestockBudget class manages and optimizes livestock populations, emissions, protein yields, and land use within the FORESIGHT framework.
+   It integrates with data managers and optimization models to compute livestock-related budgets, emissions, protein yields, and land requirements under various scenarios.
+
+   .. attribute:: net_zero_budget
+
+      Emissions budget for net zero scenarios.
+
+      :type: float or None
+
+   .. attribute:: split_gas_budget
+
+      Emissions budget for split gas scenarios.
+
+      :type: float or None
+
+   .. attribute:: data_manager_class
+
+      Instance of the data manager for accessing scenario and scaler data.
+
+   .. attribute:: optimisation
+
+      Optimisation engine for livestock populations.
+
+      :type: LivestockOptimisation
+
+   .. attribute:: baseline_emission
+
+      Baseline emissions calculator.
+
+      :type: BaselineEmission
+
+   .. attribute:: other_land_budget
+
+      Budget for other land uses.
+
+      :type: OtherLandBudget
+
+   .. attribute:: forest_budget
+
+      Budget for forest land uses.
+
+      :type: ForestBudget
+
+   .. attribute:: bio_energy_budget
+
+      Budget for bioenergy land uses.
+
+      :type: BioEnergyBudget
+
+   .. attribute:: protein_crop_budget
+
+      Budget for protein crop land uses.
+
+      :type: ProteinCropsBudget
+
+   .. attribute:: static_ag_budget
+
+      Budget for static agriculture land uses.
+
+      :type: StaticAgBudget
+
+   .. attribute:: rewetted_area
+
+      Area of rewetted organic soils (ha).
+
+      :type: float
+
+   .. attribute:: afforested_area
+
+      Area for afforestation (ha).
+
+      :type: float
+
+   .. attribute:: biomethane_area
+
+      Area for biomethane production (ha).
+
+      :type: float
+
+   .. attribute:: willow_area
+
+      Area for willow production (ha).
+
+      :type: float
+
+   .. attribute:: protein_crop_area
+
+      Area for protein crops (ha).
+
+      :type: float
+
+   .. attribute:: _milk_protein
+
+      Protein content scaler for milk.
+
+      :type: float
+
+   .. attribute:: _beef_protein
+
+      Protein content scaler for beef.
+
+      :type: float
+
+   .. attribute:: target_year
+
+      Target year for scenario.
+
+      :type: int
+
+   .. attribute:: scenario
+
+      Abatement scenario name.
+
+      :type: str
+
+   .. attribute:: abatement
+
+      Abatement type.
+
+      :type: str
+
+   .. attribute:: get_livestock_ratio_type
+
+      Type of livestock ratio constraint.
+
+      :type: str
+
+   .. attribute:: livestock_ratio_value
+
+      Value for livestock ratio constraint.
+
+      :type: float
+
+   .. attribute:: split_gas_approach
+
+      Whether split gas approach is used.
+
+      :type: bool
+
+   .. attribute:: split_gas_frac
+
+      Fraction for split gas approach.
+
+      :type: float
+
+   .. attribute:: ch4_baseline
+
+      Baseline CH4 emissions (kt).
+
+      :type: float
+
+   .. attribute:: ch4_budget
+
+      CH4 budget for split gas approach (kt).
+
+      :type: float
+
+   .. attribute:: _optimisation_outputs
+
+      Cached optimisation outputs.
+
+      :type: dict or None
+
+
+   .. py:attribute:: net_zero_budget
+      :value: None
+
+
+
+   .. py:attribute:: split_gas_budget
+      :value: None
+
+
+
+   .. py:attribute:: data_manager_class
+
+
+   .. py:attribute:: optimisation
+
+
+   .. py:attribute:: baseline_emission
+
+
+   .. py:attribute:: other_land_budget
+
+
+   .. py:attribute:: forest_budget
+
+
+   .. py:attribute:: bio_energy_budget
+
+
+   .. py:attribute:: protein_crop_budget
+
+
+   .. py:attribute:: static_ag_budget
+
+
+   .. py:attribute:: rewetted_area
+
+
+   .. py:attribute:: afforested_area
+
+
+   .. py:attribute:: biomethane_area
+
+
+   .. py:attribute:: willow_area
+
+
+   .. py:attribute:: protein_crop_area
+
+
+   .. py:attribute:: _milk_protein
+
+
+   .. py:attribute:: _beef_protein
+
+
+   .. py:attribute:: target_year
+
+
+   .. py:attribute:: scenario
+
+
+   .. py:attribute:: abatement
+
+
+   .. py:attribute:: get_livestock_ratio_type
+
+
+   .. py:attribute:: livestock_ratio_value
+
+
+   .. py:attribute:: split_gas_approach
+
+
+   .. py:attribute:: split_gas_frac
+
+
+   .. py:attribute:: _optimisation_outputs
+      :value: None
+
+
+
+   .. py:method:: _get_total_area_commitment()
+
+      Calculate the total area commitment for all land uses that compete with livestock (rewetted, afforested, biomethane, willow, protein crops).
+
+      :returns: Total area commitment in hectares (ha).
+      :rtype: float
+
+
+
+   .. py:method:: _load_optimisation_outputs()
+
+      Load and cache the livestock optimisation outputs if not already loaded.
+
+      :returns: Dictionary of optimisation results for livestock populations and constraints.
+      :rtype: dict
+
+
+
+   .. py:method:: _get_total_non_livestock_emission_ch4()
+
+      Calculate total CH4 (methane) emissions from all relevant land uses and sectors in the scenario.
+
+      :returns: Total CH4 emissions in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_ch4_budget()
+
+      Calculate the CH4 (methane) budget for the scenario, based on baseline emissions and the split gas fraction.
+
+      :returns: CH4 budget in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_split_gas_ch4_emission()
+
+      Calculate the remaining CH4 (methane) budget after accounting for all scenario emissions, under the split gas approach.
+
+      :returns: Remaining CH4 budget in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_optimisation_outputs()
+
+      Run the livestock population optimisation for the current scenario and constraints.
+
+      :returns: Dictionary of optimised livestock populations and related outputs.
+      :rtype: dict
+
+
+
+   .. py:method:: get_dairy_population()
+
+      Get the optimised dairy cow population for the scenario.
+
+      :returns: Number of dairy cows.
+      :rtype: float
+
+
+
+   .. py:method:: get_beef_population()
+
+      Get the optimised beef cow population for the scenario.
+
+      :returns: Number of beef cows.
+      :rtype: float
+
+
+
+   .. py:method:: _get_scaled_beef_population()
+
+      Get the beef cow population, scaled by the emission scaler for the scenario.
+
+      :returns: Scaled beef cow population.
+      :rtype: float
+
+
+
+   .. py:method:: _get_scaled_dairy_population()
+
+      Get the dairy cow population, scaled by the emission scaler for the scenario.
+
+      :returns: Scaled dairy cow population.
+      :rtype: float
+
+
+
+   .. py:method:: get_dairy_cows_co2_emission()
+
+      Calculate the total CO2 emissions from dairy cows for the scenario.
+
+      :returns: CO2 emissions from dairy cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_dairy_cows_ch4_emission()
+
+      Calculate the total CH4 emissions from dairy cows for the scenario.
+
+      :returns: CH4 emissions from dairy cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_dairy_cows_n2o_emission()
+
+      Calculate the total N2O emissions from dairy cows for the scenario.
+
+      :returns: N2O emissions from dairy cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_dairy_cows_co2e_emission()
+
+      Calculate the total CO2e (CO2 equivalent) emissions from dairy cows for the scenario.
+
+      :returns: CO2e emissions from dairy cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_beef_cows_co2_emission()
+
+      Calculate the total CO2 emissions from beef cows for the scenario.
+
+      :returns: CO2 emissions from beef cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_beef_cows_ch4_emission()
+
+      Calculate the total CH4 emissions from beef cows for the scenario.
+
+      :returns: CH4 emissions from beef cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_beef_cows_n2o_emission()
+
+      Calculate the total N2O emissions from beef cows for the scenario.
+
+      :returns: N2O emissions from beef cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_beef_cows_co2e_emission()
+
+      Calculate the total CO2e (CO2 equivalent) emissions from beef cows for the scenario.
+
+      :returns: CO2e emissions from beef cows in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_co2_emission()
+
+      Calculate the total CO2 emissions from all livestock (dairy and beef) for the scenario.
+
+      :returns: Total CO2 emissions in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_ch4_emission()
+
+      Calculate the total CH4 emissions from all livestock (dairy and beef) for the scenario.
+
+      :returns: Total CH4 emissions in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_n2o_emission()
+
+      Calculate the total N2O emissions from all livestock (dairy and beef) for the scenario.
+
+      :returns: Total N2O emissions in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_co2e_emission()
+
+      Calculate the total CO2e (CO2 equivalent) emissions from all livestock (dairy and beef) for the scenario.
+
+      :returns: Total CO2e emissions in kilotonnes (kt).
+      :rtype: float
+
+
+
+   .. py:method:: get_dairy_cows_area()
+
+      Calculate the total land area required for dairy cows, using the area scaler and scaled population.
+
+      :returns: Land area for dairy cows in hectares (ha).
+      :rtype: float
+
+
+
+   .. py:method:: get_beef_cows_area()
+
+      Calculate the total land area required for beef cows, including both beef and dairy+beef systems.
+
+      :returns: Land area for beef cows in hectares (ha).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_area()
+
+      Calculate the total land area required for all livestock (dairy and beef).
+
+      :returns: Total land area in hectares (ha).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_beef_protein()
+
+      Calculate the total protein production from beef and dairy+beef systems for the scenario.
+
+      :returns: Total beef protein production in kilograms (kg).
+      :rtype: float
+
+
+
+   .. py:method:: get_total_milk_protein()
+
+      Calculate the total milk protein production from dairy cows for the scenario.
+
+      :returns: Total milk protein production in kilograms (kg).
+      :rtype: float
+
+
+
+   .. py:method:: get_hnv_area()
+
+      Calculate the area of high nature value (HNV) grassland managed by beef cows, including both beef and dairy+beef systems.
+
+      :returns: HNV area in hectares (ha).
+      :rtype: float
+
+
+

@@ -1,0 +1,785 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.budget_model.emissions_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optigob.budget_model.emissions_budget</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optigob.budget_model.emissions_budget</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Emissions Budget Module</span>
+<span class="sd">=======================</span>
+
+<span class="sd">This module defines the EmissionsBudget class, which calculates and aggregates emissions budgets and categories</span>
+<span class="sd">across all sectors using the optigob_data_manager. Emissions are returned in kilotons (kt).</span>
+
+<span class="sd">Class:</span>
+<span class="sd">    EmissionsBudget: Calculates total and sectoral emissions (CO2e, CO2, CH4, N2O), net zero and split gas budgets, and substitution emissions.</span>
+
+<span class="sd">Methods:</span>
+<span class="sd">    __init__(self, optigob_data_manager):</span>
+<span class="sd">        Initializes the EmissionsBudget with the provided data manager and sets up all sectoral budget classes and emission methods.</span>
+<span class="sd">    _get_total_beccs_co2e(self):</span>
+<span class="sd">        Calculates total BECCS CO2e emissions (kt).</span>
+<span class="sd">    _get_total_beccs_co2(self):</span>
+<span class="sd">        Calculates total BECCS CO2 emissions (kt).</span>
+<span class="sd">    _get_total_beccs_ch4(self):</span>
+<span class="sd">        Calculates total BECCS CH4 emissions (kt).</span>
+<span class="sd">    _get_total_beccs_n2o(self):</span>
+<span class="sd">        Calculates total BECCS N2O emissions (kt).</span>
+<span class="sd">    _get_total_emission_co2e_budget(self):</span>
+<span class="sd">        Calculates the total CO2e emissions budget (kt) for net zero.</span>
+<span class="sd">    _get_total_emission_co2e(self):</span>
+<span class="sd">        Calculates the current total CO2e emissions (kt).</span>
+<span class="sd">    _split_gas_emissions_total_budget_co2e(self):</span>
+<span class="sd">        Calculates the total split gas emissions budget (kt).</span>
+<span class="sd">    _get_total_emission_ch4(self):</span>
+<span class="sd">        Calculates the current total CH4 emissions (kt).</span>
+<span class="sd">    _get_total_emission_n2o(self):</span>
+<span class="sd">        Calculates the current total N2O emissions (kt).</span>
+<span class="sd">    _get_total_emission_co2(self):</span>
+<span class="sd">        Calculates the current total CO2 emissions (kt).</span>
+<span class="sd">    _check_net_zero_status(self):</span>
+<span class="sd">        Checks if the net zero budget is met (returns True/False).</span>
+<span class="sd">    check_status(self):</span>
+<span class="sd">        Returns a dict with the status of net zero and split gas budgets.</span>
+<span class="sd">    _check_split_gas_net_zero_status(self):</span>
+<span class="sd">        Checks if the split gas budget is met (returns True/False).</span>
+<span class="sd">    get_split_gas_budget(self):</span>
+<span class="sd">        Returns the split gas budget (kt).</span>
+<span class="sd">    get_net_zero_budget(self):</span>
+<span class="sd">        Returns the net zero budget (kt).</span>
+<span class="sd">    total_agriculture_co2e_emission(self):</span>
+<span class="sd">        Calculates total agriculture CO2e emissions (kt).</span>
+<span class="sd">    total_agriculture_co2_emission(self):</span>
+<span class="sd">        Calculates total agriculture CO2 emissions (kt).</span>
+<span class="sd">    get_total_agriculture_ch4_emission(self):</span>
+<span class="sd">        Calculates total agriculture CH4 emissions (kt).</span>
+<span class="sd">    get_total_agriculture_n2o_emission(self):</span>
+<span class="sd">        Calculates total agriculture N2O emissions (kt).</span>
+<span class="sd">    get_co2e_emission_categories(self):</span>
+<span class="sd">        Returns CO2e emissions by sector/category (kt).</span>
+<span class="sd">    get_co2_emission_categories(self):</span>
+<span class="sd">        Returns CO2 emissions by sector/category (kt).</span>
+<span class="sd">    get_ch4_emission_categories(self):</span>
+<span class="sd">        Returns CH4 emissions by sector/category (kt).</span>
+<span class="sd">    get_n2o_emission_categories(self):</span>
+<span class="sd">        Returns N2O emissions by sector/category (kt).</span>
+<span class="sd">    get_total_co2e_emission(self):</span>
+<span class="sd">        Returns total CO2e emissions (kt) summed across all sectors.</span>
+<span class="sd">    get_total_co2_emission(self):</span>
+<span class="sd">        Returns total CO2 emissions (kt) summed across all sectors.</span>
+<span class="sd">    get_total_ch4_emission(self):</span>
+<span class="sd">        Returns total CH4 emissions (kt) summed across all sectors.</span>
+<span class="sd">    get_total_n2o_emission(self):</span>
+<span class="sd">        Returns total N2O emissions (kt) summed across all sectors.</span>
+<span class="sd">    get_substitution_emission_co2e(self):</span>
+<span class="sd">        Returns substitution emissions for CO2e by category (kt).</span>
+<span class="sd">    get_substitution_emission_co2(self):</span>
+<span class="sd">        Returns substitution emissions for CO2 by category (kt).</span>
+<span class="sd">    get_substitution_emission_ch4(self):</span>
+<span class="sd">        Returns substitution emissions for CH4 by category (kt).</span>
+<span class="sd">    get_substitution_emission_n2o(self):</span>
+<span class="sd">        Returns substitution emissions for N2O by category (kt).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.forest.forest_budget</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForestBudget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.bioenergy.bioenergy_budget</span><span class="w"> </span><span class="kn">import</span> <span class="n">BioEnergyBudget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.other_land.other_land_budget</span><span class="w"> </span><span class="kn">import</span> <span class="n">OtherLandBudget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.static_ag.static_ag_budget</span><span class="w"> </span><span class="kn">import</span> <span class="n">StaticAgBudget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.livestock.livestock_budget</span><span class="w"> </span><span class="kn">import</span> <span class="n">LivestockBudget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.protein_crops.protein_crops_budget</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProteinCropsBudget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.substitution.substitution</span><span class="w"> </span><span class="kn">import</span> <span class="n">Substitution</span>
+
+<div class="viewcode-block" id="EmissionsBudget">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EmissionsBudget</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optigob_data_manager</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the EmissionsBudget with data manager.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span> <span class="o">=</span> <span class="n">optigob_data_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">biomethane_included</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_biomethane_included</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_beccs_included</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split_gas_frac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_split_gas_fraction</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_emission_sectors</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span> <span class="o">=</span> <span class="n">ForestBudget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span> <span class="o">=</span> <span class="n">BioEnergyBudget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span> <span class="o">=</span> <span class="n">OtherLandBudget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span> <span class="o">=</span> <span class="n">StaticAgBudget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span> <span class="o">=</span> <span class="n">ProteinCropsBudget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span> <span class="o">=</span> <span class="n">Substitution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">net_zero_budget</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_total_emission_co2e_budget</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split_gas_budget</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_split_gas_emissions_total_budget_co2e</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">livestock_budget</span> <span class="o">=</span> <span class="n">LivestockBudget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="p">,</span> 
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">net_zero_budget</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">split_gas_budget</span><span class="p">)</span>
+
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;CO2e&quot;</span><span class="p">:{</span>
+            <span class="s2">&quot;agriculture&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_agriculture_co2e_emission</span><span class="p">,</span>
+            <span class="s2">&quot;afforestation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_afforestation_offset</span><span class="p">,</span>
+            <span class="s2">&quot;existing_forest&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_managed_forest_offset</span><span class="p">,</span>
+            <span class="s2">&quot;other_land_use&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_co2e</span><span class="p">,</span>
+            <span class="s2">&quot;hwp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_hwp_offset</span><span class="p">,</span>
+            <span class="s2">&quot;ad&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_co2e_emission</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">biomethane_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;beccs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_co2e</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;CO2&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;agriculture&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_agriculture_co2_emission</span><span class="p">,</span>
+            <span class="s2">&quot;afforestation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_afforestation_offset</span><span class="p">,</span>
+            <span class="s2">&quot;existing_forest&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_managed_forest_offset</span><span class="p">,</span>
+            <span class="s2">&quot;other_land_use&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_co2</span><span class="p">,</span>
+            <span class="s2">&quot;hwp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_hwp_offset</span><span class="p">,</span>
+            <span class="s2">&quot;ad&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_co2_emission</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">biomethane_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;beccs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_co2</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;CH4&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;agriculture&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_total_agriculture_ch4_emission</span><span class="p">,</span>
+            <span class="s2">&quot;other_land_use&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_ch4</span><span class="p">,</span>
+            <span class="s2">&quot;ad&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_ch4_emission</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">biomethane_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;beccs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_ch4</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;N2O&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;agriculture&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_total_agriculture_n2o_emission</span><span class="p">,</span>
+            <span class="s2">&quot;other_land_use&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_n2o</span><span class="p">,</span>
+            <span class="s2">&quot;ad&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_n2o_emission</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">biomethane_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;beccs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_n2o</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">beccs_included</span> <span class="k">else</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">}</span>
+
+        <span class="p">}</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;CO2e&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;ad_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_ad_substitution_co2e_emission</span><span class="p">,</span>
+            <span class="s2">&quot;forest_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_forest_substitution_offset_co2e</span><span class="p">,</span>
+            <span class="s2">&quot;willow_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_willow_substitution_offset_co2e</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;CO2&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;ad_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_ad_substitution_co2_emission</span><span class="p">,</span>
+            <span class="s2">&quot;forest_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_forest_substitution_offset_co2e</span><span class="p">,</span>
+            <span class="s2">&quot;willow_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_willow_substitution_offset_co2e</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;CH4&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;ad_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_ad_substitution_ch4_emission</span><span class="p">,</span>
+            <span class="s2">&quot;forest_substitution&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1"># No forest substitution for CH4</span>
+            <span class="s2">&quot;willow_substitution&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span>  <span class="c1"># No willow substitution for CH4</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;N2O&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;ad_substitution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_budget</span><span class="o">.</span><span class="n">get_ad_substitution_n2o_emission</span><span class="p">,</span>
+            <span class="s2">&quot;forest_substitution&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1"># No forest substitution for N2O</span>
+            <span class="s2">&quot;willow_substitution&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span>  <span class="c1"># No willow substitution for N2O</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+
+<div class="viewcode-block" id="EmissionsBudget._get_total_beccs_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_co2e">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_beccs_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total BECCS CO2e emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bio_energy_beccs_co2e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_total_ccs_co2e_emission</span><span class="p">()</span>
+        <span class="n">forest_beccs_co2e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_wood_ccs_offset</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">bio_energy_beccs_co2e</span> <span class="o">+</span> <span class="n">forest_beccs_co2e</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget._get_total_beccs_co2">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_co2">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_beccs_co2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total BECCS CO2 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bio_energy_beccs_co2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_total_ccs_co2_emission</span><span class="p">()</span>
+        <span class="n">forest_beccs_co2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_wood_ccs_offset</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">bio_energy_beccs_co2</span> <span class="o">+</span> <span class="n">forest_beccs_co2</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget._get_total_beccs_ch4">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_ch4">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_beccs_ch4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total BECCS CH4 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bio_energy_beccs_ch4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_total_ccs_ch4_emission</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">bio_energy_beccs_ch4</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget._get_total_beccs_n2o">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_n2o">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_beccs_n2o</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total BECCS N2O emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bio_energy_beccs_n2o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_total_ccs_n2o_emission</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">bio_energy_beccs_n2o</span> </div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget._get_total_emission_co2e_budget">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2e_budget">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_emission_co2e_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total CO2e emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_co2e</span><span class="p">()</span>
+        <span class="n">forest_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">total_emission_offset</span><span class="p">()</span>
+        <span class="n">beccs_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_co2e</span><span class="p">()</span>
+        <span class="n">other_land_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_co2e</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_co2e</span><span class="p">()</span>
+        <span class="n">ad_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_co2e_emission</span><span class="p">()</span>
+
+        <span class="n">total_emission</span> <span class="o">=</span> <span class="p">(</span><span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">forest_emission</span> <span class="o">+</span> <span class="n">other_land_emission</span> <span class="o">+</span>
+                          <span class="n">beccs_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span> <span class="o">+</span> <span class="n">ad_ag_emission</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">total_emission</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">total_emission</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">total_emission</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget._get_total_emission_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2e">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_emission_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total CO2e emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_co2e</span><span class="p">()</span>
+        <span class="n">livestock_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">livestock_budget</span><span class="o">.</span><span class="n">get_total_co2e_emission</span><span class="p">()</span>
+        <span class="n">forest_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">total_emission_offset</span><span class="p">()</span>
+        <span class="n">beccs_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_co2e</span><span class="p">()</span>
+        <span class="n">other_land_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_co2e</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_co2e</span><span class="p">()</span>
+        <span class="n">ad_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_co2e_emission</span><span class="p">()</span>
+
+        <span class="n">total_emission</span> <span class="o">=</span> <span class="p">(</span><span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">livestock_emission</span> <span class="o">+</span> <span class="n">forest_emission</span> <span class="o">+</span> <span class="n">other_land_emission</span> <span class="o">+</span>
+                          <span class="n">beccs_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span> <span class="o">+</span> <span class="n">ad_ag_emission</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">total_emission</span></div>
+
+
+<div class="viewcode-block" id="EmissionsBudget._split_gas_emissions_total_budget_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._split_gas_emissions_total_budget_co2e">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_split_gas_emissions_total_budget_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total split gas emissions CO2e budget (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">forest_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_forest_co2e</span><span class="p">()</span>
+        <span class="n">total_emission_n2o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_emission_n2o</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_AR_gwp100_values</span><span class="p">(</span><span class="s2">&quot;N2O&quot;</span><span class="p">)</span>
+        <span class="n">total_emission_co2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_emission_co2</span><span class="p">()</span>
+        <span class="n">total_emission</span> <span class="o">=</span> <span class="n">forest_emission</span> <span class="o">+</span> <span class="n">total_emission_n2o</span> <span class="o">+</span> <span class="n">total_emission_co2</span>
+
+        <span class="k">if</span> <span class="n">total_emission</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">total_emission</span> <span class="o">=</span> <span class="mi">0</span>
+       
+        <span class="k">return</span> <span class="n">total_emission</span></div>
+
+
+
+<div class="viewcode-block" id="EmissionsBudget._get_total_emission_n2o">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_n2o">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_emission_n2o</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total N2O emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_n2o</span><span class="p">()</span>
+        <span class="n">other_land_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_n2o</span><span class="p">()</span>
+        <span class="n">ad_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_n2o_emission</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_n2o</span><span class="p">()</span>
+        <span class="n">beccs_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_n2o</span><span class="p">()</span>
+
+        <span class="n">total_emission</span> <span class="o">=</span> <span class="p">(</span><span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">other_land_emission</span> <span class="o">+</span>
+                          <span class="n">beccs_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span> <span class="o">+</span> <span class="n">ad_ag_emission</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">total_emission</span></div>
+
+
+<div class="viewcode-block" id="EmissionsBudget._get_total_emission_ch4">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_ch4">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_emission_ch4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total CH4 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_ch4</span><span class="p">()</span>
+        <span class="n">other_land_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_ch4</span><span class="p">()</span>
+        <span class="n">beccs_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_ch4</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_ch4</span><span class="p">()</span>
+        <span class="n">ad_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_ch4_emission</span><span class="p">()</span>
+
+        <span class="n">total_emission</span> <span class="o">=</span> <span class="p">(</span><span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">other_land_emission</span> <span class="o">+</span>
+                          <span class="n">beccs_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span> <span class="o">+</span> <span class="n">ad_ag_emission</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">total_emission</span></div>
+
+
+<div class="viewcode-block" id="EmissionsBudget._get_total_emission_co2">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_emission_co2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total CO2 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_co2</span><span class="p">()</span>
+        <span class="n">other_land_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_land_budget</span><span class="o">.</span><span class="n">get_wetland_restoration_emission_co2</span><span class="p">()</span>
+        <span class="n">ad_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bio_energy_budget</span><span class="o">.</span><span class="n">get_ad_ag_co2_emission</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_co2</span><span class="p">()</span>
+        <span class="n">beccs_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_beccs_co2</span><span class="p">()</span>
+        
+        <span class="n">total_emission</span> <span class="o">=</span> <span class="p">(</span><span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">other_land_emission</span> <span class="o">+</span>
+                          <span class="n">beccs_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span> <span class="o">+</span> <span class="n">ad_ag_emission</span> <span class="p">)</span>  
+        
+        <span class="k">return</span> <span class="n">total_emission</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget._get_total_forest_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_forest_co2e">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_total_forest_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total forest and hwp CO2e emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">forest_biomass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_total_forest_offset</span><span class="p">()</span>
+        <span class="n">hwp_biomass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">get_hwp_offset</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">forest_biomass</span> <span class="o">+</span> <span class="n">hwp_biomass</span></div>
+
+        
+    
+<div class="viewcode-block" id="EmissionsBudget._check_split_gas_net_zero_status">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._check_split_gas_net_zero_status">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_split_gas_net_zero_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the split gas budget is met.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if split gas budget is met, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">forest_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forest_budget</span><span class="o">.</span><span class="n">total_emission_offset</span><span class="p">()</span>
+        <span class="n">emissions_total_co2</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_emission_co2</span><span class="p">()</span>
+        <span class="n">emissions_total_n2o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_emission_n2o</span><span class="p">()</span>
+
+        <span class="n">total_emission</span> <span class="o">=</span> <span class="p">((</span><span class="n">emissions_total_n2o</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_AR_gwp100_values</span><span class="p">(</span><span class="s2">&quot;N2O&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="n">emissions_total_co2</span><span class="p">)</span> <span class="o">+</span> <span class="n">forest_emission</span>
+        <span class="k">return</span> <span class="n">total_emission</span> <span class="o">&lt;=</span> <span class="n">tolerance</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.check_net_zero_status">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.check_net_zero_status">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_net_zero_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks the status of the emissions budget.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary with keys &#39;net_zero&#39; and &#39;split_gas&#39; indicating the status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;net_zero&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_net_zero_status</span><span class="p">(),</span>
+            <span class="s2">&quot;split_gas&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_split_gas_net_zero_status</span><span class="p">()</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="EmissionsBudget._check_net_zero_status">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget._check_net_zero_status">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_net_zero_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the net zero budget is met.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if net zero budget is met, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">emissions_total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_emission_co2e</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">emissions_total</span> <span class="o">&lt;=</span> <span class="n">tolerance</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_emission_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_emission_co2e">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_emission_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the total CO2e emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_total_emission_co2e</span><span class="p">()</span></div>
+
+    
+
+<div class="viewcode-block" id="EmissionsBudget.get_split_gas_budget">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_split_gas_budget">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_split_gas_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the split gas budget (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_gas_budget</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_net_zero_budget">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_net_zero_budget">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_net_zero_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the net zero budget (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">net_zero_budget</span></div>
+
+
+<div class="viewcode-block" id="EmissionsBudget.total_agriculture_co2e_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.total_agriculture_co2e_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_agriculture_co2e_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total agriculture CO2e emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_co2e</span><span class="p">()</span>
+        <span class="n">livestock_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">livestock_budget</span><span class="o">.</span><span class="n">get_total_co2e_emission</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_co2e</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">livestock_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.total_agriculture_co2_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.total_agriculture_co2_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">total_agriculture_co2_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total agriculture CO2 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_co2</span><span class="p">()</span>
+        <span class="n">livestock_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">livestock_budget</span><span class="o">.</span><span class="n">get_total_co2_emission</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_co2</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">livestock_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_agriculture_ch4_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_agriculture_ch4_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_agriculture_ch4_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total agriculture CH4 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_ch4</span><span class="p">()</span>
+        <span class="n">livestock_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">livestock_budget</span><span class="o">.</span><span class="n">get_total_ch4_emission</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_ch4</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">livestock_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_agriculture_n2o_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_agriculture_n2o_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_agriculture_n2o_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates total agriculture N2O emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">static_ag_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_ag_budget</span><span class="o">.</span><span class="n">get_total_static_ag_n2o</span><span class="p">()</span>
+        <span class="n">livestock_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">livestock_budget</span><span class="o">.</span><span class="n">get_total_n2o_emission</span><span class="p">()</span>
+        <span class="n">protein_crop_emission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protein_crops_budget</span><span class="o">.</span><span class="n">get_crop_emission_n2o</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">static_ag_emission</span> <span class="o">+</span> <span class="n">livestock_emission</span> <span class="o">+</span> <span class="n">protein_crop_emission</span></div>
+
+    
+        
+<div class="viewcode-block" id="EmissionsBudget.get_co2e_emission_categories">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_co2e_emission_categories">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_co2e_emission_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns CO2e emissions by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;CO2e&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># default value if key not found</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_co2_emission_categories">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_co2_emission_categories">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_co2_emission_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns CO2 emissions by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>    
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;CO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_ch4_emission_categories">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_ch4_emission_categories">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ch4_emission_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns CH4 emissions by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>    
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;CH4&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_n2o_emission_categories">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_n2o_emission_categories">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_n2o_emission_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns N2O emissions by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>    
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;N2O&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_co2e_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_co2e_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_co2e_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns total CO2e emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;CO2e&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="n">func</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">total</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_co2_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_co2_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_co2_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns total CO2 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;CO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="n">func</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">total</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_ch4_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_ch4_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_ch4_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns total CH4 emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;CH4&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="n">func</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">total</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_n2o_emission">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_n2o_emission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_n2o_emission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns total N2O emissions (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_sectors</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emission_methods</span><span class="p">[</span><span class="s2">&quot;N2O&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="n">func</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">total</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_substitution_emission_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_co2e">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_substitution_emission_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns substitution emissions for CO2e by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;CO2e&quot;</span><span class="p">]:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;CO2e&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_substitution_emission_co2">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_co2">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_substitution_emission_co2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns substitution emissions for CO2 by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;CO2&quot;</span><span class="p">]:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;CO2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_substitution_emission_ch4">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_ch4">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_substitution_emission_ch4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns substitution emissions for CH4 by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;CH4&quot;</span><span class="p">]:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;CH4&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_substitution_emission_n2o">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_n2o">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_substitution_emission_n2o</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns substitution emissions for N2O by category (kt).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;N2O&quot;</span><span class="p">]:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitution_methods</span><span class="p">[</span><span class="s2">&quot;N2O&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">result_dict</span></div>
+
+    
+<div class="viewcode-block" id="EmissionsBudget.get_total_livestock_ch4_emission_budget">
+<a class="viewcode-back" href="../../../autoapi/optigob/budget_model/emissions_budget/index.html#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_livestock_ch4_emission_budget">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_livestock_ch4_emission_budget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns total livestock split gas CH4 emissions (kt) budget.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">livestock_budget</span><span class="o">.</span><span class="n">get_split_gas_ch4_emission</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
