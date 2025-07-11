@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.budget_model.emissions_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="optigob.budget_model.landarea_budget" href="../landarea_budget/index.html" />
+    <link rel="prev" title="optigob.budget_model.econ_output" href="../econ_output/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../input_variables.html">OptiGob Input Variables Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">optigob</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../bioenergy/index.html">optigob.bioenergy</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">optigob.budget_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../database/index.html">optigob.database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../forest/index.html">optigob.forest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../input_helper/index.html">optigob.input_helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../livestock/index.html">optigob.livestock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optigob/index.html">optigob.optigob</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../other_land/index.html">optigob.other_land</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../protein_crops/index.html">optigob.protein_crops</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../resource_manager/index.html">optigob.resource_manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../static_ag/index.html">optigob.static_ag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../substitution/index.html">optigob.substitution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">optigob</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">optigob.budget_model</a></li>
+      <li class="breadcrumb-item active">optigob.budget_model.emissions_budget</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/optigob/budget_model/emissions_budget/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-optigob.budget_model.emissions_budget">
+<span id="optigob-budget-model-emissions-budget"></span><h1>optigob.budget_model.emissions_budget<a class="headerlink" href="#module-optigob.budget_model.emissions_budget" title="Link to this heading"></a></h1>
+<p>This module defines the EmissionsBudget class, which calculates and aggregates emissions budgets and categories
+across all sectors using the optigob_data_manager. Emissions are returned in kilotons (kt).</p>
+<dl class="simple">
+<dt>Class:</dt><dd><p>EmissionsBudget: Calculates total and sectoral emissions (CO2e, CO2, CH4, N2O), net zero and split gas budgets, and substitution emissions.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.__init__">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optigob_data_manager</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes the EmissionsBudget with the provided data manager and sets up all sectoral budget classes and emission methods.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_beccs_co2e">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_beccs_co2e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_beccs_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_beccs_co2">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_beccs_co2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_beccs_co2" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS CO2 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_beccs_ch4">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_beccs_ch4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_beccs_ch4" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS CH4 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_beccs_n2o">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_beccs_n2o</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_beccs_n2o" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS N2O emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_emission_co2e_budget">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_emission_co2e_budget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_emission_co2e_budget" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total CO2e emissions budget (kt) for net zero.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_emission_co2e">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_emission_co2e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_emission_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates the current total CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._split_gas_emissions_total_budget_co2e">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_split_gas_emissions_total_budget_co2e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._split_gas_emissions_total_budget_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total split gas emissions budget (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_emission_ch4">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_emission_ch4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_emission_ch4" title="Link to this definition"></a></dt>
+<dd><p>Calculates the current total CH4 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_emission_n2o">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_emission_n2o</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_emission_n2o" title="Link to this definition"></a></dt>
+<dd><p>Calculates the current total N2O emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._get_total_emission_co2">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_get_total_emission_co2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._get_total_emission_co2" title="Link to this definition"></a></dt>
+<dd><p>Calculates the current total CO2 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._check_net_zero_status">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_check_net_zero_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._check_net_zero_status" title="Link to this definition"></a></dt>
+<dd><p>Checks if the net zero budget is met (returns True/False).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.check_status">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">check_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.check_status" title="Link to this definition"></a></dt>
+<dd><p>Returns a dict with the status of net zero and split gas budgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget._check_split_gas_net_zero_status">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">_check_split_gas_net_zero_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget._check_split_gas_net_zero_status" title="Link to this definition"></a></dt>
+<dd><p>Checks if the split gas budget is met (returns True/False).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_split_gas_budget">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_split_gas_budget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_split_gas_budget" title="Link to this definition"></a></dt>
+<dd><p>Returns the split gas budget (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_net_zero_budget">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_net_zero_budget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_net_zero_budget" title="Link to this definition"></a></dt>
+<dd><p>Returns the net zero budget (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.total_agriculture_co2e_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">total_agriculture_co2e_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.total_agriculture_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.total_agriculture_co2_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">total_agriculture_co2_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.total_agriculture_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture CO2 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_total_agriculture_ch4_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_total_agriculture_ch4_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_total_agriculture_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture CH4 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_total_agriculture_n2o_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_total_agriculture_n2o_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_total_agriculture_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture N2O emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_co2e_emission_categories">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_co2e_emission_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_co2e_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns CO2e emissions by sector/category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_co2_emission_categories">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_co2_emission_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_co2_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns CO2 emissions by sector/category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_ch4_emission_categories">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_ch4_emission_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_ch4_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns CH4 emissions by sector/category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_n2o_emission_categories">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_n2o_emission_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_n2o_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns N2O emissions by sector/category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_total_co2e_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_total_co2e_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_total_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total CO2e emissions (kt) summed across all sectors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_total_co2_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_total_co2_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_total_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total CO2 emissions (kt) summed across all sectors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_total_ch4_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_total_ch4_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_total_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total CH4 emissions (kt) summed across all sectors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_total_n2o_emission">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_total_n2o_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_total_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total N2O emissions (kt) summed across all sectors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_substitution_emission_co2e">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_substitution_emission_co2e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_substitution_emission_co2e" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for CO2e by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_substitution_emission_co2">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_substitution_emission_co2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_substitution_emission_co2" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for CO2 by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_substitution_emission_ch4">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_substitution_emission_ch4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_substitution_emission_ch4" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for CH4 by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.get_substitution_emission_n2o">
+<span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">get_substitution_emission_n2o</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optigob.budget_model.emissions_budget.get_substitution_emission_n2o" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for N2O by category (kt).</p>
+</dd></dl>
+
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#optigob.budget_model.emissions_budget.EmissionsBudget" title="optigob.budget_model.emissions_budget.EmissionsBudget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmissionsBudget</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optigob.budget_model.emissions_budget.</span></span><span class="sig-name descname"><span class="pre">EmissionsBudget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optigob_data_manager</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.data_manager_class">
+<span class="sig-name descname"><span class="pre">data_manager_class</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.data_manager_class" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.biomethane_included">
+<span class="sig-name descname"><span class="pre">biomethane_included</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.biomethane_included" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.beccs_included">
+<span class="sig-name descname"><span class="pre">beccs_included</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.beccs_included" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.split_gas_frac">
+<span class="sig-name descname"><span class="pre">split_gas_frac</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.split_gas_frac" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.emission_sectors">
+<span class="sig-name descname"><span class="pre">emission_sectors</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.emission_sectors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.forest_budget">
+<span class="sig-name descname"><span class="pre">forest_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.forest_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.bio_energy_budget">
+<span class="sig-name descname"><span class="pre">bio_energy_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.bio_energy_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.other_land_budget">
+<span class="sig-name descname"><span class="pre">other_land_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.other_land_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.static_ag_budget">
+<span class="sig-name descname"><span class="pre">static_ag_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.static_ag_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.protein_crops_budget">
+<span class="sig-name descname"><span class="pre">protein_crops_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.protein_crops_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.substitution_budget">
+<span class="sig-name descname"><span class="pre">substitution_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.substitution_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.net_zero_budget">
+<span class="sig-name descname"><span class="pre">net_zero_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.net_zero_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.split_gas_budget">
+<span class="sig-name descname"><span class="pre">split_gas_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.split_gas_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.livestock_budget">
+<span class="sig-name descname"><span class="pre">livestock_budget</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.livestock_budget" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.emission_methods">
+<span class="sig-name descname"><span class="pre">emission_methods</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.emission_methods" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.substitution_methods">
+<span class="sig-name descname"><span class="pre">substitution_methods</span></span><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.substitution_methods" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_co2e">
+<span class="sig-name descname"><span class="pre">_get_total_beccs_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_beccs_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_co2">
+<span class="sig-name descname"><span class="pre">_get_total_beccs_co2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_beccs_co2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_co2" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS CO2 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_ch4">
+<span class="sig-name descname"><span class="pre">_get_total_beccs_ch4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_beccs_ch4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_ch4" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS CH4 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_n2o">
+<span class="sig-name descname"><span class="pre">_get_total_beccs_n2o</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_beccs_n2o"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_beccs_n2o" title="Link to this definition"></a></dt>
+<dd><p>Calculates total BECCS N2O emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2e_budget">
+<span class="sig-name descname"><span class="pre">_get_total_emission_co2e_budget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_emission_co2e_budget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2e_budget" title="Link to this definition"></a></dt>
+<dd><p>Calculates total CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2e">
+<span class="sig-name descname"><span class="pre">_get_total_emission_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_emission_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates total CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._split_gas_emissions_total_budget_co2e">
+<span class="sig-name descname"><span class="pre">_split_gas_emissions_total_budget_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._split_gas_emissions_total_budget_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._split_gas_emissions_total_budget_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates total split gas emissions CO2e budget (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_n2o">
+<span class="sig-name descname"><span class="pre">_get_total_emission_n2o</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_emission_n2o"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_n2o" title="Link to this definition"></a></dt>
+<dd><p>Calculates total N2O emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_ch4">
+<span class="sig-name descname"><span class="pre">_get_total_emission_ch4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_emission_ch4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_ch4" title="Link to this definition"></a></dt>
+<dd><p>Calculates total CH4 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2">
+<span class="sig-name descname"><span class="pre">_get_total_emission_co2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_emission_co2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_emission_co2" title="Link to this definition"></a></dt>
+<dd><p>Calculates total CO2 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._get_total_forest_co2e">
+<span class="sig-name descname"><span class="pre">_get_total_forest_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._get_total_forest_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._get_total_forest_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates total forest and hwp CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._check_split_gas_net_zero_status">
+<span class="sig-name descname"><span class="pre">_check_split_gas_net_zero_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._check_split_gas_net_zero_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._check_split_gas_net_zero_status" title="Link to this definition"></a></dt>
+<dd><p>Checks if the split gas budget is met.
+:returns: True if split gas budget is met, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.check_net_zero_status">
+<span class="sig-name descname"><span class="pre">check_net_zero_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.check_net_zero_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.check_net_zero_status" title="Link to this definition"></a></dt>
+<dd><p>Checks the status of the emissions budget.
+:returns: A dictionary with keys ‘net_zero’ and ‘split_gas’ indicating the status.
+:rtype: dict</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget._check_net_zero_status">
+<span class="sig-name descname"><span class="pre">_check_net_zero_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget._check_net_zero_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget._check_net_zero_status" title="Link to this definition"></a></dt>
+<dd><p>Checks if the net zero budget is met.
+:returns: True if net zero budget is met, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_emission_co2e">
+<span class="sig-name descname"><span class="pre">get_total_emission_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_emission_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_emission_co2e" title="Link to this definition"></a></dt>
+<dd><p>Returns the total CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_split_gas_budget">
+<span class="sig-name descname"><span class="pre">get_split_gas_budget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_split_gas_budget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_split_gas_budget" title="Link to this definition"></a></dt>
+<dd><p>Returns the split gas budget (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_net_zero_budget">
+<span class="sig-name descname"><span class="pre">get_net_zero_budget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_net_zero_budget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_net_zero_budget" title="Link to this definition"></a></dt>
+<dd><p>Returns the net zero budget (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.total_agriculture_co2e_emission">
+<span class="sig-name descname"><span class="pre">total_agriculture_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.total_agriculture_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.total_agriculture_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.total_agriculture_co2_emission">
+<span class="sig-name descname"><span class="pre">total_agriculture_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.total_agriculture_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.total_agriculture_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture CO2 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_agriculture_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_total_agriculture_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_agriculture_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_agriculture_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture CH4 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_agriculture_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_total_agriculture_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_agriculture_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_agriculture_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculates total agriculture N2O emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_co2e_emission_categories">
+<span class="sig-name descname"><span class="pre">get_co2e_emission_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_co2e_emission_categories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_co2e_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns CO2e emissions by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_co2_emission_categories">
+<span class="sig-name descname"><span class="pre">get_co2_emission_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_co2_emission_categories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_co2_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns CO2 emissions by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_ch4_emission_categories">
+<span class="sig-name descname"><span class="pre">get_ch4_emission_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_ch4_emission_categories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_ch4_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns CH4 emissions by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_n2o_emission_categories">
+<span class="sig-name descname"><span class="pre">get_n2o_emission_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_n2o_emission_categories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_n2o_emission_categories" title="Link to this definition"></a></dt>
+<dd><p>Returns N2O emissions by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_co2e_emission">
+<span class="sig-name descname"><span class="pre">get_total_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total CO2e emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_co2_emission">
+<span class="sig-name descname"><span class="pre">get_total_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total CO2 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_total_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total CH4 emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_total_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Returns total N2O emissions (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_co2e">
+<span class="sig-name descname"><span class="pre">get_substitution_emission_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_substitution_emission_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_co2e" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for CO2e by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_co2">
+<span class="sig-name descname"><span class="pre">get_substitution_emission_co2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_substitution_emission_co2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_co2" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for CO2 by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_ch4">
+<span class="sig-name descname"><span class="pre">get_substitution_emission_ch4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_substitution_emission_ch4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_ch4" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for CH4 by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_n2o">
+<span class="sig-name descname"><span class="pre">get_substitution_emission_n2o</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_substitution_emission_n2o"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_substitution_emission_n2o" title="Link to this definition"></a></dt>
+<dd><p>Returns substitution emissions for N2O by category (kt).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.budget_model.emissions_budget.EmissionsBudget.get_total_livestock_ch4_emission_budget">
+<span class="sig-name descname"><span class="pre">get_total_livestock_ch4_emission_budget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/budget_model/emissions_budget.html#EmissionsBudget.get_total_livestock_ch4_emission_budget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.budget_model.emissions_budget.EmissionsBudget.get_total_livestock_ch4_emission_budget" title="Link to this definition"></a></dt>
+<dd><p>Returns total livestock split gas CH4 emissions (kt) budget.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../econ_output/index.html" class="btn btn-neutral float-left" title="optigob.budget_model.econ_output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../landarea_budget/index.html" class="btn btn-neutral float-right" title="optigob.budget_model.landarea_budget" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+optigob.livestock
+=================
+
+.. py:module:: optigob.livestock
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/optigob/livestock/baseline_livestock/index
+   /autoapi/optigob/livestock/livestock_budget/index
+   /autoapi/optigob/livestock/livestock_optimisation/index
+
+

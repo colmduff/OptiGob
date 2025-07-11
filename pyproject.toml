@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "optigob"
-version = "0.1.1"
+version = "0.1.3"
 description = "A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance"
 authors = ["Colm Duffy"]
 license = "MIT"

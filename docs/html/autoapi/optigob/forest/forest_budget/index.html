@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.forest.forest_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="optigob.input_helper" href="../../input_helper/index.html" />
+    <link rel="prev" title="optigob.forest.baseline_forest" href="../baseline_forest/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../input_variables.html">OptiGob Input Variables Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">optigob</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../bioenergy/index.html">optigob.bioenergy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../budget_model/index.html">optigob.budget_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../database/index.html">optigob.database</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">optigob.forest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../input_helper/index.html">optigob.input_helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../livestock/index.html">optigob.livestock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optigob/index.html">optigob.optigob</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../other_land/index.html">optigob.other_land</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../protein_crops/index.html">optigob.protein_crops</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../resource_manager/index.html">optigob.resource_manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../static_ag/index.html">optigob.static_ag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../substitution/index.html">optigob.substitution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">optigob</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">optigob.forest</a></li>
+      <li class="breadcrumb-item active">optigob.forest.forest_budget</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/optigob/forest/forest_budget/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-optigob.forest.forest_budget">
+<span id="optigob-forest-forest-budget"></span><h1>optigob.forest.forest_budget<a class="headerlink" href="#module-optigob.forest.forest_budget" title="Link to this heading"></a></h1>
+<p>This module contains the ForestBudget class, which is responsible for calculating various forest-related offsets and metrics.
+The class interacts with an optigob data manager to retrieve necessary data for these calculations, including managed forest, afforestation, HWP, CCS, and substitution offsets, as well as area and volume metrics.</p>
+<dl class="simple">
+<dt>Class:</dt><dd><p>ForestBudget: Calculates forest-related emission offsets, areas, and volumes.</p>
+</dd>
+<dt>Methods in ForestBudget:</dt><dd><p>__init__(self, optigob_data_manager): Initializes the ForestBudget instance with data from the optigob data manager.
+get_managed_forest_offset(self): Calculates the emission offset from managed forests (in kt).
+get_afforestation_offset(self): Calculates the emission offset from afforestation activities (in kt).
+get_total_forest_offset(self): Calculates the total emission offset from both managed forests and afforestation (in kt).
+get_hwp_offset(self): Calculates the emission offset from harvested wood products (HWP) (in kt).
+get_wood_ccs_offset(self): Calculates the emission offset from carbon capture and storage (CCS) (in kt).
+get_subsitution_offset(self): Calculates the emission offset from substitution effects (in kt).
+total_emission_offset(self): Calculates the total emission offset from all sources (in kt).
+get_managed_forest_area(self): Retrieves the area of managed forests (in hectares).
+get_managed_forest_hnv_area(self): Retrieves the area of high nature value (HNV) managed forests.
+get_afforestation_area(self): Retrieves the area of afforestation activities (in hectares).
+get_afforestation_hnv_area(self): Retrieves the area of high nature value (HNV) afforestation.
+get_hwp_volume(self): Retrieves the volume of harvested wood products (in cubic meters).
+get_wood_ccs_volume(self): Retrieves the volume of carbon captured and stored (in cubic meters).
+get_wood_ccs_offset(self): Calculates the emission offset from carbon capture and storage (CCS) (in kt).</p>
+</dd>
+</dl>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#optigob.forest.forest_budget.ForestBudget" title="optigob.forest.forest_budget.ForestBudget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForestBudget</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optigob.forest.forest_budget.</span></span><span class="sig-name descname"><span class="pre">ForestBudget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optigob_data_manager</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.data_manager_class">
+<span class="sig-name descname"><span class="pre">data_manager_class</span></span><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.data_manager_class" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.target_year">
+<span class="sig-name descname"><span class="pre">target_year</span></span><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.target_year" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.afforestation_rate">
+<span class="sig-name descname"><span class="pre">afforestation_rate</span></span><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.afforestation_rate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.harvest_rate">
+<span class="sig-name descname"><span class="pre">harvest_rate</span></span><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.harvest_rate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.organic_soil_fraction">
+<span class="sig-name descname"><span class="pre">organic_soil_fraction</span></span><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.organic_soil_fraction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.broadleaf_fraction">
+<span class="sig-name descname"><span class="pre">broadleaf_fraction</span></span><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.broadleaf_fraction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.beccs_included">
+<span class="sig-name descname"><span class="pre">beccs_included</span></span><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.beccs_included" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.zero_if_beccs_not_included">
+<span class="sig-name descname"><span class="pre">zero_if_beccs_not_included</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.zero_if_beccs_not_included"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.zero_if_beccs_not_included" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_managed_forest_offset">
+<span class="sig-name descname"><span class="pre">get_managed_forest_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_managed_forest_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_managed_forest_offset" title="Link to this definition"></a></dt>
+<dd><p>Calculates the emission offset from managed forests.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_afforestation_offset">
+<span class="sig-name descname"><span class="pre">get_afforestation_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_afforestation_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_afforestation_offset" title="Link to this definition"></a></dt>
+<dd><p>Calculates the emission offset from afforestation activities.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_total_forest_offset">
+<span class="sig-name descname"><span class="pre">get_total_forest_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_total_forest_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_total_forest_offset" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total emission offset from both managed forests and afforestation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_hwp_offset">
+<span class="sig-name descname"><span class="pre">get_hwp_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_hwp_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_hwp_offset" title="Link to this definition"></a></dt>
+<dd><p>Calculates the emission offset from harvested wood products (HWP).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.total_emission_offset">
+<span class="sig-name descname"><span class="pre">total_emission_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.total_emission_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.total_emission_offset" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total emission offset from all sources.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_managed_forest_area">
+<span class="sig-name descname"><span class="pre">get_managed_forest_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_managed_forest_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_managed_forest_area" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the area of managed forests.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_managed_forest_hnv_area">
+<span class="sig-name descname"><span class="pre">get_managed_forest_hnv_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_managed_forest_hnv_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_managed_forest_hnv_area" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the area of high nature value (HNV) managed forests.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_afforestation_area">
+<span class="sig-name descname"><span class="pre">get_afforestation_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_afforestation_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_afforestation_area" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the area of afforestation activities.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_afforestation_hnv_area">
+<span class="sig-name descname"><span class="pre">get_afforestation_hnv_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_afforestation_hnv_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_afforestation_hnv_area" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the area of high nature value (HNV) afforestation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_hwp_volume">
+<span class="sig-name descname"><span class="pre">get_hwp_volume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_hwp_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_hwp_volume" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the volume of harvested wood products (in cubic meters).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_wood_ccs_volume">
+<span class="sig-name descname"><span class="pre">get_wood_ccs_volume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_wood_ccs_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_wood_ccs_volume" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the volume of carbon captured and stored (in cubic meters).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.forest.forest_budget.ForestBudget.get_wood_ccs_offset">
+<span class="sig-name descname"><span class="pre">get_wood_ccs_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/forest/forest_budget.html#ForestBudget.get_wood_ccs_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.forest.forest_budget.ForestBudget.get_wood_ccs_offset" title="Link to this definition"></a></dt>
+<dd><p>Calculates the emission offset from carbon capture and storage (CCS).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../baseline_forest/index.html" class="btn btn-neutral float-left" title="optigob.forest.baseline_forest" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../input_helper/index.html" class="btn btn-neutral float-right" title="optigob.input_helper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

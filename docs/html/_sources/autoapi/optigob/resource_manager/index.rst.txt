@@ -1,0 +1,52 @@
+optigob.resource_manager
+========================
+
+.. py:module:: optigob.resource_manager
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/optigob/resource_manager/database_manager/index
+   /autoapi/optigob/resource_manager/import_factory/index
+   /autoapi/optigob/resource_manager/input_query/index
+   /autoapi/optigob/resource_manager/optigob_data_manager/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.resource_manager.LivestockOptimisation
+
+
+Package Contents
+----------------
+
+.. py:class:: LivestockOptimisation(solver='cplex_direct')
+
+   .. py:attribute:: solver
+      :value: 'cplex_direct'
+
+
+
+   .. py:method:: solve_optimiser(emissions_budget, dairy_beef_ratio, year, scenario, scalers_file)
+
+      Set up and solve the optimisation model.
+
+      Parameters:
+      emissions_budget: Total allowable emissions.
+      dairy_beef_ratio: Ratio of dairy animals to beef animals (e.g., 10 for a 10:1 ratio).
+      year: Year to select the correct row from the CSV.
+      scenario: Abatement scenario to determine the scalers block.
+      scalers_file: CSV file containing the scaler table.
+
+      Returns:
+      Optimal units (in 10,000 animals) for beef and dairy, and total number of animals.
+
+
+

@@ -1,0 +1,95 @@
+optigob.resource_manager.input_query
+====================================
+
+.. py:module:: optigob.resource_manager.input_query
+
+.. autoapi-nested-parse::
+
+   input_query.py
+   =============
+
+   This module defines the InputQuery class, which provides utilities for querying and generating valid input parameter combinations for scenario analysis in the OptiGob framework. It is designed to help users and developers enumerate all valid combinations of key coupled input parameters (such as organic soil and forest management options) for use in scenario generation, sensitivity analysis, or batch modeling.
+
+   Classes:
+       InputQuery: Provides methods to retrieve all valid input parameter combinations for major coupled parameters (e.g., organic soil, forest) as lists or DataFrames.
+
+   Methods in InputQuery:
+       __init__(self): Initializes the InputQuery class and underlying data manager.
+       get_organic_soil_input_combos(self): Returns all valid organic soil input combinations as a list of dicts.
+       get_forest_input_combos(self): Returns all valid forest input combinations as a list of dicts.
+       get_abatement_and_productivity_input_combos(self): Returns all valid abatement and productivity input combinations as a list of dicts.
+       get_all_input_combos(self): Returns a dict of all valid input combinations for major coupled parameters.
+       get_all_input_combos_df(self): Returns a pandas DataFrame of all valid input combinations for major coupled parameters.
+
+   Typical usage example:
+       iq = InputQuery()
+       combos = iq.get_all_input_combos()
+       combos_df = iq.get_all_input_combos_df()
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.resource_manager.input_query.InputQuery
+
+
+Module Contents
+---------------
+
+.. py:class:: InputQuery
+
+   InputQuery class for managing input queries in OptiGob.
+   Provides methods to enumerate all valid combinations of key input parameters for scenario generation and analysis.
+
+
+   .. py:attribute:: data_manager
+
+
+   .. py:attribute:: organic_soil_template
+      :value: ''
+
+
+
+   .. py:method:: get_organic_soil_input_combos()
+
+      Retrieves all valid organic soil input combinations.
+      :returns: A list of organic soil input combinations.
+      :rtype: list
+
+
+
+   .. py:method:: get_forest_input_combos()
+
+      Retrieves all valid forest input combinations.
+      :returns: A list of forest input combinations.
+      :rtype: list
+
+
+
+   .. py:method:: get_abatement_and_productivity_input_combos()
+
+      Retrieves all valid input combinations for abatement and productivity scenarios.
+      :returns: A list of abatement and productivity input combinations.
+      :rtype: list
+
+
+
+   .. py:method:: get_all_input_combos()
+
+      Returns a dict of all valid input combinations for major coupled parameters.
+      :returns: {"forest": [...], "organic_soil": [...]}
+      :rtype: dict
+
+
+
+   .. py:method:: get_all_input_combos_df()
+
+      Returns a DataFrame of all valid input combinations for major coupled parameters.
+      :returns: DataFrame with all input combinations.
+      :rtype: pd.DataFrame
+
+
+

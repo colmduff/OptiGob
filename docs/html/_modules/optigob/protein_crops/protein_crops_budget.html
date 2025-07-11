@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.protein_crops.protein_crops_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optigob.protein_crops.protein_crops_budget</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optigob.protein_crops.protein_crops_budget</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">protein_crops_budget</span>
+<span class="sd">====================</span>
+
+<span class="sd">This module contains the ProteinCropsBudget class, which is used to calculate various protein crop-related metrics</span>
+<span class="sd">such as area, emissions (CO2, CH4, N2O, CO2e), and protein yield for protein crops.</span>
+
+<span class="sd">Class:</span>
+<span class="sd">    ProteinCropsBudget: Calculates area, emissions, and protein yield for protein crops.</span>
+
+<span class="sd">Methods in ProteinCropsBudget:</span>
+<span class="sd">    __init__(self, optigob_data_manager): Initializes the ProteinCropsBudget with the given data manager.</span>
+<span class="sd">    get_crop_area(self): Returns the area for the protein crop and abatement in hectares (multiplied by the crop area multiplier).</span>
+<span class="sd">    get_crop_emission_ch4(self): Returns the CH4 emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">    get_crop_emission_n2o(self): Returns the N2O emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">    get_crop_emission_co2(self): Returns the CO2 emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">    get_crop_emission_co2e(self): Returns the CO2e emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">    get_crop_protein_yield(self): Returns the protein yield for the protein crop and abatement in kg (multiplied by the crop area multiplier).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ProteinCropsBudget">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProteinCropsBudget</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optigob_data_manager</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ProteinCropsBudget with the given data manager.</span>
+<span class="sd">        Reads target year, scenario, abatement, and crop area multiplier from the data manager.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span> <span class="o">=</span> <span class="n">optigob_data_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_target_year</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abatement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_abatement_type</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protein_crop_included</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_included</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crop_area_multiplier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_multiplier</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crop_protein</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_content_scaler</span><span class="p">(</span><span class="s1">&#39;crops&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ProteinCropsBudget.zero_if_not_included">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget.zero_if_not_included">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">zero_if_not_included</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;protein_crop_included&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="ProteinCropsBudget.get_crop_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget.get_crop_area">[docs]</a>
+    <span class="nd">@zero_if_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the area for the protein crop and abatement in hectares (multiplied by the crop area multiplier).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">crop_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_emission_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">abatement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abatement</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s1">&#39;CO2e&#39;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">crop_area_df</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_area_multiplier</span></div>
+
+
+<div class="viewcode-block" id="ProteinCropsBudget.get_crop_emission_ch4">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget.get_crop_emission_ch4">[docs]</a>
+    <span class="nd">@zero_if_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_emission_ch4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the CH4 emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crop_emission_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_emission_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">abatement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abatement</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s1">&#39;CH4&#39;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">crop_emission_df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_area_multiplier</span></div>
+
+    
+<div class="viewcode-block" id="ProteinCropsBudget.get_crop_emission_n2o">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget.get_crop_emission_n2o">[docs]</a>
+    <span class="nd">@zero_if_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_emission_n2o</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the N2O emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crop_emission_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_emission_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">abatement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abatement</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s1">&#39;N2O&#39;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">crop_emission_df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_area_multiplier</span></div>
+
+    
+<div class="viewcode-block" id="ProteinCropsBudget.get_crop_emission_co2">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget.get_crop_emission_co2">[docs]</a>
+    <span class="nd">@zero_if_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_emission_co2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the CO2 emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crop_emission_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_emission_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">abatement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abatement</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s1">&#39;CO2&#39;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">crop_emission_df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_area_multiplier</span></div>
+
+    
+<div class="viewcode-block" id="ProteinCropsBudget.get_crop_emission_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget.get_crop_emission_co2e">[docs]</a>
+    <span class="nd">@zero_if_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_emission_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the CO2e emission for the protein crop and abatement in kilotons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crop_emission_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_emission_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">abatement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abatement</span><span class="p">,</span>
+            <span class="n">ghg</span><span class="o">=</span><span class="s1">&#39;CO2e&#39;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">crop_emission_df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_area_multiplier</span></div>
+
+    
+<div class="viewcode-block" id="ProteinCropsBudget.get_crop_protein_yield">
+<a class="viewcode-back" href="../../../autoapi/optigob/protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget.get_crop_protein_yield">[docs]</a>
+    <span class="nd">@zero_if_not_included</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_protein_yield</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the protein yield for the protein crop and abatement in kg (multiplied by the crop area multiplier).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crop_protein_yield_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_protein_crop_protein_scaler</span><span class="p">(</span>
+            <span class="n">year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">abatement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abatement</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">crop_protein_yield_df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_protein</span><span class="p">)</span><span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_area_multiplier</span></div>
+</div>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

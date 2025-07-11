@@ -1,0 +1,16 @@
+optigob.static_ag
+=================
+
+.. py:module:: optigob.static_ag
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/optigob/static_ag/baseline_static_ag/index
+   /autoapi/optigob/static_ag/static_ag_budget/index
+
+

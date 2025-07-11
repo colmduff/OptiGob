@@ -3,7 +3,6 @@
 [![PyPI version](https://img.shields.io/pypi/v/optigob.svg)](https://pypi.org/project/optigob/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Versions](https://img.shields.io/pypi/pyversions/optigob.svg)](https://pypi.org/project/optigob/)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/yourusername/optigob/ci.yml?branch=main)](https://github.com/yourusername/optigob/actions)
 
 A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance.
 
@@ -108,6 +107,34 @@ pip install optigob
 ```
 
 ## Usage
+
+Here is some example input data:
+
+```yaml
+    AR: 5
+    split_gas: true
+    split_gas_frac: 0.3
+    target_year: 2050
+    abatement_type: "frontier"
+    abatement_scenario: 9
+    livestock_ratio_type: "dairy_per_beef"
+    livestock_ratio_value: 10
+    forest_harvest_intensity: low
+    afforestation_rate_kha_per_year: 16
+    broadleaf_fraction: 0.3
+    organic_soil_fraction: 0
+    beccs_included: true
+    beccs_willow_area_multiplier: 1.5
+    wetland_restored_frac: 0.9
+    organic_soil_under_grass_frac: 0.5
+    biomethane_included: true
+    protein_crop_included: false
+    protein_crop_multiplier: 0
+    pig_and_poultry_multiplier: 1.2
+    baseline_year: 2020
+    baseline_dairy_pop: 156.8
+    baseline_beef_pop: 98.4
+```
 
 Here is a short example of how to use the `Optigob` class:
 

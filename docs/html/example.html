@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example usage &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="optigob" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-usage">
+<h1>Example usage<a class="headerlink" href="#example-usage" title="Link to this heading"></a></h1>
+<p>To use <code class="docutils literal notranslate"><span class="pre">optigob</span></code> in a project:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">optigob.optigob</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optigob</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.resource_manager.optigob_data_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptiGobDataManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.input_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">InputHelper</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OptiGob Budget Model Input Combinations&quot;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the input helper</span>
+<span class="n">helper</span> <span class="o">=</span> <span class="n">InputHelper</span><span class="p">()</span>
+<span class="n">helper</span><span class="o">.</span><span class="n">print_all_combos</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OptiGob Budget Model Input Combinations
+
+Input type: forest
+{&#39;affor_rate_kha-yr&#39;: 2, &#39;broadleaf_frac&#39;: 0.5, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;high&#39;}
+{&#39;affor_rate_kha-yr&#39;: 8, &#39;broadleaf_frac&#39;: 0.5, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;high&#39;}
+{&#39;affor_rate_kha-yr&#39;: 8, &#39;broadleaf_frac&#39;: 0.5, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;low&#39;}
+{&#39;affor_rate_kha-yr&#39;: 8, &#39;broadleaf_frac&#39;: 0.3, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;high&#39;}
+{&#39;affor_rate_kha-yr&#39;: 8, &#39;broadleaf_frac&#39;: 0.3, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;low&#39;}
+{&#39;affor_rate_kha-yr&#39;: 16, &#39;broadleaf_frac&#39;: 0.5, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;low&#39;}
+{&#39;affor_rate_kha-yr&#39;: 16, &#39;broadleaf_frac&#39;: 0.3, &#39;organic_soil_frac&#39;: 0.0, &#39;forest_harvest_intensity&#39;: &#39;high&#39;}
+{&#39;affor_rate_kha-yr&#39;: 16, &#39;broadleaf_frac&#39;: 0.3, &#39;organic_soil_frac&#39;: 0.0, &#39;forest_harvest_intensity&#39;: &#39;low&#39;}
+{&#39;affor_rate_kha-yr&#39;: 25, &#39;broadleaf_frac&#39;: 0.5, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;high&#39;}
+{&#39;affor_rate_kha-yr&#39;: 25, &#39;broadleaf_frac&#39;: 0.5, &#39;organic_soil_frac&#39;: 0.15, &#39;forest_harvest_intensity&#39;: &#39;low&#39;}
+{&#39;affor_rate_kha-yr&#39;: 25, &#39;broadleaf_frac&#39;: 0.3, &#39;organic_soil_frac&#39;: 0.0, &#39;forest_harvest_intensity&#39;: &#39;high&#39;}
+{&#39;affor_rate_kha-yr&#39;: 25, &#39;broadleaf_frac&#39;: 0.3, &#39;organic_soil_frac&#39;: 0.0, &#39;forest_harvest_intensity&#39;: &#39;low&#39;}
+
+Input type: organic_soil
+{&#39;wetland_restored_frac&#39;: 0.5, &#39;organic_soil_under_grass_frac&#39;: 0.0}
+{&#39;wetland_restored_frac&#39;: 0.9, &#39;organic_soil_under_grass_frac&#39;: 0.5}
+{&#39;wetland_restored_frac&#39;: 0.9, &#39;organic_soil_under_grass_frac&#39;: 0.9}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;./data/sip.yaml&#39;</span>
+<span class="c1"># Initialize the data manager</span>
+<span class="n">data_manager</span> <span class="o">=</span> <span class="n">OptiGobDataManager</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Create an instance of Optigob</span>
+<span class="n">optigob</span> <span class="o">=</span> <span class="n">Optigob</span><span class="p">(</span><span class="n">data_manager</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GHG Emissions by Sector&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_emissions_co2e_by_sector</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_emissions_co2e_by_sector_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GHG Emissions by Sector
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;baseline&#39;: {&#39;agriculture&#39;: 21147.772800304, &#39;existing_forest&#39;: -2082.0, &#39;afforestation&#39;: 0, &#39;hwp&#39;: 0, &#39;other_land_use&#39;: 5947, &#39;ad&#39;: 0, &#39;beccs&#39;: 0}, &#39;scenario&#39;: {&#39;agriculture&#39;: 12273.079795069938, &#39;existing_forest&#39;: 2057.0, &#39;afforestation&#39;: -4757.436304, &#39;hwp&#39;: -1198, &#39;other_land_use&#39;: 6546, &#39;ad&#39;: 141.1, &#39;beccs&#39;: -2315.2028127000003}}
+                   baseline      scenario
+agriculture      21147.7728  12273.079795
+existing_forest  -2082.0000   2057.000000
+afforestation        0.0000  -4757.436304
+hwp                  0.0000  -1198.000000
+other_land_use    5947.0000   6546.000000
+ad                   0.0000    141.100000
+beccs                0.0000  -2315.202813
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Aggregated Total Land Area by Sector&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_aggregated_total_land_area_by_sector</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_aggregated_total_land_area_by_sector_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Aggregated Total Land Area by Sector
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;baseline&#39;: {&#39;agriculture&#39;: 4225153.146096, &#39;afforested&#39;: 0, &#39;existing_forest&#39;: 773254, &#39;other_land_use&#39;: 1433000, &#39;ad&#39;: 0, &#39;protein_crops&#39;: 0, &#39;beccs_willow&#39;: 0}, &#39;scenario&#39;: {&#39;agriculture&#39;: 2794622.2815562123, &#39;afforested&#39;: 368640, &#39;existing_forest&#39;: 781254, &#39;other_land_use&#39;: 1433000, &#39;ad&#39;: 130000.0, &#39;protein_crops&#39;: 0, &#39;beccs_willow&#39;: 150000.0}}
+                     baseline      scenario
+agriculture      4.225153e+06  2.794622e+06
+afforested       0.000000e+00  3.686400e+05
+existing_forest  7.732540e+05  7.812540e+05
+other_land_use   1.433000e+06  1.433000e+06
+ad               0.000000e+00  1.300000e+05
+protein_crops    0.000000e+00  0.000000e+00
+beccs_willow     0.000000e+00  1.500000e+05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Protein by Sector&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_protein_by_sector</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_protein_by_sector_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Protein by Sector
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;baseline&#39;: {&#39;pig_and_poultry&#39;: 132000000.0, &#39;sheep&#39;: 14332176.614848224, &#39;beef&#39;: 155417070.62386402, &#39;milk&#39;: 297463320.00000006, &#39;protein_crops&#39;: 0}, &#39;scenario&#39;: {&#39;pig_and_poultry&#39;: 158400000.0, &#39;sheep&#39;: 14332176.614848224, &#39;beef&#39;: 114726990.82573089, &#39;milk&#39;: 450223532.97514117, &#39;protein_crops&#39;: 0}}
+                     baseline      scenario
+pig_and_poultry  1.320000e+08  1.584000e+08
+sheep            1.433218e+07  1.433218e+07
+beef             1.554171e+08  1.147270e+08
+milk             2.974633e+08  4.502235e+08
+protein_crops    0.000000e+00  0.000000e+00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area by Sector&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_disaggregated_total_land_area_by_sector</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_disaggregated_total_land_area_by_sector_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Area by Sector
+{&#39;baseline&#39;: {&#39;dairy&#39;: 980841.4292544001, &#39;beef&#39;: 2066291.4368416, &#39;sheep&#39;: 828020.28, &#39;pig_and_poultry&#39;: 0.0, &#39;static_crops&#39;: 350000, &#39;protein_crops&#39;: 0, &#39;beccs_willow&#39;: 0, &#39;anaerobic_digestion&#39;: 0, &#39;managed forest&#39;: 773254, &#39;afforestation&#39;: 0, &#39;other_land_use&#39;: 1433000, &#39;available_area&#39;: 0}, &#39;scenario&#39;: {&#39;dairy&#39;: 1082977.7200910388, &#39;beef&#39;: 765997.4414651733, &#39;sheep&#39;: 595647.12, &#39;pig_and_poultry&#39;: 0.0, &#39;static_crops&#39;: 350000.0, &#39;protein_crops&#39;: 0, &#39;beccs_willow&#39;: 150000.0, &#39;anaerobic_digestion&#39;: 130000.0, &#39;managed forest&#39;: 781254, &#39;afforestation&#39;: 368640, &#39;other_land_use&#39;: 1433000, &#39;available_area&#39;: 773890.8645397881}}
+                         baseline      scenario
+dairy                9.808414e+05  1.082978e+06
+beef                 2.066291e+06  7.659974e+05
+sheep                8.280203e+05  5.956471e+05
+pig_and_poultry      0.000000e+00  0.000000e+00
+static_crops         3.500000e+05  3.500000e+05
+protein_crops        0.000000e+00  0.000000e+00
+beccs_willow         0.000000e+00  1.500000e+05
+anaerobic_digestion  0.000000e+00  1.300000e+05
+managed forest       7.732540e+05  7.812540e+05
+afforestation        0.000000e+00  3.686400e+05
+other_land_use       1.433000e+06  1.433000e+06
+available_area       0.000000e+00  7.738909e+05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;High Nature Value (HNV) Land Area by Sector&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_hnv_land_area_by_sector</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_hnv_land_area_by_sector_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>High Nature Value (HNV) Land Area by Sector
+{&#39;baseline&#39;: {&#39;agriculture&#39;: 681876.1741560001, &#39;afforested&#39;: 0, &#39;existing_forest&#39;: 255174, &#39;wetland&#39;: 884000, &#39;rewetted_wetland&#39;: 85000, &#39;organic_soil&#39;: 85000, &#39;beccs&#39;: 0}, &#39;scenario&#39;: {&#39;agriculture&#39;: 252779.15563495315, &#39;afforested&#39;: 110592.0, &#39;existing_forest&#39;: 257814, &#39;wetland&#39;: 884000, &#39;rewetted_wetland&#39;: 198000, &#39;organic_soil&#39;: 198000, &#39;beccs&#39;: 150000.0}}
+                       baseline       scenario
+agriculture       681876.174156  252779.155635
+afforested             0.000000  110592.000000
+existing_forest   255174.000000  257814.000000
+wetland           884000.000000  884000.000000
+rewetted_wetland   85000.000000  198000.000000
+organic_soil       85000.000000  198000.000000
+beccs                  0.000000  150000.000000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bioenergy by Sector&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_bioenergy_by_sector</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_bioenergy_by_sector_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bioenergy by Sector
+{&#39;baseline&#39;: {&#39;ad&#39;: 0, &#39;willow_biomass&#39;: 0, &#39;forest_biomass&#39;: 0}, &#39;scenario&#39;: {&#39;ad&#39;: 5700000, &#39;willow_biomass&#39;: 6605280.0, &#39;forest_biomass&#39;: 9144547.727}}
+                baseline     scenario
+ad                     0  5700000.000
+willow_biomass         0  6605280.000
+forest_biomass         0  9144547.727
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;HWP&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_hwp_volume</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_hwp_volume_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HWP
+{&#39;baseline&#39;: {&#39;hwp&#39;: 0}, &#39;scenario&#39;: {&#39;hwp&#39;: 6407181}}
+     baseline  scenario
+hwp         0   6407181
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Substitution&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_substitution_emission_by_sector_co2e</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_substitution_emission_by_sector_co2e_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Substitution
+{&#39;ad_substitution&#39;: -417.1257789, &#39;forest_substitution&#39;: -3034, &#39;willow_substitution&#39;: -496.3207392}
+                        scenario
+ad_substitution      -417.125779
+forest_substitution -3034.000000
+willow_substitution  -496.320739
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NZ Status&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">check_net_zero_status</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;total emissions co2e: </span><span class="si">{</span><span class="n">optigob</span><span class="o">.</span><span class="n">total_emission_co2e</span><span class="p">()</span><span class="si">}</span><span class="s2"> kt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NZ Status
+True
+total emissions co2e: 12746.540678369938 kt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Livestock Population&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_population</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_population_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Livestock Population
+{&#39;baseline&#39;: {&#39;dairy&#39;: 1568000.0, &#39;beef&#39;: 984000.0}, &#39;scenario&#39;: {&#39;dairy&#39;: 1832228.3887815578, &#39;beef&#39;: 183222.8388781558}}
+        baseline      scenario
+dairy  1568000.0  1.832228e+06
+beef    984000.0  1.832228e+05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Livestock CH4 Emissions budget&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_split_gas_ch4_emission_budget</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Livestock CH4 Emissions budget
+293.11946640400004
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Livestock CO2e Emissions budget&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_co2e_emission_budget</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Livestock CO2e Emissions budget
+-3259.6335684200003
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AREA comparison&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">optigob</span><span class="o">.</span><span class="n">get_disaggregated_total_land_area_by_sector_df</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sum of each column:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AREA comparison
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                         baseline      scenario
+dairy                9.808414e+05  1.082978e+06
+beef                 2.066291e+06  7.659974e+05
+sheep                8.280203e+05  5.956471e+05
+pig_and_poultry      0.000000e+00  0.000000e+00
+static_crops         3.500000e+05  3.500000e+05
+protein_crops        0.000000e+00  0.000000e+00
+beccs_willow         0.000000e+00  1.500000e+05
+anaerobic_digestion  0.000000e+00  1.300000e+05
+managed forest       7.732540e+05  7.812540e+05
+afforestation        0.000000e+00  3.686400e+05
+other_land_use       1.433000e+06  1.433000e+06
+available_area       0.000000e+00  7.738909e+05
+
+Sum of each column:
+baseline    6.431407e+06
+scenario    6.431407e+06
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="optigob" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

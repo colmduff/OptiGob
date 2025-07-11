@@ -1,0 +1,25 @@
+optigob.database
+================
+
+.. py:module:: optigob.database
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   optigob.database.get_local_dir
+
+
+Package Contents
+----------------
+
+.. py:function:: get_local_dir()
+
+   Gets the directory containing this script
+
+   :returns: full path to the the script's directory
+   :rtype: str
+
+

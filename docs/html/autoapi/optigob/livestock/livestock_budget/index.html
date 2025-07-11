@@ -1,0 +1,1151 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.livestock.livestock_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="optigob.livestock.livestock_optimisation" href="../livestock_optimisation/index.html" />
+    <link rel="prev" title="optigob.livestock.baseline_livestock" href="../baseline_livestock/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../input_variables.html">OptiGob Input Variables Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">optigob</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../bioenergy/index.html">optigob.bioenergy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../budget_model/index.html">optigob.budget_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../database/index.html">optigob.database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../forest/index.html">optigob.forest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../input_helper/index.html">optigob.input_helper</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">optigob.livestock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optigob/index.html">optigob.optigob</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../other_land/index.html">optigob.other_land</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../protein_crops/index.html">optigob.protein_crops</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../resource_manager/index.html">optigob.resource_manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../static_ag/index.html">optigob.static_ag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../substitution/index.html">optigob.substitution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">optigob</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">optigob.livestock</a></li>
+      <li class="breadcrumb-item active">optigob.livestock.livestock_budget</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/optigob/livestock/livestock_budget/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-optigob.livestock.livestock_budget">
+<span id="optigob-livestock-livestock-budget"></span><h1>optigob.livestock.livestock_budget<a class="headerlink" href="#module-optigob.livestock.livestock_budget" title="Link to this heading"></a></h1>
+<p>This module contains the LivestockBudget class, which is responsible for managing and optimizing livestock populations, emissions, protein yields, and land use within the FORESIGHT framework. The class integrates with data managers and optimization models to compute livestock-related budgets and outputs under various scenarios.</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><ul class="simple">
+<li><p>LivestockBudget: Manages and optimizes livestock populations, emissions, protein, and land use.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">__init__(self,</span> <span class="pre">optigob_data_manager,</span> <span class="pre">net_zero_budget=None,</span> <span class="pre">split_gas_budget=None)</span></span></dt>
+<dd><p>Initialize the LivestockBudget class and set up all required budgets, data managers, and scenario parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">_get_total_area_commitment(self)</span></span></dt>
+<dd><p>Calculate the total area commitment for all land uses that compete with livestock (rewetted, afforested, biomethane, willow, protein crops).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">_load_optimisation_outputs(self)</span></span></dt>
+<dd><p>Load and cache the livestock optimisation outputs if not already loaded.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">_get_total_non_livestock_emission_ch4(self)</span></span></dt>
+<dd><p>Calculate total CH4 emissions from all relevant land uses and sectors in the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_ch4_budget(self)</span></span></dt>
+<dd><p>Calculate the CH4 budget for the scenario, based on baseline emissions and the split gas fraction.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_split_gas_ch4_emission(self)</span></span></dt>
+<dd><p>Calculate the remaining CH4 budget after accounting for all scenario emissions, under the split gas approach.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_optimisation_outputs(self)</span></span></dt>
+<dd><p>Run the livestock population optimisation for the current scenario and constraints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_dairy_population(self)</span></span></dt>
+<dd><p>Get the optimised dairy cow population for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_beef_population(self)</span></span></dt>
+<dd><p>Get the optimised beef cow population for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">_get_scaled_beef_population(self)</span></span></dt>
+<dd><p>Get the beef cow population, scaled by the emission scaler for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">_get_scaled_dairy_population(self)</span></span></dt>
+<dd><p>Get the dairy cow population, scaled by the emission scaler for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_dairy_cows_co2_emission(self)</span></span></dt>
+<dd><p>Calculate the total CO2 emissions from dairy cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_dairy_cows_ch4_emission(self)</span></span></dt>
+<dd><p>Calculate the total CH4 emissions from dairy cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_dairy_cows_n2o_emission(self)</span></span></dt>
+<dd><p>Calculate the total N2O emissions from dairy cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_dairy_cows_co2e_emission(self)</span></span></dt>
+<dd><p>Calculate the total CO2e emissions from dairy cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_beef_cows_co2_emission(self)</span></span></dt>
+<dd><p>Calculate the total CO2 emissions from beef cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_beef_cows_ch4_emission(self)</span></span></dt>
+<dd><p>Calculate the total CH4 emissions from beef cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_beef_cows_n2o_emission(self)</span></span></dt>
+<dd><p>Calculate the total N2O emissions from beef cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_beef_cows_co2e_emission(self)</span></span></dt>
+<dd><p>Calculate the total CO2e emissions from beef cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_total_co2_emission(self)</span></span></dt>
+<dd><p>Calculate the total CO2 emissions from all livestock (dairy and beef) for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_total_ch4_emission(self)</span></span></dt>
+<dd><p>Calculate the total CH4 emissions from all livestock (dairy and beef) for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_total_n2o_emission(self)</span></span></dt>
+<dd><p>Calculate the total N2O emissions from all livestock (dairy and beef) for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_total_co2e_emission(self)</span></span></dt>
+<dd><p>Calculate the total CO2e emissions from all livestock (dairy and beef) for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_dairy_cows_area(self)</span></span></dt>
+<dd><p>Calculate the total land area required for dairy cows.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_beef_cows_area(self)</span></span></dt>
+<dd><p>Calculate the total land area required for beef cows.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_total_area(self)</span></span></dt>
+<dd><p>Calculate the total land area required for all livestock (dairy and beef).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_total_beef_protein(self)</span></span></dt>
+<dd><p>Calculate the total protein production from beef and dairy+beef systems for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_total_milk_protein(self)</span></span></dt>
+<dd><p>Calculate the total milk protein production from dairy cows for the scenario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">get_hnv_area(self)</span></span></dt>
+<dd><p>Calculate the area of high nature value (HNV) grassland managed by beef cows, including both beef and dairy+beef systems.</p>
+</dd></dl>
+
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#optigob.livestock.livestock_budget.LivestockBudget" title="optigob.livestock.livestock_budget.LivestockBudget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LivestockBudget</span></code></a></p></td>
+<td><p>The LivestockBudget class manages and optimizes livestock populations, emissions, protein yields, and land use within the FORESIGHT framework.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optigob.livestock.livestock_budget.</span></span><span class="sig-name descname"><span class="pre">LivestockBudget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optigob_data_manager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">net_zero_budget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_gas_budget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget" title="Link to this definition"></a></dt>
+<dd><p>The LivestockBudget class manages and optimizes livestock populations, emissions, protein yields, and land use within the FORESIGHT framework.
+It integrates with data managers and optimization models to compute livestock-related budgets, emissions, protein yields, and land requirements under various scenarios.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.net_zero_budget">
+<span class="sig-name descname"><span class="pre">net_zero_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.net_zero_budget" title="Link to this definition"></a></dt>
+<dd><p>Emissions budget for net zero scenarios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.split_gas_budget">
+<span class="sig-name descname"><span class="pre">split_gas_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.split_gas_budget" title="Link to this definition"></a></dt>
+<dd><p>Emissions budget for split gas scenarios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.data_manager_class">
+<span class="sig-name descname"><span class="pre">data_manager_class</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.data_manager_class" title="Link to this definition"></a></dt>
+<dd><p>Instance of the data manager for accessing scenario and scaler data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.optimisation">
+<span class="sig-name descname"><span class="pre">optimisation</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.optimisation" title="Link to this definition"></a></dt>
+<dd><p>Optimisation engine for livestock populations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../livestock_optimisation/index.html#optigob.livestock.livestock_optimisation.LivestockOptimisation" title="optigob.livestock.livestock_optimisation.LivestockOptimisation">LivestockOptimisation</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.baseline_emission">
+<span class="sig-name descname"><span class="pre">baseline_emission</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.baseline_emission" title="Link to this definition"></a></dt>
+<dd><p>Baseline emissions calculator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../budget_model/baseline_emissions/index.html#optigob.budget_model.baseline_emissions.BaselineEmission" title="optigob.budget_model.baseline_emissions.BaselineEmission">BaselineEmission</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.other_land_budget">
+<span class="sig-name descname"><span class="pre">other_land_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.other_land_budget" title="Link to this definition"></a></dt>
+<dd><p>Budget for other land uses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget" title="optigob.other_land.other_land_budget.OtherLandBudget">OtherLandBudget</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.forest_budget">
+<span class="sig-name descname"><span class="pre">forest_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.forest_budget" title="Link to this definition"></a></dt>
+<dd><p>Budget for forest land uses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../forest/forest_budget/index.html#optigob.forest.forest_budget.ForestBudget" title="optigob.forest.forest_budget.ForestBudget">ForestBudget</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.bio_energy_budget">
+<span class="sig-name descname"><span class="pre">bio_energy_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.bio_energy_budget" title="Link to this definition"></a></dt>
+<dd><p>Budget for bioenergy land uses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../bioenergy/bioenergy_budget/index.html#optigob.bioenergy.bioenergy_budget.BioEnergyBudget" title="optigob.bioenergy.bioenergy_budget.BioEnergyBudget">BioEnergyBudget</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.protein_crop_budget">
+<span class="sig-name descname"><span class="pre">protein_crop_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.protein_crop_budget" title="Link to this definition"></a></dt>
+<dd><p>Budget for protein crop land uses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../protein_crops/protein_crops_budget/index.html#optigob.protein_crops.protein_crops_budget.ProteinCropsBudget" title="optigob.protein_crops.protein_crops_budget.ProteinCropsBudget">ProteinCropsBudget</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.static_ag_budget">
+<span class="sig-name descname"><span class="pre">static_ag_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.static_ag_budget" title="Link to this definition"></a></dt>
+<dd><p>Budget for static agriculture land uses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../static_ag/static_ag_budget/index.html#optigob.static_ag.static_ag_budget.StaticAgBudget" title="optigob.static_ag.static_ag_budget.StaticAgBudget">StaticAgBudget</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.rewetted_area">
+<span class="sig-name descname"><span class="pre">rewetted_area</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.rewetted_area" title="Link to this definition"></a></dt>
+<dd><p>Area of rewetted organic soils (ha).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.afforested_area">
+<span class="sig-name descname"><span class="pre">afforested_area</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.afforested_area" title="Link to this definition"></a></dt>
+<dd><p>Area for afforestation (ha).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.biomethane_area">
+<span class="sig-name descname"><span class="pre">biomethane_area</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.biomethane_area" title="Link to this definition"></a></dt>
+<dd><p>Area for biomethane production (ha).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.willow_area">
+<span class="sig-name descname"><span class="pre">willow_area</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.willow_area" title="Link to this definition"></a></dt>
+<dd><p>Area for willow production (ha).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.protein_crop_area">
+<span class="sig-name descname"><span class="pre">protein_crop_area</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.protein_crop_area" title="Link to this definition"></a></dt>
+<dd><p>Area for protein crops (ha).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._milk_protein">
+<span class="sig-name descname"><span class="pre">_milk_protein</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._milk_protein" title="Link to this definition"></a></dt>
+<dd><p>Protein content scaler for milk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._beef_protein">
+<span class="sig-name descname"><span class="pre">_beef_protein</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._beef_protein" title="Link to this definition"></a></dt>
+<dd><p>Protein content scaler for beef.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.target_year">
+<span class="sig-name descname"><span class="pre">target_year</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.target_year" title="Link to this definition"></a></dt>
+<dd><p>Target year for scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.scenario">
+<span class="sig-name descname"><span class="pre">scenario</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.scenario" title="Link to this definition"></a></dt>
+<dd><p>Abatement scenario name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.abatement">
+<span class="sig-name descname"><span class="pre">abatement</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.abatement" title="Link to this definition"></a></dt>
+<dd><p>Abatement type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_livestock_ratio_type">
+<span class="sig-name descname"><span class="pre">get_livestock_ratio_type</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_livestock_ratio_type" title="Link to this definition"></a></dt>
+<dd><p>Type of livestock ratio constraint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.livestock_ratio_value">
+<span class="sig-name descname"><span class="pre">livestock_ratio_value</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.livestock_ratio_value" title="Link to this definition"></a></dt>
+<dd><p>Value for livestock ratio constraint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.split_gas_approach">
+<span class="sig-name descname"><span class="pre">split_gas_approach</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.split_gas_approach" title="Link to this definition"></a></dt>
+<dd><p>Whether split gas approach is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.split_gas_frac">
+<span class="sig-name descname"><span class="pre">split_gas_frac</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.split_gas_frac" title="Link to this definition"></a></dt>
+<dd><p>Fraction for split gas approach.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.ch4_baseline">
+<span class="sig-name descname"><span class="pre">ch4_baseline</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.ch4_baseline" title="Link to this definition"></a></dt>
+<dd><p>Baseline CH4 emissions (kt).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.ch4_budget">
+<span class="sig-name descname"><span class="pre">ch4_budget</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.ch4_budget" title="Link to this definition"></a></dt>
+<dd><p>CH4 budget for split gas approach (kt).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._optimisation_outputs">
+<span class="sig-name descname"><span class="pre">_optimisation_outputs</span></span><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._optimisation_outputs" title="Link to this definition"></a></dt>
+<dd><p>Cached optimisation outputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">net_zero_budget</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">split_gas_budget</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">data_manager_class</span></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">optimisation</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">baseline_emission</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">other_land_budget</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">forest_budget</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">bio_energy_budget</span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">protein_crop_budget</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">static_ag_budget</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">rewetted_area</span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">afforested_area</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">biomethane_area</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">willow_area</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">protein_crop_area</span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">_milk_protein</span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">_beef_protein</span></span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">target_year</span></span><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">scenario</span></span><a class="headerlink" href="#id18" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">abatement</span></span><a class="headerlink" href="#id19" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id20">
+<span class="sig-name descname"><span class="pre">get_livestock_ratio_type</span></span><a class="headerlink" href="#id20" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id21">
+<span class="sig-name descname"><span class="pre">livestock_ratio_value</span></span><a class="headerlink" href="#id21" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id22">
+<span class="sig-name descname"><span class="pre">split_gas_approach</span></span><a class="headerlink" href="#id22" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id23">
+<span class="sig-name descname"><span class="pre">split_gas_frac</span></span><a class="headerlink" href="#id23" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id24">
+<span class="sig-name descname"><span class="pre">_optimisation_outputs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id24" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._get_total_area_commitment">
+<span class="sig-name descname"><span class="pre">_get_total_area_commitment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget._get_total_area_commitment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._get_total_area_commitment" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total area commitment for all land uses that compete with livestock (rewetted, afforested, biomethane, willow, protein crops).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total area commitment in hectares (ha).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._load_optimisation_outputs">
+<span class="sig-name descname"><span class="pre">_load_optimisation_outputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget._load_optimisation_outputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._load_optimisation_outputs" title="Link to this definition"></a></dt>
+<dd><p>Load and cache the livestock optimisation outputs if not already loaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of optimisation results for livestock populations and constraints.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._get_total_non_livestock_emission_ch4">
+<span class="sig-name descname"><span class="pre">_get_total_non_livestock_emission_ch4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget._get_total_non_livestock_emission_ch4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._get_total_non_livestock_emission_ch4" title="Link to this definition"></a></dt>
+<dd><p>Calculate total CH4 (methane) emissions from all relevant land uses and sectors in the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total CH4 emissions in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_ch4_budget">
+<span class="sig-name descname"><span class="pre">get_ch4_budget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_ch4_budget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_ch4_budget" title="Link to this definition"></a></dt>
+<dd><p>Calculate the CH4 (methane) budget for the scenario, based on baseline emissions and the split gas fraction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CH4 budget in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_split_gas_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_split_gas_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_split_gas_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_split_gas_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the remaining CH4 (methane) budget after accounting for all scenario emissions, under the split gas approach.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Remaining CH4 budget in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_optimisation_outputs">
+<span class="sig-name descname"><span class="pre">get_optimisation_outputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_optimisation_outputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_optimisation_outputs" title="Link to this definition"></a></dt>
+<dd><p>Run the livestock population optimisation for the current scenario and constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of optimised livestock populations and related outputs.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_dairy_population">
+<span class="sig-name descname"><span class="pre">get_dairy_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_dairy_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_dairy_population" title="Link to this definition"></a></dt>
+<dd><p>Get the optimised dairy cow population for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of dairy cows.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_beef_population">
+<span class="sig-name descname"><span class="pre">get_beef_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_beef_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_beef_population" title="Link to this definition"></a></dt>
+<dd><p>Get the optimised beef cow population for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of beef cows.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._get_scaled_beef_population">
+<span class="sig-name descname"><span class="pre">_get_scaled_beef_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget._get_scaled_beef_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._get_scaled_beef_population" title="Link to this definition"></a></dt>
+<dd><p>Get the beef cow population, scaled by the emission scaler for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Scaled beef cow population.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget._get_scaled_dairy_population">
+<span class="sig-name descname"><span class="pre">_get_scaled_dairy_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget._get_scaled_dairy_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget._get_scaled_dairy_population" title="Link to this definition"></a></dt>
+<dd><p>Get the dairy cow population, scaled by the emission scaler for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Scaled dairy cow population.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_co2_emission">
+<span class="sig-name descname"><span class="pre">get_dairy_cows_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_dairy_cows_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CO2 emissions from dairy cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CO2 emissions from dairy cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_dairy_cows_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_dairy_cows_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CH4 emissions from dairy cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CH4 emissions from dairy cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_dairy_cows_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_dairy_cows_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total N2O emissions from dairy cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>N2O emissions from dairy cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_co2e_emission">
+<span class="sig-name descname"><span class="pre">get_dairy_cows_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_dairy_cows_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CO2e (CO2 equivalent) emissions from dairy cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CO2e emissions from dairy cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_co2_emission">
+<span class="sig-name descname"><span class="pre">get_beef_cows_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_beef_cows_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CO2 emissions from beef cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CO2 emissions from beef cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_beef_cows_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_beef_cows_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CH4 emissions from beef cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CH4 emissions from beef cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_beef_cows_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_beef_cows_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total N2O emissions from beef cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>N2O emissions from beef cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_co2e_emission">
+<span class="sig-name descname"><span class="pre">get_beef_cows_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_beef_cows_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CO2e (CO2 equivalent) emissions from beef cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CO2e emissions from beef cows in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_total_co2_emission">
+<span class="sig-name descname"><span class="pre">get_total_co2_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_total_co2_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_total_co2_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CO2 emissions from all livestock (dairy and beef) for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total CO2 emissions in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_total_ch4_emission">
+<span class="sig-name descname"><span class="pre">get_total_ch4_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_total_ch4_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_total_ch4_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CH4 emissions from all livestock (dairy and beef) for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total CH4 emissions in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_total_n2o_emission">
+<span class="sig-name descname"><span class="pre">get_total_n2o_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_total_n2o_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_total_n2o_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total N2O emissions from all livestock (dairy and beef) for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total N2O emissions in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_total_co2e_emission">
+<span class="sig-name descname"><span class="pre">get_total_co2e_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_total_co2e_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_total_co2e_emission" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total CO2e (CO2 equivalent) emissions from all livestock (dairy and beef) for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total CO2e emissions in kilotonnes (kt).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_area">
+<span class="sig-name descname"><span class="pre">get_dairy_cows_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_dairy_cows_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_dairy_cows_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total land area required for dairy cows, using the area scaler and scaled population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Land area for dairy cows in hectares (ha).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_area">
+<span class="sig-name descname"><span class="pre">get_beef_cows_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_beef_cows_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_beef_cows_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total land area required for beef cows, including both beef and dairy+beef systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Land area for beef cows in hectares (ha).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_total_area">
+<span class="sig-name descname"><span class="pre">get_total_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_total_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_total_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total land area required for all livestock (dairy and beef).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total land area in hectares (ha).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_total_beef_protein">
+<span class="sig-name descname"><span class="pre">get_total_beef_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_total_beef_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_total_beef_protein" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total protein production from beef and dairy+beef systems for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total beef protein production in kilograms (kg).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_total_milk_protein">
+<span class="sig-name descname"><span class="pre">get_total_milk_protein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_total_milk_protein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_total_milk_protein" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total milk protein production from dairy cows for the scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total milk protein production in kilograms (kg).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.livestock.livestock_budget.LivestockBudget.get_hnv_area">
+<span class="sig-name descname"><span class="pre">get_hnv_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/livestock/livestock_budget.html#LivestockBudget.get_hnv_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.livestock.livestock_budget.LivestockBudget.get_hnv_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the area of high nature value (HNV) grassland managed by beef cows, including both beef and dairy+beef systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HNV area in hectares (ha).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../baseline_livestock/index.html" class="btn btn-neutral float-left" title="optigob.livestock.baseline_livestock" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../livestock_optimisation/index.html" class="btn btn-neutral float-right" title="optigob.livestock.livestock_optimisation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

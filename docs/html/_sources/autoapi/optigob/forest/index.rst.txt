@@ -1,0 +1,16 @@
+optigob.forest
+==============
+
+.. py:module:: optigob.forest
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/optigob/forest/baseline_forest/index
+   /autoapi/optigob/forest/forest_budget/index
+
+

@@ -1,0 +1,15 @@
+optigob.bioenergy
+=================
+
+.. py:module:: optigob.bioenergy
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/optigob/bioenergy/bioenergy_budget/index
+
+

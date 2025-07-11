@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.other_land.other_land_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optigob.other_land.other_land_budget</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optigob.other_land.other_land_budget</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">other_land_budget</span>
+<span class="sd">=================</span>
+
+<span class="sd">This module contains the OtherLandBudget class, which is responsible for calculating various emissions and areas related to wetland restoration and organic soil management.</span>
+
+<span class="sd">Class:</span>
+<span class="sd">    OtherLandBudget: Calculates emissions and areas for wetland restoration and organic soils.</span>
+
+<span class="sd">Methods in OtherLandBudget:</span>
+<span class="sd">    __init__(self, optigob_data_manager): Initializes the OtherLandBudget class with the provided data manager.</span>
+<span class="sd">    get_wetland_restoration_emission_co2e(self): Calculates and returns the CO2e emissions from wetland restoration.</span>
+<span class="sd">    get_wetland_restoration_emission_ch4(self): Calculates and returns the CH4 emissions from wetland restoration.</span>
+<span class="sd">    get_wetland_restoration_emission_n2o(self): Calculates and returns the N2O emissions from wetland restoration.</span>
+<span class="sd">    get_wetland_restoration_emission_co2(self): Calculates and returns the CO2 emissions from wetland restoration.</span>
+<span class="sd">    get_drained_organic_soil_area(self): Calculates and returns the area of drained organic soil.</span>
+<span class="sd">    get_rewetted_organic_area(self): Calculates and returns the area of rewetted organic soil.</span>
+<span class="sd">    get_drained_wetland_area(self): Calculates and returns the area of drained wetland.</span>
+<span class="sd">    get_rewetted_wetland_area(self): Calculates and returns the area of rewetted wetland.</span>
+<span class="sd">    get_total_other_land_area(self): Calculates and returns the total area of other land, including drained and rewetted organic soil and wetland.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="OtherLandBudget">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OtherLandBudget</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optigob_data_manager</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the OtherLandBudget class with the provided data manager.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            optigob_data_manager: The data manager instance to be used for data retrieval.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span> <span class="o">=</span> <span class="n">optigob_data_manager</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_year</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_target_year</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_wetland_restored_fraction</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_under_grass_fraction</span><span class="p">()</span>
+
+<div class="viewcode-block" id="OtherLandBudget.get_wetland_restoration_emission_co2e">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_co2e">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_wetland_restoration_emission_co2e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the CO2e emissions from wetland restoration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The CO2e emissions value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wetland_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">wetland_df</span><span class="p">[</span><span class="n">wetland_df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CO2e&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_wetland_restoration_emission_ch4">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_ch4">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_wetland_restoration_emission_ch4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the CH4 emissions from wetland restoration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The CH4 emissions value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wetland_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">wetland_df</span><span class="p">[</span><span class="n">wetland_df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CH4&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_wetland_restoration_emission_n2o">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_n2o">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_wetland_restoration_emission_n2o</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the N2O emissions from wetland restoration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The N2O emissions value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wetland_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">wetland_df</span><span class="p">[</span><span class="n">wetland_df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;N2O&quot;</span><span class="p">]</span>
+
+       
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_wetland_restoration_emission_co2">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_co2">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_wetland_restoration_emission_co2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the CO2 emissions from wetland restoration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The CO2 emissions value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wetland_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_emission_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">wetland_df</span><span class="p">[</span><span class="n">wetland_df</span><span class="p">[</span><span class="s2">&quot;ghg&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;CO2&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;emission_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OtherLandBudget.get_drained_organic_soil_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_drained_organic_soil_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_drained_organic_soil_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the area of drained organic soil.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of drained organic soil in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">drained_organic_soil_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+        
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">drained_organic_soil_area_df</span><span class="p">[</span><span class="n">drained_organic_soil_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;drained_organic&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;areas_ha&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_rewetted_organic_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_organic_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_rewetted_organic_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the area of rewetted organic soil.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of rewetted organic soil in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rewtted_organic_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">rewtted_organic_area_df</span><span class="p">[</span><span class="n">rewtted_organic_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;rewetted_organic&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;areas_ha&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_drained_wetland_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_drained_wetland_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_drained_wetland_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the area of drained wetland.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of drained wetland in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">drained_wetland_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">drained_wetland_area_df</span><span class="p">[</span><span class="n">drained_wetland_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;drained_wetland&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;areas_ha&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_rewetted_wetland_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_wetland_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_rewetted_wetland_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the area of rewetted wetland.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of rewetted wetland in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rewetted_wetland_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">rewetted_wetland_area_df</span><span class="p">[</span><span class="n">rewetted_wetland_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;rewetted_wetland&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;areas_ha&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_near_natural_wetland_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_near_natural_wetland_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_near_natural_wetland_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the area of near-natural wetland.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of near-natural wetland in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">near_natural_wetland_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">near_natural_wetland_area_df</span><span class="p">[</span><span class="n">near_natural_wetland_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;near_natural_wetland&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;areas_ha&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_total_other_land_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_total_other_land_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_total_other_land_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and returns the total area of other land, including drained and rewetted organic soil and wetland.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The total area of other land in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">drained_organic_soil_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_drained_organic_soil_area</span><span class="p">()</span>
+        <span class="n">rewetted_organic_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_rewetted_organic_area</span><span class="p">()</span>
+        <span class="n">drained_wetland_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_drained_wetland_area</span><span class="p">()</span>
+        <span class="n">rewetted_wetland_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_rewetted_wetland_area</span><span class="p">()</span>
+        <span class="n">near_natural_wetland_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_near_natural_wetland_area</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">drained_organic_soil_area</span> <span class="o">+</span> <span class="n">rewetted_organic_area</span> <span class="o">+</span> <span class="n">drained_wetland_area</span> <span class="o">+</span> <span class="n">rewetted_wetland_area</span> <span class="o">+</span> <span class="n">near_natural_wetland_area</span></div>
+
+
+<div class="viewcode-block" id="OtherLandBudget.get_rewetted_organic_hnv_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_organic_hnv_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_rewetted_organic_hnv_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the area of rewetted high nature value (HNV) organic soil.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of rewetted HNV organic soil in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rewetted_organic_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">rewetted_organic_area_df</span><span class="p">[</span><span class="n">rewetted_organic_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;rewetted_organic&quot;</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;hnv_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_rewetted_wetland_hnv_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_wetland_hnv_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_rewetted_wetland_hnv_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the area of rewetted high nature value (HNV) wetland.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of rewetted HNV wetland in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rewetted_wetland_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">rewetted_wetland_area_df</span><span class="p">[</span><span class="n">rewetted_wetland_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;rewetted_wetland&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;hnv_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="OtherLandBudget.get_near_natural_wetland_hnv_area">
+<a class="viewcode-back" href="../../../autoapi/optigob/other_land/other_land_budget/index.html#optigob.other_land.other_land_budget.OtherLandBudget.get_near_natural_wetland_hnv_area">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_near_natural_wetland_hnv_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the area of near-natural high nature value (HNV) wetland.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The area of near-natural HNV wetland in hectares.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">near_natural_wetland_area_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_manager_class</span><span class="o">.</span><span class="n">get_organic_soil_area_scaler</span><span class="p">(</span>
+            <span class="n">target_year</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_year</span><span class="p">,</span>
+            <span class="n">wetland_restored_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wetland_restored_fraction</span><span class="p">,</span>
+            <span class="n">organic_soil_under_grass_frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">organic_soil_under_grass_fraction</span>
+        <span class="p">)</span>
+
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">near_natural_wetland_area_df</span><span class="p">[</span><span class="n">near_natural_wetland_area_df</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;near_natural_wetland&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;hnv_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

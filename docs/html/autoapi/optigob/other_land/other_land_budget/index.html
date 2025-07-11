@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob.other_land.other_land_budget &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="optigob.protein_crops" href="../../protein_crops/index.html" />
+    <link rel="prev" title="optigob.other_land.baseline_other_land" href="../baseline_other_land/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../input_variables.html">OptiGob Input Variables Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">optigob</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../bioenergy/index.html">optigob.bioenergy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../budget_model/index.html">optigob.budget_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../database/index.html">optigob.database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../forest/index.html">optigob.forest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../input_helper/index.html">optigob.input_helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../livestock/index.html">optigob.livestock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../optigob/index.html">optigob.optigob</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">optigob.other_land</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../protein_crops/index.html">optigob.protein_crops</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../resource_manager/index.html">optigob.resource_manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../static_ag/index.html">optigob.static_ag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../substitution/index.html">optigob.substitution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">optigob</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">optigob.other_land</a></li>
+      <li class="breadcrumb-item active">optigob.other_land.other_land_budget</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/optigob/other_land/other_land_budget/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-optigob.other_land.other_land_budget">
+<span id="optigob-other-land-other-land-budget"></span><h1>optigob.other_land.other_land_budget<a class="headerlink" href="#module-optigob.other_land.other_land_budget" title="Link to this heading"></a></h1>
+<p>This module contains the OtherLandBudget class, which is responsible for calculating various emissions and areas related to wetland restoration and organic soil management.</p>
+<dl class="simple">
+<dt>Class:</dt><dd><p>OtherLandBudget: Calculates emissions and areas for wetland restoration and organic soils.</p>
+</dd>
+<dt>Methods in OtherLandBudget:</dt><dd><p>__init__(self, optigob_data_manager): Initializes the OtherLandBudget class with the provided data manager.
+get_wetland_restoration_emission_co2e(self): Calculates and returns the CO2e emissions from wetland restoration.
+get_wetland_restoration_emission_ch4(self): Calculates and returns the CH4 emissions from wetland restoration.
+get_wetland_restoration_emission_n2o(self): Calculates and returns the N2O emissions from wetland restoration.
+get_wetland_restoration_emission_co2(self): Calculates and returns the CO2 emissions from wetland restoration.
+get_drained_organic_soil_area(self): Calculates and returns the area of drained organic soil.
+get_rewetted_organic_area(self): Calculates and returns the area of rewetted organic soil.
+get_drained_wetland_area(self): Calculates and returns the area of drained wetland.
+get_rewetted_wetland_area(self): Calculates and returns the area of rewetted wetland.
+get_total_other_land_area(self): Calculates and returns the total area of other land, including drained and rewetted organic soil and wetland.</p>
+</dd>
+</dl>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#optigob.other_land.other_land_budget.OtherLandBudget" title="optigob.other_land.other_land_budget.OtherLandBudget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OtherLandBudget</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optigob.other_land.other_land_budget.</span></span><span class="sig-name descname"><span class="pre">OtherLandBudget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optigob_data_manager</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.data_manager_class">
+<span class="sig-name descname"><span class="pre">data_manager_class</span></span><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.data_manager_class" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.target_year">
+<span class="sig-name descname"><span class="pre">target_year</span></span><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.target_year" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.wetland_restored_fraction">
+<span class="sig-name descname"><span class="pre">wetland_restored_fraction</span></span><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.wetland_restored_fraction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.organic_soil_under_grass_fraction">
+<span class="sig-name descname"><span class="pre">organic_soil_under_grass_fraction</span></span><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.organic_soil_under_grass_fraction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_co2e">
+<span class="sig-name descname"><span class="pre">get_wetland_restoration_emission_co2e</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_wetland_restoration_emission_co2e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_co2e" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the CO2e emissions from wetland restoration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2e emissions value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_ch4">
+<span class="sig-name descname"><span class="pre">get_wetland_restoration_emission_ch4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_wetland_restoration_emission_ch4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_ch4" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the CH4 emissions from wetland restoration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CH4 emissions value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_n2o">
+<span class="sig-name descname"><span class="pre">get_wetland_restoration_emission_n2o</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_wetland_restoration_emission_n2o"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_n2o" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the N2O emissions from wetland restoration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The N2O emissions value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_co2">
+<span class="sig-name descname"><span class="pre">get_wetland_restoration_emission_co2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_wetland_restoration_emission_co2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_wetland_restoration_emission_co2" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the CO2 emissions from wetland restoration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CO2 emissions value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_drained_organic_soil_area">
+<span class="sig-name descname"><span class="pre">get_drained_organic_soil_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_drained_organic_soil_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_drained_organic_soil_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the area of drained organic soil.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of drained organic soil in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_organic_area">
+<span class="sig-name descname"><span class="pre">get_rewetted_organic_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_rewetted_organic_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_organic_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the area of rewetted organic soil.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of rewetted organic soil in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_drained_wetland_area">
+<span class="sig-name descname"><span class="pre">get_drained_wetland_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_drained_wetland_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_drained_wetland_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the area of drained wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of drained wetland in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_wetland_area">
+<span class="sig-name descname"><span class="pre">get_rewetted_wetland_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_rewetted_wetland_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_wetland_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the area of rewetted wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of rewetted wetland in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_near_natural_wetland_area">
+<span class="sig-name descname"><span class="pre">get_near_natural_wetland_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_near_natural_wetland_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_near_natural_wetland_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the area of near-natural wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of near-natural wetland in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_total_other_land_area">
+<span class="sig-name descname"><span class="pre">get_total_other_land_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_total_other_land_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_total_other_land_area" title="Link to this definition"></a></dt>
+<dd><p>Calculates and returns the total area of other land, including drained and rewetted organic soil and wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total area of other land in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_organic_hnv_area">
+<span class="sig-name descname"><span class="pre">get_rewetted_organic_hnv_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_rewetted_organic_hnv_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_organic_hnv_area" title="Link to this definition"></a></dt>
+<dd><p>Returns the area of rewetted high nature value (HNV) organic soil.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of rewetted HNV organic soil in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_wetland_hnv_area">
+<span class="sig-name descname"><span class="pre">get_rewetted_wetland_hnv_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_rewetted_wetland_hnv_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_rewetted_wetland_hnv_area" title="Link to this definition"></a></dt>
+<dd><p>Returns the area of rewetted high nature value (HNV) wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of rewetted HNV wetland in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optigob.other_land.other_land_budget.OtherLandBudget.get_near_natural_wetland_hnv_area">
+<span class="sig-name descname"><span class="pre">get_near_natural_wetland_hnv_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/optigob/other_land/other_land_budget.html#OtherLandBudget.get_near_natural_wetland_hnv_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optigob.other_land.other_land_budget.OtherLandBudget.get_near_natural_wetland_hnv_area" title="Link to this definition"></a></dt>
+<dd><p>Returns the area of near-natural high nature value (HNV) wetland.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The area of near-natural HNV wetland in hectares.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../baseline_other_land/index.html" class="btn btn-neutral float-left" title="optigob.other_land.baseline_other_land" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../protein_crops/index.html" class="btn btn-neutral float-right" title="optigob.protein_crops" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

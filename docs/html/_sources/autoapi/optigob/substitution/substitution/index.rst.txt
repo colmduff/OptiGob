@@ -1,0 +1,106 @@
+optigob.substitution.substitution
+=================================
+
+.. py:module:: optigob.substitution.substitution
+
+.. autoapi-nested-parse::
+
+   Substitution Module
+   ==================
+
+   This module contains the Substitution class, which centralizes all substitution impact logic (AD, wood, willow, etc.)
+   from across the codebase. All substitution-related calculations should be implemented or wrapped here for modularity and maintainability.
+
+   Class:
+       Substitution: Centralizes substitution impact calculations for AD, wood, willow, and other relevant sectors.
+
+   Methods in Substitution:
+       __init__(self, optigob_data_manager): Initializes the Substitution class with the data manager.
+       get_ad_substitution_co2_emission(self): Returns the AD-Substitution CO2 emissions in kilotons.
+       get_ad_substitution_ch4_emission(self): Returns the AD-Substitution CH4 emissions in kilotons.
+       get_ad_substitution_n2o_emission(self): Returns the AD-Substitution N2O emissions in kilotons.
+       get_ad_substitution_co2e_emission(self): Returns the AD-Substitution CO2e emissions in kilotons.
+       get_forest_substitution_offset_co2e(self): Calculates the emission offset from forest substitution effects (in kt).
+       get_willow_substitution_offset_co2e(self): Calculates the willow substitution emission offset in kilotons.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   optigob.substitution.substitution.Substitution
+
+
+Module Contents
+---------------
+
+.. py:class:: Substitution(optigob_data_manager)
+
+   .. py:attribute:: data_manager_class
+
+
+   .. py:attribute:: beccs_included
+
+
+   .. py:attribute:: biomethane_included
+
+
+   .. py:attribute:: target_year
+
+
+   .. py:attribute:: afforestation_rate
+
+
+   .. py:attribute:: harvest_rate
+
+
+   .. py:attribute:: organic_soil_fraction
+
+
+   .. py:attribute:: broadleaf_fraction
+
+
+   .. py:method:: zero_if_beccs_not_included()
+
+
+   .. py:method:: zero_if_biomethane_not_included()
+
+
+   .. py:method:: get_ad_substitution_co2_emission()
+
+      Returns the AD-Substitution CO2 emissions in kilotons.
+
+
+
+   .. py:method:: get_ad_substitution_ch4_emission()
+
+      Returns the AD-Substitution CH4 emissions in kilotons.
+
+
+
+   .. py:method:: get_ad_substitution_n2o_emission()
+
+      Returns the AD-Substitution N2O emissions in kilotons.
+
+
+
+   .. py:method:: get_ad_substitution_co2e_emission()
+
+      Returns the AD-Substitution CO2e emissions in kilotons.
+
+
+
+   .. py:method:: get_forest_substitution_offset_co2e()
+
+      Calculates the emission offset from substitution effects.
+
+
+
+   .. py:method:: get_willow_substitution_offset_co2e()
+
+      Calculates the willow substitution emission offset in kilotons.
+
+
+

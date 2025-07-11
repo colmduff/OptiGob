@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optigob &mdash; optigob  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example usage" href="example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            optigob
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input_variables.html">OptiGob Input Variables Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">optigob</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">optigob</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optigob">
+<h1>optigob<a class="headerlink" href="#optigob" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://pypi.org/project/optigob/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/optigob.svg" /></a>
+<a class="reference external" href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/optigob/"><img alt="Python Versions" src="https://img.shields.io/pypi/pyversions/optigob.svg" /></a></p>
+<p>A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance.</p>
+<hr class="docutils" />
+<section id="high-level-architecture-module-interaction">
+<h2>High-Level Architecture &amp; Module Interaction<a class="headerlink" href="#high-level-architecture-module-interaction" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">optigob</span></code> package is a modular land use and environmental assessment framework. It is designed to calculate, aggregate, and analyze greenhouse gas emissions, land use, protein, bioenergy, harvested wood products, and substitution impacts for both baseline and scenario cases. The system is built around a central API (<code class="docutils literal notranslate"><span class="pre">Optigob</span></code>), which coordinates specialized modules for each sector and data type.</p>
+<section id="module-structure">
+<h3>Module Structure<a class="headerlink" href="#module-structure" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>optigob/
+├── budget_model/
+│   ├── baseline_emissions.py
+│   ├── emissions_budget.py
+│   ├── landarea_budget.py
+│   ├── econ_output.py
+│   └── substitution.py
+├── bioenergy/
+│   └── bioenergy_budget.py
+├── database/
+│   └── ...
+├── forest/
+│   └── forest_budget.py
+├── livestock/
+│   └── livestock_budget.py
+├── other_land/
+│   ├── baseline_other_land.py
+│   └── other_land_budget.py
+├── protein_crops/
+│   ├── __init__.py
+│   └── protein_crops_budget.py
+├── resource_manager/
+│   └── optigob_data_manager.py
+├── optigob.py
+└── ...
+</pre></div>
+</div>
+</section>
+<section id="core-modules-and-their-roles">
+<h3>Core Modules and Their Roles<a class="headerlink" href="#core-modules-and-their-roles" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>optigob/optigob.py</strong>: Central interface (<code class="docutils literal notranslate"><span class="pre">Optigob</span></code> class) for retrieving all model outputs. Orchestrates calls to all other modules and provides unified access to results as dictionaries or tidy DataFrames.</p></li>
+<li><p><strong>resource_manager/optigob_data_manager.py</strong>: Loads, validates, and provides access to all input data and configuration. Supplies data to all budget and output modules.</p></li>
+<li><p><strong>budget_model/emissions_budget.py</strong>: Calculates scenario emissions (CO2e, CO2, CH4, N2O) by sector, including substitution impacts. Handles net zero logic and split gas configuration.</p></li>
+<li><p><strong>budget_model/baseline_emissions.py</strong>: Provides baseline emissions by sector for all gases.</p></li>
+<li><p><strong>budget_model/landarea_budget.py</strong>: Calculates land area (aggregated, disaggregated, HNV) by sector for baseline and scenario.</p></li>
+<li><p><strong>budget_model/econ_output.py</strong>: Calculates protein, bioenergy, harvested wood products, and livestock population by sector.</p></li>
+<li><p><strong>budget_model/substitution.py</strong>: Centralizes logic for substitution impacts (e.g., wood for fossil, protein crop substitution).</p></li>
+<li><p><strong>protein_crops/protein_crops_budget.py</strong>: Handles protein crop area, yield, and protein output calculations.</p></li>
+<li><p><strong>livestock/livestock_budget.py</strong>: Calculates livestock sector budgets, including emissions, land use, and protein.</p></li>
+<li><p><strong>forest/forest_budget.py</strong>: Handles forest sector land area, emissions, and harvested wood product calculations.</p></li>
+<li><p><strong>bioenergy/bioenergy_budget.py</strong>: Calculates bioenergy area and output by sector.</p></li>
+<li><p><strong>other_land/other_land_budget.py</strong>: Handles other land types and their contributions to area and emissions.</p></li>
+<li><p><strong>database/</strong>: Contains data loaders and helpers for accessing and managing input datasets.</p></li>
+</ul>
+</section>
+<section id="module-interaction-diagram-textual">
+<h3>Module Interaction Diagram (Textual)<a class="headerlink" href="#module-interaction-diagram-textual" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[Optigob]
+   |
+   |-- [resource_manager/optigob_data_manager.py] &lt;--- loads all input data
+   |
+   |-- [budget_model/emissions_budget.py] &lt;--- uses data_manager, calls substitution.py
+   |-- [budget_model/baseline_emissions.py]
+   |-- [budget_model/landarea_budget.py]
+   |-- [budget_model/econ_output.py]
+   |-- [substitution/substitution.py]
+   |
+   |-- [protein_crops/protein_crops_budget.py]
+   |-- [livestock/livestock_budget.py]
+   |-- [forest/forest_budget.py]
+   |-- [bioenergy/bioenergy_budget.py]
+   |-- [other_land/other_land_budget.py]
+   |-- [static_ag/static_ag_budget.py]
+   |
+   |-- [database/] (data loaders)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Optigob</span></code> class is the main entry point. It receives a data manager instance, which loads all configuration and input data.</p></li>
+<li><p>Each budget/output module (emissions, land area, protein, etc.) is initialized with the data manager and provides sectoral and total results.</p></li>
+<li><p>Substitution logic is centralized in <code class="docutils literal notranslate"><span class="pre">substitution.py</span></code> and called by emissions and output modules as needed.</p></li>
+<li><p>Specialized sector modules (livestock, forest, protein crops, etc.) encapsulate sector-specific calculations and are used by the budget modules.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Calculate total and sectoral CO2e, CO2, CH4, N2O emissions for baseline and scenario</p></li>
+<li><p>Calculate total and sectoral land area (aggregated, disaggregated, HNV)</p></li>
+<li><p>Calculate protein, bioenergy, and harvested wood product outputs by sector</p></li>
+<li><p>Centralized logic for substitution impacts (e.g., wood for fossil, protein crop substitution)</p></li>
+<li><p>Generate detailed tidy DataFrames for all outputs</p></li>
+<li><p>Easy integration with preconfigured data sources</p></li>
+<li><p>Modular, extensible architecture for new sectors or outputs</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>To install the package, use pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>optigob
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>Here is some example input data:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nt">AR</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">split_gas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">split_gas_frac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span>
+<span class="w">    </span><span class="nt">target_year</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2050</span>
+<span class="w">    </span><span class="nt">abatement_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;frontier&quot;</span>
+<span class="w">    </span><span class="nt">abatement_scenario</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span>
+<span class="w">    </span><span class="nt">livestock_ratio_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dairy_per_beef&quot;</span>
+<span class="w">    </span><span class="nt">livestock_ratio_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">forest_harvest_intensity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">low</span>
+<span class="w">    </span><span class="nt">afforestation_rate_kha_per_year</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">    </span><span class="nt">broadleaf_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span>
+<span class="w">    </span><span class="nt">organic_soil_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">beccs_included</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">beccs_willow_area_multiplier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+<span class="w">    </span><span class="nt">wetland_restored_frac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span>
+<span class="w">    </span><span class="nt">organic_soil_under_grass_frac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">    </span><span class="nt">biomethane_included</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">protein_crop_included</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">protein_crop_multiplier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">pig_and_poultry_multiplier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2</span>
+<span class="w">    </span><span class="nt">baseline_year</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2020</span>
+<span class="w">    </span><span class="nt">baseline_dairy_pop</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">156.8</span>
+<span class="w">    </span><span class="nt">baseline_beef_pop</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">98.4</span>
+</pre></div>
+</div>
+<p>Here is a short example of how to use the <code class="docutils literal notranslate"><span class="pre">Optigob</span></code> class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">optigob.optigob</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optigob</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.resource_manager.optigob_data_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptiGobDataManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optigob.input_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">InputHelper</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OptiGob Budget Model Input Combinations&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Initialize the input helper</span>
+    <span class="n">helper</span> <span class="o">=</span> <span class="n">InputHelper</span><span class="p">()</span>
+
+    <span class="n">helper</span><span class="o">.</span><span class="n">print_readable_combos</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;./data/sip.yaml&#39;</span>
+    <span class="c1"># Initialize the data manager</span>
+    <span class="n">data_manager</span> <span class="o">=</span> <span class="n">OptiGobDataManager</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Create an instance of Optigob</span>
+    <span class="n">optigob</span> <span class="o">=</span> <span class="n">Optigob</span><span class="p">(</span><span class="n">data_manager</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OptiGob Budget Model Input Combinations&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Get baseline and target populations</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GHG Emissions by Sector&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_emissions_co2e_by_sector</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_emissions_co2e_by_sector_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Aggregated Total Land Area by Sector&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_aggregated_total_land_area_by_sector</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_aggregated_total_land_area_by_sector_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Protein by Sector&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_protein_by_sector</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_protein_by_sector_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Area by Sector&quot;</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_disaggregated_total_land_area_by_sector</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_disaggregated_total_land_area_by_sector_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;High Nature Value (HNV) Land Area by Sector&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_hnv_land_area_by_sector</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_total_hnv_land_area_by_sector_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bioenergy by Sector&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_bioenergy_by_sector</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_bioenergy_by_sector_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;HWP&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_hwp_volume</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_hwp_volume_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Substitution&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_substitution_emission_by_sector_co2e</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_substitution_emission_by_sector_co2e_df</span><span class="p">())</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NZ Status&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">check_net_zero_status</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;total emissions co2e: </span><span class="si">{</span><span class="n">optigob</span><span class="o">.</span><span class="n">total_emission_co2e</span><span class="p">()</span><span class="si">}</span><span class="s2"> kt&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Livestock Population&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_population</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_population_df</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Livestock CH4 Emissions budget&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_split_gas_ch4_emission_budget</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Livestock CO2e Emissions budget&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">optigob</span><span class="o">.</span><span class="n">get_livestock_co2e_emission_budget</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AREA comparison&quot;</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">optigob</span><span class="o">.</span><span class="n">get_disaggregated_total_land_area_by_sector_df</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sum of each column:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<p>Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">optigob</span></code> was created by Colm Duffy. It is licensed under the terms of the MIT license.</p>
+</section>
+<section id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">optigob</span></code> was created with <a class="reference external" href="https://cookiecutter.readthedocs.io/en/latest/"><code class="docutils literal notranslate"><span class="pre">cookiecutter</span></code></a> and the <code class="docutils literal notranslate"><span class="pre">py-pkgs-cookiecutter</span></code> <a class="reference external" href="https://github.com/py-pkgs/py-pkgs-cookiecutter">template</a>.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example.html" class="btn btn-neutral float-right" title="Example usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Colm Duffy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
