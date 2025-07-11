@@ -236,6 +236,17 @@ class EmissionsBudget:
 
         return total_emission
 
+    def _split_gas_emissions_total(self):
+        """
+        Calculates current total split gas emissions CO2e (kt).
+        """
+        forest_emission = self._get_total_forest_co2e()
+        total_emission_n2o = self._get_total_emission_n2o() * self.data_manager_class.get_AR_gwp100_values("N2O")
+        total_emission_co2 = self._get_total_emission_co2()
+        total_emission = forest_emission + total_emission_n2o + total_emission_co2
+
+        return total_emission
+
     def _split_gas_emissions_total_budget_co2e(self):
         """
         Calculates total split gas emissions CO2e budget (kt).
@@ -261,6 +272,21 @@ class EmissionsBudget:
         ad_ag_emission = self.bio_energy_budget.get_ad_ag_n2o_emission()
         protein_crop_emission = self.protein_crops_budget.get_crop_emission_n2o()
         beccs_emission = self._get_total_beccs_n2o()
+
+        total_emission = (static_ag_emission + other_land_emission +
+                          beccs_emission + protein_crop_emission + ad_ag_emission)
+        
+        return total_emission
+
+    def _get_total_emission_ch4(self):
+        """
+        Calculates total CH4 emissions (kt).
+        """
+        static_ag_emission = self.static_ag_budget.get_total_static_ag_ch4()
+        other_land_emission = self.other_land_budget.get_wetland_restoration_emission_ch4()
+        beccs_emission = self._get_total_beccs_ch4()
+        protein_crop_emission = self.protein_crops_budget.get_crop_emission_ch4()
+        ad_ag_emission = self.bio_energy_budget.get_ad_ag_ch4_emission()
 
         total_emission = (static_ag_emission + other_land_emission +
                           beccs_emission + protein_crop_emission + ad_ag_emission)

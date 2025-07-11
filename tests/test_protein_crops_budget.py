@@ -15,6 +15,7 @@ class TestProteinCropsBudget(unittest.TestCase):
         mock_area_df.__getitem__.return_value.item.return_value = 100.0
         self.mock_data_manager.get_protein_crop_emission_scaler.return_value = mock_area_df
         self.mock_data_manager.get_protein_crop_protein_scaler.return_value = mock_area_df
+        self.mock_data_manager.get_protein_content_scaler.return_value = 50.0  # Add missing mock
 
         self.budget = ProteinCropsBudget(self.mock_data_manager)
 

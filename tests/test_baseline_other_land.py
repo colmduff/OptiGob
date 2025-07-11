@@ -9,9 +9,18 @@ class TestBaselineOtherLand(unittest.TestCase):
         self.mock_data_manager.get_wetland_restored_fraction.return_value = 0.5
         self.mock_data_manager.get_organic_soil_under_grass_fraction.return_value = 0.3
 
-        # Mock DataFrame with .__getitem__().item() for all area/emission returns
+        # Mock DataFrame with proper filtering chain for emission methods
         mock_df = MagicMock()
+        # Setup for the filtering chain: df[df["ghg"] == "something"]["emission_value"].item()
+        mock_filtered_df = MagicMock()
+        mock_series = MagicMock()
+        mock_series.item.return_value = 42.0
+        mock_filtered_df.__getitem__.return_value = mock_series
+        mock_df.__getitem__.return_value = mock_filtered_df
+        
+        # For direct access: df["column"].item()
         mock_df.__getitem__.return_value.item.return_value = 42.0
+        
         self.mock_data_manager.get_organic_soil_emission_scaler.return_value = mock_df
         self.mock_data_manager.get_organic_soil_area_scaler.return_value = mock_df
 
