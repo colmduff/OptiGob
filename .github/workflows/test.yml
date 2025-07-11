@@ -2,18 +2,13 @@ name: Run Python Tests
 
 on:
   push:
-    branches:
-      - '**'
+    branches: ['**']
   pull_request:
-    branches:
-      - '**'
+    branches: ['**']
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/optigob/tests
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,15 +24,11 @@ jobs:
           pip install poetry
 
       - name: Install dependencies with Poetry
-        run: |
-          poetry install --no-interaction --no-root
-        working-directory: ../../
+        run: poetry install --no-interaction --no-root
 
       - name: Install optigob package (editable)
-        run: |
-          poetry install --no-interaction
-        working-directory: ../../
+        run: poetry install --no-interaction
 
-      - name: Run tests
-        run: |
-          poetry run make test
+      - name: Run tests via Makefile in tests folder
+        working-directory: tests
+        run: poetry run make test
