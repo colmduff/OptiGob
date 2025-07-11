@@ -114,8 +114,18 @@ Here is a short example of how to use the `Optigob` class:
 ```python
 from optigob.optigob import Optigob
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
+from optigob.input_helper import InputHelper
 
 def main():
+
+    print("#" * 50)
+    print("OptiGob Budget Model Input Combinations")
+
+    # Initialize the input helper
+    helper = InputHelper()
+
+    helper.print_readable_combos(12)
+
     data = './data/sip.yaml'
     # Initialize the data manager
     data_manager = OptiGobDataManager(data)
@@ -123,6 +133,9 @@ def main():
     # Create an instance of Optigob
     optigob = Optigob(data_manager)
 
+    print("#" * 50)
+    print("OptiGob Budget Model Input Combinations")
+    
     # Get baseline and target populations
     print("#" * 50)
     print("GHG Emissions by Sector")
@@ -182,6 +195,23 @@ def main():
 
     print(optigob.get_livestock_population())
     print(optigob.get_livestock_population_df())
+
+    print("#" * 50)
+    print("Livestock CH4 Emissions budget")
+    print(optigob.get_livestock_split_gas_ch4_emission_budget())
+
+    print("#" * 50)
+    print("Livestock CO2e Emissions budget")
+    print(optigob.get_livestock_co2e_emission_budget())
+
+    print("#" * 50)
+    print("AREA comparison")
+
+    df = optigob.get_disaggregated_total_land_area_by_sector_df()
+    print(df)
+    print("\nSum of each column:")
+    print(df.sum())
+
 
 if __name__ == '__main__':
     main()
