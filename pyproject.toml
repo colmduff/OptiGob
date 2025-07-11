@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.12"
 pyomo = "^6.8.0"
 cplex = "^22.1.2.0"
 pandas = "^2.2.3"
