@@ -1,5 +1,5 @@
 ---
-title: 'OptiGob: A decision support tool for Agriculture, Forestry and Other Land Use transitions.'
+title: 'OptiGob: A decision support tool for Agriculture, Forestry and Other Land Use transitions'
 tags:
   - Python
   - Land use change
@@ -21,7 +21,7 @@ authors:
     affiliation: 1
 affiliations:
   - name: School of Biological and Chemical Sciences and Ryan Institute, University of Galway, H91 REW4, Ireland
-   index: 1
+    index: 1
   - name: Lero, School of Computer Science, University of Galway, Galway, Ireland
     index: 2
 
