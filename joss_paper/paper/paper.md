@@ -46,7 +46,7 @@ The GOBLIN modelling framework has been used in recent studies on pathways to ne
 
 Figure 1 illustrates the architecture of the `OptiGob` model. User-defined parameters are provided via JSON or CSV input files and parsed by a data manager, which supplies values to the relevant sub-modules. The central `OptiGob` class orchestrates the overall model flow, coordinating sub-modules for emissions, land area, and economic outcomes. These in turn call modules representing forestry, livestock, bioenergy, other land uses, and static agricultural components such as crops, sheep, pigs, poultry, and protein crops, as well as substitution effects.
 
-![OptiGob Architecture.\label{fig:Figure1}](./figures/flow.drawio.png)
+![OptiGob Architecture.\label{fig:Figure1}](../figures/flow.drawio.png)
 
 `OptiGob` enables exploration of Ireland’s AFOLU sector under alternative assumptions about productivity, emissions abatement, land use change, and carbon dioxide removal (CDR). Key user inputs include: the dairy-to-beef cow ratio, level of agricultural abatement, agricultural productivity growth, afforestation rate and harvest intensity, wetland and organic soil restoration, biomethane deployment, land allocation to protein crops and willow bioenergy, and inclusion of BECCS (Bioenergy with Carbon Capture and Storage).
 
@@ -72,15 +72,15 @@ Parameter selection reflects the 'frontier' abatement path, with a strong produc
 
 Figure 2 shows the emissions and removals by category for the baseline and transition scenario.
 
-![Emissions and Removals from Agriculture, Existing Forest (Managed Forest), Afforestation, Harvested Wood Products (HWP), Other Land Use (Wetlands and Organic Soils), AD (Anaerobic Digestion) and BECCS (CO~2~e).\label{fig:Figure2}](./figures/co2e_stacked_bar.png)
+![Emissions and Removals from Agriculture, Existing Forest (Managed Forest), Afforestation, Harvested Wood Products (HWP), Other Land Use (Wetlands and Organic Soils), AD (Anaerobic Digestion) and BECCS (CO~2~e).\label{fig:Figure2}](../figures/co2e_stacked_bar.png)
 
 Figure 3 shows total area breakdown by category for the baseline and transition scenario.
 
-![Total area footprint from Dairy, Suckler Beef, Sheep, Pigs & Poultry, Crops, Protein Crops, BECCS (Willow), AD (Anaerobic Digestion), Exiting Forest (Managed Forest), Afforestation, Other Land Use (Wetlands and Organic Soils), and Available Area (Spared area not in use).\label{fig:Figure3}](./figures/area_stacked_bar.png)
+![Total area footprint from Dairy, Suckler Beef, Sheep, Pigs & Poultry, Crops, Protein Crops, BECCS (Willow), AD (Anaerobic Digestion), Exiting Forest (Managed Forest), Afforestation, Other Land Use (Wetlands and Organic Soils), and Available Area (Spared area not in use).\label{fig:Figure3}](../figures/area_stacked_bar.png)
 
 Finally, Figure 4 shows the total protein output by category for the baseline and transition scenario. Given the variability in composition of non-protein crops, and the relatively small contribution to the overall protein value, static crops have not been included.  
 
-![Protein output from Milk, Beef, Pigs & Poultry, Sheep and Protein Crops.\label{fig:Figure4}](./figures/protein_stacked_bar.png)
+![Protein output from Milk, Beef, Pigs & Poultry, Sheep and Protein Crops.\label{fig:Figure4}](../figures/protein_stacked_bar.png)
 
 # Functionality
 
