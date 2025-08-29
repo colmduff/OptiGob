@@ -2,7 +2,7 @@
     "AR": 5,
     "split_gas": true,
     "split_gas_frac": 0.32,
-    "target_year": 2050,
+    "target_year": 2049,
     "abatement_type": "baseline",
     "abatement_scenario": 1,
     "livestock_ratio_type": "beef_per_dairy",
