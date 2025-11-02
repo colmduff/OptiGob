@@ -3,7 +3,10 @@
 [![PyPI version](https://img.shields.io/pypi/v/optigob.svg)](https://pypi.org/project/optigob/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Versions](https://img.shields.io/pypi/pyversions/optigob.svg)](https://pypi.org/project/optigob/)
-[![Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://colmduff.github.io/OptiGob/html/index.html)
+[![Documentation Status](https://readthedocs.org/projects/optigob/badge/?version=latest)](https://optigob.readthedocs.io/en/latest/?badge=latest)
+
+[GitHub](https://github.com/colmduff/OptiGob) |
+[Documentation](https://optigob.readthedocs.io/en/latest/) |
 
 A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance.
 
