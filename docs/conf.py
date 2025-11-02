@@ -23,7 +23,7 @@ extensions = [
 ]
 autoapi_dirs = ["../src"]
 
-nb_execution_mode = "force"
+nb_execution_mode = "cache"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
