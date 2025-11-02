@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.3 (02/11/2025)
+
+- **Documentation Migration**: Migrated documentation hosting from GitHub Pages to Read the Docs.
+- Added `.readthedocs.yml` configuration file for automated documentation builds on Read the Docs.
+- Updated documentation dependencies in `docs/requirements.txt` (changed `autoapi` to `sphinx-autoapi`).
+- Updated README with Read the Docs documentation badges and links.
+- Documentation now available at: <https://optigob.readthedocs.io/en/latest/>
+- Improved documentation build process with automated Sphinx builds on commit.
+
 ## v0.1.3 (11/07/2025)
 
 - Added `InputHelper` class for user-friendly querying and filtering of valid input parameter combinations for scenarios.
