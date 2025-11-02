@@ -15,7 +15,7 @@ build:
 sphinx:
   configuration: docs/conf.py
 
-# Only install documentation requirements (not the full package)
+# Only install documentation requirements (notebook execution disabled)
 python:
   install:
     - requirements: docs/requirements.txt
