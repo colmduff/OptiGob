@@ -3,6 +3,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/optigob.svg)](https://pypi.org/project/optigob/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Versions](https://img.shields.io/pypi/pyversions/optigob.svg)](https://pypi.org/project/optigob/)
+[![Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://colmduff.github.io/OptiGob/html/index.html)
 
 A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance.
 
@@ -86,17 +87,20 @@ optigob/
 - Substitution logic is centralized in `substitution.py` and called by emissions and output modules as needed.
 - Specialized sector modules (livestock, forest, protein crops, etc.) encapsulate sector-specific calculations and are used by the budget modules.
 
+### Default Database
+
+A default database offers multiple permutations of abatement and productivity scenarios, but certain parameters (e.g., wetland restoration, forestry on organic soils) are limited to predefined combinations. A helper function identifies valid options to prevent unsupported configurations. Custom databases can also be supplied, provided they follow the expected schema.
+
 ---
 
 ## Features
 
 - Calculate total and sectoral CO2e, CO2, CH4, N2O emissions for baseline and scenario
 - Calculate total and sectoral land area (aggregated, disaggregated, HNV)
-- Calculate protein, bioenergy, and harvested wood product outputs by sector
+- Calculate protein, bioenergy, and harvested wood product outputs
 - Centralized logic for substitution impacts (e.g., wood for fossil, protein crop substitution)
-- Generate detailed tidy DataFrames for all outputs
-- Easy integration with preconfigured data sources
-- Modular, extensible architecture for new sectors or outputs
+- Generate detailed DataFrames for all outputs
+- Default database supports modelling up to 2050. Users can extend scenarios beyond 2050 by supplying a custom database.
 
 ## Installation
 
