@@ -146,11 +146,24 @@ Here is some example input data:
 Here is a short example of how to use the `Optigob` class:
 
 ```python
+from pathlib import Path
 from optigob.optigob import Optigob
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
 from optigob.input_helper import InputHelper
+from optigob.logger import configure_logging
+import logging
+
 
 def main():
+
+    # add a path to for a log file, if none is provided, messages are returned to the terminal 
+    LOGPATH = str(Path('.') / 'data' / 'logs' / 'example_log.log')
+
+    # Logger will capture critical information on scenarios. 
+    configure_logging(
+        level=logging.INFO,
+        log_to_file=str(LOGPATH)
+    )
 
     print("#" * 50)
     print("OptiGob Budget Model Input Combinations")
@@ -245,7 +258,6 @@ def main():
     print(df)
     print("\nSum of each column:")
     print(df.sum())
-
 
 if __name__ == '__main__':
     main()

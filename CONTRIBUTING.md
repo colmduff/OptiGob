@@ -1,7 +1,10 @@
 # Contributing
 
-Contributions are welcome, and they are greatly appreciated! Every little bit
-helps, and credit will always be given.
+`optigob` is an open-source model and decision-support tool for exploring future productivity and environmental outcomes for Ireland’s land sector. The project builds on the [GOBLIN](https://github.com/GOBLIN-Proj/goblin_lite), FERS-CBM and LCAD models and welcomes collaboration from researchers, developers, and data contributors interested in AFOLU modeling, scenario analysis, or visualization tools.
+
+If you’d like to support the model, the research, future models, or propose a change, feel free to [open an issue](https://github.com/colmduff/OptiGob/issues) to start a discussion. We're happy to help and collaborate!
+
+For other enquiries, please feel free to reach out to the maintainer.
 
 ## Types of Contributions
 

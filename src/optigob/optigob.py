@@ -58,7 +58,9 @@ from optigob.budget_model.emissions_budget import EmissionsBudget
 from optigob.budget_model.landarea_budget import LandAreaBudget
 from optigob.budget_model.econ_output import EconOutput
 import pandas as pd
+from optigob.logger import get_logger
 
+logger = get_logger("optigob")
 
 class Optigob:
     """
@@ -114,7 +116,9 @@ class Optigob:
         if self.split_gas:
             return self.emission_budget.get_total_livestock_ch4_emission_budget()
         else:
-            raise ValueError("Split gas is not included in the model configuration.")
+            error_msg = "Split gas is not included in the model configuration."
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         
         
     def total_emission_co2e(self):

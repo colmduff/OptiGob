@@ -1,8 +1,20 @@
+from pathlib import Path
 from optigob.optigob import Optigob
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
 from optigob.input_helper import InputHelper
+from optigob.logger import configure_logging
+import logging
+
 
 def main():
+
+    LOGPATH = str(Path('.') / 'data' / 'logs' / 'example_log.log')
+
+    # Log to both console and file
+    configure_logging(
+        level=logging.INFO,
+        log_to_file=str(LOGPATH)
+    )
 
     print("#" * 50)
     print("OptiGob Budget Model Input Combinations")
