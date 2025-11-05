@@ -1,0 +1,253 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.7">
+  <diagram name="OptiGob Architecture" id="optigob-architecture">
+    <mxGraphModel dx="1426" dy="751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UserInput" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;User Input (YAML/JSON)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6ffe6;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="335" y="60" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="DataManager" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;OptiGobDataManager (resource_manager/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f8ff;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="315" y="180" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Optigob" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Optigob (Central API/Orchestrator)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="315" y="300" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#e51400;strokeColor=#B20000;curved=0;" parent="1" source="EmissionsBudget" target="ForestBudget" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;curved=0;fillColor=#e51400;strokeColor=#B20000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="EmissionsBudget" target="LivestockBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="560" />
+              <mxPoint x="320" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;curved=0;fillColor=#e51400;strokeColor=#B20000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="EmissionsBudget" target="BioEnergyBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="560" />
+              <mxPoint x="510" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#e51400;strokeColor=#B20000;curved=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="EmissionsBudget" target="OtherLandBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="560" />
+              <mxPoint x="720" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;jumpStyle=arc;curved=0;fillColor=#e51400;strokeColor=#B20000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="EmissionsBudget" target="StaticAgBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="560" />
+              <mxPoint x="420" y="560" />
+              <mxPoint x="420" y="730" />
+              <mxPoint x="510" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#e51400;strokeColor=#B20000;curved=0;jumpStyle=gap;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="EmissionsBudget" target="ProteinCropsBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="560" />
+              <mxPoint x="420" y="560" />
+              <mxPoint x="420" y="730" />
+              <mxPoint x="720" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#e51400;strokeColor=#B20000;curved=0;jumpStyle=gap;" parent="1" source="EmissionsBudget" target="AJOVm7QF9Q-dh0jWNaUX-21" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="560" />
+              <mxPoint x="220" y="560" />
+              <mxPoint x="220" y="730" />
+              <mxPoint x="320" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EmissionsBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;EmissionsBudget (budget_model/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e51400;strokeColor=#B20000;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="90" y="450" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.595;entryY=0.024;entryDx=0;entryDy=0;jumpStyle=gap;curved=0;fillColor=#76608a;strokeColor=#432D57;entryPerimeter=0;" parent="1" source="LandAreaBudget" target="LivestockBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="540" />
+              <mxPoint x="331" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=#76608a;strokeColor=#432D57;curved=0;jumpStyle=gap;" parent="1" source="LandAreaBudget" target="ForestBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="540" />
+              <mxPoint x="90" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=#76608a;strokeColor=#432D57;curved=0;jumpStyle=gap;" parent="1" source="LandAreaBudget" target="OtherLandBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="540" />
+              <mxPoint x="690" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=#76608a;strokeColor=#432D57;curved=0;jumpStyle=gap;" parent="1" source="LandAreaBudget" target="StaticAgBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="740" />
+              <mxPoint x="480" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=#76608a;strokeColor=#432D57;curved=0;jumpStyle=gap;" parent="1" source="LandAreaBudget" target="ProteinCropsBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="740" />
+              <mxPoint x="693" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lTnIyTIIz1W1G79j4I-E-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;curved=0;jumpStyle=gap;strokeColor=#432D57;" edge="1" parent="1" source="LandAreaBudget" target="BioEnergyBudget">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="540" />
+              <mxPoint x="483" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LandAreaBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;LandAreaBudget (budget_model/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;strokeColor=#432D57;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="335" y="450" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fillColor=#f0a30a;strokeColor=#BD7000;curved=0;jumpStyle=gap;" parent="1" source="EconOutput" target="BioEnergyBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="520" />
+              <mxPoint x="540" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-15" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=#f0a30a;strokeColor=#BD7000;curved=0;jumpStyle=gap;" parent="1" source="EconOutput" target="LivestockBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="520" />
+              <mxPoint x="290" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-17" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#f0a30a;strokeColor=#BD7000;curved=0;jumpStyle=gap;" parent="1" source="EconOutput" target="StaticAgBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="520" />
+              <mxPoint x="600" y="520" />
+              <mxPoint x="600" y="720" />
+              <mxPoint x="540" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fillColor=#f0a30a;strokeColor=#BD7000;curved=0;jumpStyle=gap;" parent="1" source="EconOutput" target="ProteinCropsBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="520" />
+              <mxPoint x="600" y="520" />
+              <mxPoint x="600" y="720" />
+              <mxPoint x="758" y="720" />
+              <mxPoint x="758" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EconOutput" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;EconOutput (budget_model/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="610" y="450" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-23" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#6d8764;strokeColor=#3A5431;curved=0;jumpStyle=gap;" parent="1" source="ForestBudget" target="BaselineModules" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="870" />
+              <mxPoint x="425" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ForestBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;ForestBudget (forest/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="60" y="600" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-25" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#6d8764;strokeColor=#3A5431;curved=0;jumpStyle=gap;" parent="1" source="StaticAgBudget" target="BaselineModules" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="870" />
+              <mxPoint x="425" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="StaticAgBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;StaticAgBudget (static_ag/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="450" y="760" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BioEnergyBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;BioEnergyBudget (bioenergy/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="450" y="600" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ProteinCropsBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;ProteinCropsBudget (protein_crops/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="660" y="770" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-26" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#6d8764;strokeColor=#3A5431;curved=0;jumpStyle=gap;" parent="1" source="OtherLandBudget" target="BaselineModules" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="700" />
+              <mxPoint x="630" y="700" />
+              <mxPoint x="630" y="870" />
+              <mxPoint x="425" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OtherLandBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;OtherLandBudget (other_land/)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="660" y="600" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BaselineModules" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Baseline Modules (baseline_*)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9c5;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="315" y="920" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" parent="1" source="UserInput" target="DataManager" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" parent="1" source="DataManager" target="Optigob" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" parent="1" source="Optigob" target="EmissionsBudget" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" parent="1" source="Optigob" target="LandAreaBudget" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" parent="1" source="Optigob" target="EconOutput" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-24" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#6d8764;strokeColor=#3A5431;curved=0;jumpStyle=gap;" parent="1" source="LivestockBudget" target="BaselineModules" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="720" />
+              <mxPoint x="400" y="720" />
+              <mxPoint x="400" y="870" />
+              <mxPoint x="425" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LivestockBudget" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;LivestockBudget (livestock/Optimiser)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="260" y="600" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.066;entryY=-0.021;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f0a30a;strokeColor=#BD7000;curved=0;jumpStyle=gap;" parent="1" source="EconOutput" target="ForestBudget" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="520" />
+              <mxPoint x="68" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AJOVm7QF9Q-dh0jWNaUX-21" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Substitution&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="260" y="760" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
