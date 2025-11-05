@@ -58,12 +58,6 @@
 ### Documentation
 
 - **Read the Docs Migration**: Documentation now hosted at <https://optigob.readthedocs.io/en/latest/>
-- **Logging Guide**: Added comprehensive logging documentation
-  - `tests/data/logs/LOGGING_GUIDE.md` - beginner-friendly guide to logging
-  - `tests/logging_example.py` - 6 interactive examples
-  - `tests/data/logs/IMPLEMENTATION_SUMMARY.md` - technical reference
-- **CLAUDE.md**: Added "Logging" section and updated "Error Handling" section with current behavior
-- Documented all bug fixes, input validation, and zero budget scenarios
 
 ## v0.1.3 (11/07/2025)
 
