@@ -1,6 +1,43 @@
 # OptiGob Input Variables Reference
 
-This document provides detailed explanations for each input variable used in the OptiGob framework. These variables are used to configure scenarios for land use, emissions, and environmental assessment. For valid combinations of these variables, and to explore which values are allowed together, please see the `InputHelper` class in [`src/optigob/input_helper.py`](src/optigob/input_helper.py). The `InputHelper` provides methods to list and display all valid input parameter combinations for scenario analysis.
+This document provides detailed explanations for each input variable used in the OptiGob framework. These variables are used to configure scenarios for land use, emissions, and environmental assessment.
+
+## Important: Valid Parameter Combinations
+
+**Not all parameter combinations are valid!** The system validates parameter combinations against the underlying database. For certain parameter groups (forest, organic soil, and abatement/productivity), only specific combinations that have been modeled are allowed.
+
+To explore valid combinations before running your scenario:
+
+```python
+from optigob.input_helper import InputHelper
+helper = InputHelper()
+
+# View all valid combinations
+helper.print_all_combos()
+
+# Filter by type
+helper.filter_combos(input_type='forest')
+helper.filter_combos(input_type='organic_soil')
+helper.filter_combos(input_type='abatement_and_productivity')
+```
+
+**Parameter Groups That Are Validated:**
+
+1. **Forest Parameters** (all 4 must form a valid combination):
+   - `afforestation_rate_kha_per_year`
+   - `broadleaf_fraction`
+   - `organic_soil_fraction`
+   - `forest_harvest_intensity`
+
+2. **Organic Soil Parameters** (both must form a valid combination):
+   - `wetland_restored_frac`
+   - `organic_soil_under_grass_frac`
+
+3. **Abatement/Productivity Parameters** (both must form a valid combination):
+   - `abatement_type`
+   - `abatement_scenario`
+
+If you provide an invalid combination, `OptiGobDataManager` will raise a `ValueError` with details about the invalid parameters and guidance on finding valid combinations.
 
 ---
 

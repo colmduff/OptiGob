@@ -136,9 +136,26 @@ class LivestockOptimisation:
         beef_units = model.x.value
         dairy_units = model.y.value
 
+        # Check for infeasibility
         if 'infeasible' in termination or beef_units is None or dairy_units is None:
-            # Give a clear, helpful, custom message
-            print("Optimization infeasible: No feasible solution for the provided constraints.")
+            error_msg = (
+                "Optimization infeasible: No feasible solution exists.\n"
+                "This should have been caught by pre-flight checks.\n"
+                "If you see this error, there may be numerical issues with the optimizer."
+            )
+
+            # Return an error result instead of crashing
+            return OptimisationResult({
+                "status": "infeasible",
+                "message": error_msg,
+                "Dairy_animals": 0,
+                "Beef_animals": 0,
+                "Scenario": scenario,
+                "Year": year,
+                "Emissions_budget_CO2e": emissions_budget,
+                "Dairy_emissions_CO2e": 0,
+                "Beef_emissions_CO2e": 0
+            })
 
         # --- Otherwise, return the solution as usual, with status "ok" ---
         total_dairy_animals = dairy_units * self.scalar(co2e_dairy_scaler["pop"])
