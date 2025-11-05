@@ -53,6 +53,10 @@ Methods:
 
 from optigob.resource_manager.database_manager import DatabaseManager
 from optigob.resource_manager.import_factory import ImportFactory  # Import the ImportFactory
+from optigob.resource_manager.input_query import InputQuery
+from optigob.logger import get_logger
+
+logger = get_logger("data_manager")
 
 class OptiGobDataManager:
     def __init__(self, sip):
@@ -77,7 +81,7 @@ class OptiGobDataManager:
         
         self.db_manager = DatabaseManager()
 
-        self._livestock_emission_scalers = None  
+        self._livestock_emission_scalers = None
         self._livestock_area_scalers = None
         self._livestock_protein_scalers = None
         self._forest_scalers = None
@@ -97,6 +101,9 @@ class OptiGobDataManager:
         self._protein_crop_protein_scalers = None
         self._protein_content_scalers = None
         self._willow_bioenergy_scalers = None
+
+        # Validate input parameters after loading
+        self._validate_input_parameters()
 
 
         self._ha_to_kha = 1e-3
@@ -123,6 +130,200 @@ class OptiGobDataManager:
             "other_land_use",
             "ad",
             "beccs"]
+
+    def _validate_input_parameters(self):
+        """
+        Validate that input parameters are consistent and within valid ranges.
+
+        This method performs two types of validation:
+        1. Parameter consistency checks (e.g., split_gas and split_gas_frac)
+        2. Database combination validation (e.g., forest, organic soil, abatement parameters)
+
+        For database combination validation, the method checks if the provided parameter
+        combinations exist in the underlying database. Not all parameter combinations are
+        valid - the database contains only specific combinations that have been modeled.
+
+        Use the InputHelper class to explore valid combinations:
+            from optigob.input_helper import InputHelper
+            helper = InputHelper()
+            helper.print_all_combos()  # View all valid combinations
+
+        Raises:
+            ValueError: If parameters are invalid, inconsistent, or form an invalid combination
+                       not present in the database.
+
+        Warns:
+            UserWarning: If parameters are confusing but don't affect calculations.
+        """
+        split_gas = self.standard_input_parameters.get('split_gas', False)
+        split_gas_frac = self.standard_input_parameters.get('split_gas_frac')
+
+        # Warn if split_gas_frac is set when split_gas is False
+        if not split_gas and split_gas_frac is not None and split_gas_frac != 0:
+            logger.warning(
+                f"Parameter Validation Warning:\n"
+                f"  split_gas=False but split_gas_frac={split_gas_frac}\n"
+                f"  The split_gas_frac parameter is IGNORED when split_gas=False.\n"
+                f"  Set split_gas_frac=0 or remove it to avoid confusion."
+            )
+
+        # Validate split_gas_frac range when split_gas is True
+        if split_gas:
+            if split_gas_frac is None or split_gas_frac <= 0 or split_gas_frac >= 1:
+                error_msg = (
+                    f"Parameter Error:\n"
+                    f"  split_gas=True requires split_gas_frac in range (0, 1).\n"
+                    f"  Got: split_gas_frac={split_gas_frac}"
+                )
+                logger.error(error_msg)
+                raise ValueError(error_msg)
+
+        # Validate parameter combinations against database
+        # Only validate if parameters are provided (allows partial specification)
+        self._validate_forest_parameters()
+        self._validate_organic_soil_parameters()
+        self._validate_abatement_productivity_parameters()
+
+    def _validate_forest_parameters(self):
+        """
+        Validate forest parameter combinations against database.
+
+        Checks if the provided forest parameters form a valid combination that exists
+        in the database. Only validates if all four forest parameters are provided.
+
+        Raises:
+            ValueError: If the forest parameter combination is invalid.
+        """
+        # Extract forest parameters
+        affor_rate = self.standard_input_parameters.get('afforestation_rate_kha_per_year')
+        broadleaf = self.standard_input_parameters.get('broadleaf_fraction')
+        organic = self.standard_input_parameters.get('organic_soil_fraction')
+        harvest = self.standard_input_parameters.get('forest_harvest_intensity')
+
+        # Only validate if all parameters are provided
+        if not all([affor_rate is not None, broadleaf is not None,
+                    organic is not None, harvest is not None]):
+            return
+
+        # Get valid combinations from database
+        input_query = InputQuery()
+        valid_combos = input_query.get_forest_input_combos()
+
+        # Check if the provided combination exists
+        user_combo = {
+            'affor_rate_kha-yr': affor_rate,
+            'broadleaf_frac': broadleaf,
+            'organic_soil_frac': organic,
+            'forest_harvest_intensity': harvest
+        }
+
+        if not any(
+            combo['affor_rate_kha-yr'] == user_combo['affor_rate_kha-yr'] and
+            combo['broadleaf_frac'] == user_combo['broadleaf_frac'] and
+            combo['organic_soil_frac'] == user_combo['organic_soil_frac'] and
+            combo['forest_harvest_intensity'] == user_combo['forest_harvest_intensity']
+            for combo in valid_combos
+        ):
+            error_msg = (
+                f"Invalid Forest Parameter Combination:\n"
+                f"  afforestation_rate_kha_per_year: {affor_rate}\n"
+                f"  broadleaf_fraction: {broadleaf}\n"
+                f"  organic_soil_fraction: {organic}\n"
+                f"  forest_harvest_intensity: {harvest}\n\n"
+                f"This combination does not exist in the database.\n"
+                f"To see all valid forest parameter combinations, use:\n"
+                f"  from optigob.input_helper import InputHelper\n"
+                f"  helper = InputHelper()\n"
+                f"  helper.filter_combos(input_type='forest')"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
+
+    def _validate_organic_soil_parameters(self):
+        """
+        Validate organic soil parameter combinations against database.
+
+        Checks if the provided organic soil parameters form a valid combination that
+        exists in the database. Only validates if both organic soil parameters are provided.
+
+        Raises:
+            ValueError: If the organic soil parameter combination is invalid.
+        """
+        # Extract organic soil parameters
+        wetland = self.standard_input_parameters.get('wetland_restored_frac')
+        grass = self.standard_input_parameters.get('organic_soil_under_grass_frac')
+
+        # Only validate if both parameters are provided
+        if wetland is None or grass is None:
+            return
+
+        # Get valid combinations from database
+        input_query = InputQuery()
+        valid_combos = input_query.get_organic_soil_input_combos()
+
+        # Check if the provided combination exists
+        if not any(
+            combo['wetland_restored_frac'] == wetland and
+            combo['organic_soil_under_grass_frac'] == grass
+            for combo in valid_combos
+        ):
+            error_msg = (
+                f"Invalid Organic Soil Parameter Combination:\n"
+                f"  wetland_restored_frac: {wetland}\n"
+                f"  organic_soil_under_grass_frac: {grass}\n\n"
+                f"This combination does not exist in the database.\n"
+                f"To see all valid organic soil parameter combinations, use:\n"
+                f"  from optigob.input_helper import InputHelper\n"
+                f"  helper = InputHelper()\n"
+                f"  helper.filter_combos(input_type='organic_soil')"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
+
+    def _validate_abatement_productivity_parameters(self):
+        """
+        Validate abatement and productivity parameter combinations against database.
+
+        Checks if the provided abatement_type and abatement_scenario form a valid
+        combination that exists in the database. Only validates if both parameters are provided.
+
+        Raises:
+            ValueError: If the abatement/productivity parameter combination is invalid.
+        """
+        # Extract abatement parameters
+        abatement_type = self.standard_input_parameters.get('abatement_type')
+        abatement_scenario = self.standard_input_parameters.get('abatement_scenario')
+
+        # Only validate if both parameters are provided
+        if abatement_type is None or abatement_scenario is None:
+            return
+
+        # Get valid combinations from database
+        input_query = InputQuery()
+        valid_combos = input_query.get_abatement_and_productivity_input_combos()
+
+        # Check if the provided combination exists
+        if not any(
+            combo['abatement'] == abatement_type and
+            combo['scenario'] == abatement_scenario
+            for combo in valid_combos
+        ):
+            error_msg = (
+                f"Invalid Abatement/Productivity Parameter Combination:\n"
+                f"  abatement_type: {abatement_type}\n"
+                f"  abatement_scenario: {abatement_scenario}\n\n"
+                f"This combination does not exist in the database.\n"
+                f"Valid combinations:\n"
+                f"  baseline: scenarios 1, 2, 3\n"
+                f"  macc: scenarios 4, 5, 6\n"
+                f"  frontier: scenarios 7, 8, 9\n\n"
+                f"To see all valid combinations, use:\n"
+                f"  from optigob.input_helper import InputHelper\n"
+                f"  helper = InputHelper()\n"
+                f"  helper.filter_combos(input_type='abatement_and_productivity')"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
 
     def get_ha_to_kha(self):
         """
@@ -315,13 +516,19 @@ class OptiGobDataManager:
         ]
 
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching livestock emission scaler found for:\n"
+                f"  year={year}, system={system}, gas={gas}, "
+                f"scenario={scenario}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
 
-        output = {"system": system, 
-                  "gas": gas, 
-                  "scenario": scenario, 
-                  "year": year, 
+        output = {"system": system,
+                  "gas": gas,
+                  "scenario": scenario,
+                  "year": year,
                   "value": filtered["value"].item(),
                   "pop": filtered["pop"].item()}
         return output            
@@ -351,11 +558,17 @@ class OptiGobDataManager:
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching livestock area scaler found for:\n"
+                f"  year={year}, system={system}, "
+                f"scenario={scenario}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
 
-        output = {"system": system, 
-                  "scenario": scenario, 
+        output = {"system": system,
+                  "scenario": scenario,
                   "year": year,
                   "area": filtered["value"].item(),
                   "hnv_area": filtered["hnv_area"].item()}
@@ -389,10 +602,16 @@ class OptiGobDataManager:
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching livestock protein scaler found for:\n"
+                f"  year={year}, system={system}, item={item}, "
+                f"scenario={scenario}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_static_livestock_emission_scaler(self,
                                             year,
                                             system, 
@@ -420,11 +639,16 @@ class OptiGobDataManager:
             (df["year"] == year) &
             (df["system"] == system) &
             (df["ghg"] == gas) &
-            (df["scenario"] == 0) & 
+            (df["scenario"] == 0) &
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching static livestock emission scaler found for:\n"
+                f"  year={year}, system={system}, gas={gas}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
 
@@ -452,11 +676,16 @@ class OptiGobDataManager:
         filtered = df[
             (df["year"] == year) &
             (df["system"] == system) &
-            (df["scenario"] == 0) & 
+            (df["scenario"] == 0) &
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching static livestock area scaler found for:\n"
+                f"  year={year}, system={system}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
 
@@ -483,11 +712,16 @@ class OptiGobDataManager:
             (df["year"] == year) &
             (df["system"] == system) &
             (df["item"] == item) &
-            (df["scenario"] == 0) & 
+            (df["scenario"] == 0) &
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching static livestock protein scaler found for:\n"
+                f"  year={year}, system={system}, item={item}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
 
@@ -519,10 +753,16 @@ class OptiGobDataManager:
             (df["harvest"] == harvest)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching forest scaler found for:\n"
+                f"  year={target_year}, affor_rate={affor_rate}, broadleaf_frac={broadleaf_frac}, "
+                f"organic_soil_frac={organic_soil_frac}, harvest={harvest}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_static_forest_scaler(self, target_year,harvest):
         """
         Retrieves the static scaler value for a given year and harvest intensity.
@@ -546,10 +786,15 @@ class OptiGobDataManager:
         ]
 
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching static forest scaler found for:\n"
+                f"  year={target_year}, harvest={harvest}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_wood_ccs_scaler(self,target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest):
         """
         Retrieves the CCS scaler value for a given year and forest management parameters.
@@ -578,10 +823,16 @@ class OptiGobDataManager:
             (df["harvest"] == harvest)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching wood CCS scaler found for:\n"
+                f"  year={target_year}, affor_rate={affor_rate}, broadleaf_frac={broadleaf_frac}, "
+                f"organic_soil_frac={organic_soil_frac}, harvest={harvest}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_hwp_scaler(self,target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest):
         """
         Retrieves the HWP scaler value for a given year and forest management parameters.
@@ -610,10 +861,16 @@ class OptiGobDataManager:
             (df["harvest"] == harvest)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching HWP scaler found for:\n"
+                f"  year={target_year}, affor_rate={affor_rate}, broadleaf_frac={broadleaf_frac}, "
+                f"organic_soil_frac={organic_soil_frac}, harvest={harvest}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_substitution_scaler(self,target_year, affor_rate, broadleaf_frac, organic_soil_frac, harvest):
         """
         Retrieves the substitution scaler value for a given year and forest management parameters.
@@ -642,7 +899,13 @@ class OptiGobDataManager:
             (df["harvest"] == harvest)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching substitution scaler found for:\n"
+                f"  year={target_year}, affor_rate={affor_rate}, broadleaf_frac={broadleaf_frac}, "
+                f"organic_soil_frac={organic_soil_frac}, harvest={harvest}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
 
@@ -674,10 +937,16 @@ class OptiGobDataManager:
             (df["organic_soil_under_grass_frac"] == organic_soil_under_grass_frac)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching organic soil emission scaler found for:\n"
+                f"  year={target_year}, wetland_restored_frac={wetland_restored_frac}, "
+                f"organic_soil_under_grass_frac={organic_soil_under_grass_frac}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_organic_soil_area_scaler(self,
                                     target_year,
                                     wetland_restored_frac,
@@ -707,10 +976,16 @@ class OptiGobDataManager:
 
 
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching organic soil area scaler found for:\n"
+                f"  year={target_year}, wetland_restored_frac={wetland_restored_frac}, "
+                f"organic_soil_under_grass_frac={organic_soil_under_grass_frac}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_ad_area_scaler(self, target_year):
         """
         Retrieves the AD area scaler value for a given year.
@@ -731,10 +1006,12 @@ class OptiGobDataManager:
             (df["year"] == target_year)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = f"No matching AD area scaler found for: year={target_year}"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_ad_emission_scaler(self, target_year):
         """
         Retrieves the AD emission scaler value for a given year.
@@ -755,10 +1032,12 @@ class OptiGobDataManager:
             (df["year"] == target_year)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = f"No matching AD emission scaler found for: year={target_year}"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
-    
+
     def get_crop_scaler(self, year, gas, abatement):
         """
         Retrieves the crop scaler value for a given year, gas, and abatement.
@@ -780,12 +1059,17 @@ class OptiGobDataManager:
         filtered = df[
             (df["year"] == year) &
             (df["ghg"] == gas) &
-            (df["scenario"] == 0) & 
+            (df["scenario"] == 0) &
             (df["abatement"] == abatement)
         ]
 
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching crop scaler found for:\n"
+                f"  year={year}, gas={gas}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
 
@@ -794,16 +1078,22 @@ class OptiGobDataManager:
         """
         Retrieves the protein crop emission scaler value for a given year, crop, gas, and abatement.
         """
-        
+
+
         df = self._load_protein_crop_emission_scalers()
 
         filtered = df[
-            (df["year"] == year) &           
+            (df["year"] == year) &
             (df["ghg"] == ghg) &
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
-            raise ValueError("No matching protein crop emission scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching protein crop emission scaler found for:\n"
+                f"  year={year}, ghg={ghg}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         return filtered
 
     def get_protein_crop_protein_scaler(self, year, abatement):
@@ -816,7 +1106,12 @@ class OptiGobDataManager:
             (df["abatement"] == abatement)
         ]
         if filtered.empty:
-            raise ValueError("No matching protein crop protein scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching protein crop protein scaler found for:\n"
+                f"  year={year}, abatement={abatement}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         return filtered
 
     def get_protein_content_scaler(self, type):
@@ -831,13 +1126,16 @@ class OptiGobDataManager:
         """
         df = self._load_protein_content_scalers()
         # Filter the DataFrame based on the provided type.
-        item = df[df["type"] == type]["conversion"].item()
+        filtered = df[df["type"] == type]
 
-        if df.empty:
-            raise ValueError("No matching protein content scaler found.")
+        if filtered.empty:
+            error_msg = f"No matching protein content scaler found for: type={type}"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
+        item = filtered["conversion"].item()
         return item
-    
+
     def get_willow_bioenergy_scaler(self, year, type, ghg):
         """
         Retrieves the willow bioenergy scaler value for a given year, type, and gas.
@@ -862,7 +1160,12 @@ class OptiGobDataManager:
             (df["ghg"] == ghg)
         ]
         if filtered.empty:
-            raise ValueError("No matching scaler found for the provided parameters.")
+            error_msg = (
+                f"No matching willow bioenergy scaler found for:\n"
+                f"  year={year}, type={type}, ghg={ghg}"
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         # Return the scaler value; if more than one row matches, we take the first.
         return filtered
 

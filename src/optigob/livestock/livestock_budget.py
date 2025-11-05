@@ -46,6 +46,9 @@ from optigob.forest.forest_budget import ForestBudget
 from optigob.bioenergy.bioenergy_budget import BioEnergyBudget
 from optigob.protein_crops.protein_crops_budget import ProteinCropsBudget
 from optigob.static_ag.static_ag_budget import StaticAgBudget
+from optigob.logger import get_logger
+
+logger = get_logger("livestock")
 
 
 
@@ -153,10 +156,19 @@ class LivestockBudget:
 
         Returns:
             dict: Dictionary of optimisation results for livestock populations and constraints.
+
+        Raises:
+            ValueError: If optimization was infeasible.
         """
         # Load optimization outputs if not already loaded.
         if self._optimisation_outputs is None:
             self._optimisation_outputs = self.get_optimisation_outputs()
+
+            # Check if optimization was feasible
+            if not self._optimisation_outputs.feasible:
+                raise ValueError(
+                    f"Livestock optimization failed:\n{self._optimisation_outputs.get('message', 'Unknown error')}"
+                )
 
         return self._optimisation_outputs
     
@@ -208,11 +220,67 @@ class LivestockBudget:
 
         Returns:
             dict: Dictionary of optimised livestock populations and related outputs.
+
+        Raises:
+            ValueError: If the scenario is mathematically infeasible before optimization.
         """
         area_commitment = self._get_total_area_commitment()
 
-
         if self.split_gas_approach:
+            # Pre-flight feasibility check for CH4 budget
+            ch4_baseline_total = self.baseline_emission.get_total_ch4_emission()
+            ch4_target = ch4_baseline_total * (1 - self.split_gas_frac)
+            non_livestock_ch4 = self._get_total_non_livestock_emission_ch4()
+            ch4_budget_for_livestock = ch4_target - non_livestock_ch4
+
+            if ch4_budget_for_livestock <= 0:
+                # Get individual sources for detailed warning message
+                static_ag_ch4 = self.static_ag_budget.get_total_static_ag_ch4()
+                wetland_ch4 = self.other_land_budget.get_wetland_restoration_emission_ch4()
+                ad_ch4 = self.bio_energy_budget.get_ad_ag_ch4_emission()
+                protein_ch4 = self.protein_crop_budget.get_crop_emission_ch4()
+                beccs_ch4 = self.bio_energy_budget.get_total_ccs_ch4_emission()
+
+                sources = [
+                    ("Wetland restoration", wetland_ch4),
+                    ("Static agriculture", static_ag_ch4),
+                    ("Anaerobic digestion", ad_ch4),
+                    ("Protein crops", protein_ch4),
+                    ("BECCS", beccs_ch4),
+                ]
+                sources_sorted = sorted(sources, key=lambda x: x[1], reverse=True)
+
+                warning_msg = (
+                    f"\nWARNING: Zero CH4 budget for livestock.\n\n"
+                    f"Your scenario's CH4 budget has been exhausted by other land uses:\n"
+                    f"  CH4 target (with {self.split_gas_frac*100:.0f}% reduction):  {ch4_target:8.2f} kt\n"
+                    f"  Non-livestock CH4 emissions:                {non_livestock_ch4:8.2f} kt\n"
+                    f"  ─────────────────────────────────────────────────────\n"
+                    f"  CH4 budget available for livestock:         {ch4_budget_for_livestock:8.2f} kt\n\n"
+                    f"Other conditions have used up the available CH4 budget:\n"
+                )
+
+                for source_name, value in sources_sorted:
+                    if value > 0:
+                        pct = (value / ch4_target) * 100
+                        warning_msg += f"  • {source_name:25s}: {value:7.2f} kt ({pct:5.1f}% of target)\n"
+
+                # Identify the major contributors
+                major_contributors = [name for name, val in sources_sorted if val > ch4_target * 0.5]
+                if major_contributors:
+                    warning_msg += f"\nMajor contributor(s): {', '.join(major_contributors)}\n"
+
+                warning_msg += (
+                    f"\nResult: Zero livestock is the only feasible solution.\n\n"
+                    f"To allow livestock production, you can try some of the following:\n"
+                    f"  1. Reduce split_gas_frac (currently {self.split_gas_frac}) to allow more CH4\n"
+                    f"  2. Reduce wetland restoration area (currently {self.rewetted_area:.0f} ha)\n"
+                    f"  3. Reduce biomethane/AD area (currently {self.biomethane_area:.0f} ha)\n"
+                    f"  4. Use split_gas=False for standard CO2e accounting instead\n"
+                )
+
+                logger.warning(warning_msg)
+
             return self.optimisation.optimise_livestock_pop(
                 ratio_type=self.get_livestock_ratio_type,
                 ratio_value=self.livestock_ratio_value,
@@ -224,6 +292,54 @@ class LivestockBudget:
                 ch4_budget=self.ch4_budget
             )
         else:
+            # Pre-flight information for zero CO2e budget
+            if self.net_zero_budget <= 0:
+                # Get individual sources for detailed informational message
+                static_ag_co2e = self.static_ag_budget.get_total_static_ag_co2e()
+                forest_co2e = self.forest_budget.total_emission_offset()
+                wetland_co2e = self.other_land_budget.get_wetland_restoration_emission_co2e()
+                ad_co2e = self.bio_energy_budget.get_ad_ag_co2e_emission()
+                protein_co2e = self.protein_crop_budget.get_crop_emission_co2e()
+                beccs_co2e = self.bio_energy_budget.get_total_ccs_co2e_emission()
+
+                total_non_livestock = static_ag_co2e + forest_co2e + wetland_co2e + ad_co2e + protein_co2e + beccs_co2e
+
+                # Sort sources by absolute magnitude for better readability
+                sources = [
+                    ("Wetland restoration", wetland_co2e),
+                    ("Static agriculture", static_ag_co2e),
+                    ("Anaerobic digestion", ad_co2e),
+                    ("Forest offset", forest_co2e),
+                    ("Protein crops", protein_co2e),
+                    ("BECCS", beccs_co2e),
+                ]
+                sources_sorted = sorted(sources, key=lambda x: abs(x[1]), reverse=True)
+
+                info_msg = (
+                    f"\nINFO: Zero CO2e budget for livestock.\n\n"
+                    f"Your scenario's non-livestock land uses produce NET EMISSIONS, leaving no budget for livestock:\n"
+                    f"  Total non-livestock emissions: {total_non_livestock:8.2f} kt CO2e\n"
+                    f"  Net-zero target budget:        {0.0:8.2f} kt CO2e\n"
+                    f"  ─────────────────────────────────────────────────────\n"
+                    f"  CO2e budget available for livestock: {self.net_zero_budget:8.2f} kt\n\n"
+                    f"Non-livestock emission breakdown:\n"
+                )
+
+                for source_name, value in sources_sorted:
+                    if value != 0:
+                        info_msg += f"  • {source_name:25s}: {value:8.2f} kt CO2e\n"
+
+                info_msg += (
+                    f"\nResult: Zero livestock is the only feasible solution.\n\n"
+                    f"To allow livestock production, you can try:\n"
+                    f"  1. Increase forest sequestration (higher afforestation rate)\n"
+                    f"  2. Reduce wetland restoration area (currently {self.rewetted_area:.0f} ha)\n"
+                    f"  3. Reduce static agriculture emissions\n"
+                    f"  4. Enable BECCS to create negative emissions\n"
+                )
+
+                logger.info(info_msg)
+
             return self.optimisation.optimise_livestock_pop(
                 ratio_type=self.get_livestock_ratio_type,
                 ratio_value=self.livestock_ratio_value,

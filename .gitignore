@@ -163,3 +163,10 @@ dmypy.json
 #/joss_paper
 sankey_diagram.html
 sankey.py
+
+#claude
+CLAUDE.md
+.claude_config.yaml
+
+#test logs
+tests/data/logs/

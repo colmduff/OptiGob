@@ -1,4 +1,4 @@
 sphinx
 sphinx_rtd_theme
 myst-nb
-autoapi
+sphinx-autoapi
