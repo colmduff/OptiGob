@@ -75,6 +75,6 @@ Figure 4 shows the total protein output by category for the baseline and transit
 
 # Acknowledgements
 
-This research was supported by EPA Research 2030, funded by Ireland’s Environment Protection Agency under grant number EPA-CCRP-MS.57, and by Ireland’s Department of the Climate, Energy and the Environment under FORESIGHT land use modelling services contract.
+This research was supported by EPA Research 2030, funded by Ireland's Environment Protection Agency under grant number EPA-CCRP-MS.57, and by Ireland's Department of the Climate, Energy and the Environment under FORESIGHT land use modelling services contract.
 
 # References
