@@ -8,7 +8,10 @@ import logging
 
 def main():
 
-    LOGPATH = str(Path('.') / 'data' / 'logs' / 'example_log.log')
+    if not Path('./logs').exists():
+        Path('./logs').mkdir(parents=True, exist_ok=True)
+
+    LOGPATH = str(Path('.') / 'logs' / 'example_log.log')
 
     # Log to both console and file
     configure_logging(

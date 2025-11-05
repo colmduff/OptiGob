@@ -19,7 +19,10 @@ from optigob.input_helper import InputHelper
 from optigob.logger import configure_logging
 import logging
 
-LOGPATH = str(Path('.') / 'data' / 'logs' / 'input_validation.log')
+if not Path('./logs').exists():
+    Path('./logs').mkdir(parents=True, exist_ok=True)
+    
+LOGPATH = str(Path('.') / 'logs' / 'input_validation.log')
 
 # Log to both console and file
 configure_logging(
