@@ -35,11 +35,11 @@ bibliography: paper.bib
 
 # Statement of need
 
-Ireland's agricultural landscape is dominated by grassland, supporting extensive dairy and suckler beef production. Investment in Ireland's bio-economy requires substantial changes to the AFOLU sector. `OptiGob` allows users to manipulate critical AFOLU levers that determine transition pathways to explore their impacts. `OptiGob` utilises data from GOBLIN Lite [@Duffy:2024; @DuffyB:2022], FERS-CBM [@Black:2025; @Kurz:2008], and LCAD2.0 [@Martinez-Acre:2025] to calculate outputs from agriculture, forestry, and anaerobic digestion.
+Ireland's agricultural landscape is dominated by grassland, supporting extensive dairy and suckler beef production. Investment in Ireland's bio-economy requires substantial changes to the AFOLU sector. `OptiGob` allows users to manipulate critical AFOLU levers that determine transition pathways to explore their impacts. `OptiGob` utilises data from GOBLIN Lite [@Duffy:2024; @DuffyB:2022], FERS-CBM [@Black:2025; @Kurz:2008], and LCAD2.0 [@Martinez-Acre:2025] to calculate outputs from agriculture, forestry, and anaerobic digestion. This allows users to explore land use and livestock trade-offs, leveraging the outputs from the upstream models without the overhead of running upstream modelling chains. To the authors' knowledge, `OptiGob` represents the first attempt to do so in the Irish context. 
 
 `OptiGob` estimates the net greenhouse gas (GHG) emissions from land use change and estimates available emissions and land budget for grass-based livestock (Dairy and Suckler cow) production. `Pyomo` [@bynum2021pyomo; @hart2011pyomo] is used to optimise livestock populations, while respecting area commitment (afforestation, anaerobic digestion, BECCS (Bioenergy with Carbon Capture and Storage), protein crops) and emission (CO~2~e in the case of net-zero, or CH~4~ alongside net-zero CO~2~e for N~2~O and CO~2~ under a split gas target) constraints.
 
-The GOBLIN framework has been applied in recent studies of net-zero pathways for AFOLU [@Henn:2025; @Bishop:2024; @DuffyB:2022]. `OptiGob` builds upon this framework, offering insight into synergies and trade-offs with reduced overhead and complexity.
+The GOBLIN framework has been applied in recent studies of net-zero pathways for AFOLU [@Henn:2025; @Bishop:2024; @DuffyB:2022]. `OptiGob` builds upon this framework, providing a single-interface tool for exploring synergies and trade-offs across sectors.
 
 # Model Overview
 

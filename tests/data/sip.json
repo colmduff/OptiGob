@@ -1,4 +1,5 @@
 {
+    "solver_name": "highs",
     "AR": 5,
     "split_gas": true,
     "split_gas_frac": 0.32,

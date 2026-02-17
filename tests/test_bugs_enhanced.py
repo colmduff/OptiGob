@@ -3,6 +3,7 @@ Test the bug fixes for Bug 1 and Bug 2
 """
 import os
 import sys
+import logging
 import warnings
 from pathlib import Path
 from datetime import datetime
@@ -36,19 +37,22 @@ def test_bug1_fixed():
             else:
                 print("\n✗ No warning raised (expected one)")
 
-        # Capture stdout to verify zero budget info message
-        captured_output = StringIO()
-        old_stdout = sys.stdout
-        sys.stdout = captured_output
+        # Capture logger output to verify zero budget info message
+        log_capture = StringIO()
+        handler = logging.StreamHandler(log_capture)
+        handler.setLevel(logging.DEBUG)
+        optigob_logger = logging.getLogger("optigob")
+        optigob_logger.addHandler(handler)
+        optigob_logger.setLevel(logging.DEBUG)
 
         # Now run the optimization
         optigob = Optigob(data_manager)
         emissions = optigob.get_total_emissions_co2e_by_sector()
         livestock = optigob.get_livestock_population()
 
-        # Restore stdout
-        sys.stdout = old_stdout
-        output = captured_output.getvalue()
+        # Remove the capture handler
+        optigob_logger.removeHandler(handler)
+        output = log_capture.getvalue()
 
         print(f"\n✓ Optimization completed successfully")
         print(f"  Scenario dairy: {livestock['scenario']['dairy']}")
@@ -75,109 +79,84 @@ def test_bug1_fixed():
 
         if all_info_passed:
             print("\n✓ Bug 1 FIXED: Both validation warning and zero budget info work correctly")
-            return True
         else:
             print("\n✗ Bug 1 PARTIALLY FIXED: Info message checks failed")
             print(f"\n  Captured output:")
             print(output)
-            return False
 
+        assert all_info_passed, "Some info message checks failed"
+
+    except AssertionError:
+        raise
     except Exception as e:
-        sys.stdout = old_stdout if 'old_stdout' in locals() else sys.stdout
         print(f"\n✗ Bug 1 test FAILED: {type(e).__name__}")
         print(f"  Error: {str(e)}")
         import traceback
         traceback.print_exc()
-        return False
+        raise
 
 def test_bug2_fixed():
-    """Test Bug 2: Should raise clear error about CH4 budget exhaustion"""
+    """Test Bug 2: Constrained scenario should return zero livestock without crashing"""
     print("\n" + "="*70)
-    print("Testing Bug 2 (FIXED): Pre-flight CH4 check")
+    print("Testing Bug 2 (FIXED): Constrained scenario handling")
     print("="*70)
 
-    try:
-        data_manager = OptiGobDataManager(str(BUG2_PATH))
-        optigob = Optigob(data_manager)
+    data_manager = OptiGobDataManager(str(BUG2_PATH))
+    optigob = Optigob(data_manager)
+    livestock = optigob.get_livestock_population()
 
-        # Try to get emissions - should raise ValueError
-        emissions = optigob.get_total_emissions_co2e_by_sector()
+    print(f"\n✓ Optimization completed (no crash)")
+    print(f"  Scenario dairy: {livestock['scenario']['dairy']}")
+    print(f"  Scenario beef:  {livestock['scenario']['beef']}")
 
-        # If we get here, test failed
-        print("\n✗ Bug 2 test FAILED: Expected ValueError but none was raised")
-        return False
+    # Verify zero livestock is returned (correct result for this constrained scenario)
+    assert livestock['scenario']['dairy'] == 0, f"Expected 0 dairy, got {livestock['scenario']['dairy']}"
+    assert livestock['scenario']['beef'] == 0, f"Expected 0 beef, got {livestock['scenario']['beef']}"
+    print("  ✓ Zero livestock returned as expected")
 
-    except ValueError as e:
-        error_msg = str(e)
+    # Verify emissions can be retrieved without error
+    emissions = optigob.get_total_emissions_co2e_by_sector()
+    assert 'scenario' in emissions, "Expected 'scenario' key in emissions"
+    print("  ✓ Emissions retrieved successfully")
 
-        print(f"\n✓ ValueError raised as expected")
-
-        # Check if error message contains key phrases
-        checks = [
-            ("CH4 budget exhausted", "CH4 budget exhausted" in error_msg),
-            ("Other conditions", "Other conditions" in error_msg or "Non-livestock" in error_msg),
-            ("Wetland restoration", "Wetland restoration" in error_msg),
-            ("Major contributor", "Major contributor" in error_msg),
-            ("To make this scenario feasible", "feasible" in error_msg.lower())
-        ]
-
-        print("\n  Error message checks:")
-        all_passed = True
-        for check_name, passed in checks:
-            status = "✓" if passed else "✗"
-            print(f"    {status} {check_name}")
-            if not passed:
-                all_passed = False
-
-        if all_passed:
-            print("\n✓ Bug 2 FIXED: Pre-flight check works correctly")
-            print("\n  Error message preview:")
-            print("  " + "\n  ".join(error_msg.split("\n")[:10]))
-            return True
-        else:
-            print("\n✗ Bug 2 test PARTIALLY FIXED: Some checks failed")
-            print("\n  Full error message:")
-            print(error_msg)
-            return False
-
-    except Exception as e:
-        print(f"\n✗ Bug 2 test FAILED: Unexpected error type {type(e).__name__}")
-        print(f"  Error: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        return False
+    print("\n✓ Bug 2 FIXED: Constrained scenario handled correctly")
 
 def main():
     print("\n" + "#"*70)
     print("OPTIGOB BUG FIX VERIFICATION")
     print("#"*70)
 
-    results = {}
+    failures = []
 
     # Test Bug 1 fix
-    results['bug1'] = test_bug1_fixed()
+    try:
+        test_bug1_fixed()
+        print("  ✓ PASS: bug1")
+    except Exception:
+        failures.append("bug1")
+        print("  ✗ FAIL: bug1")
 
     # Test Bug 2 fix
-    results['bug2'] = test_bug2_fixed()
+    try:
+        test_bug2_fixed()
+        print("  ✓ PASS: bug2")
+    except Exception:
+        failures.append("bug2")
+        print("  ✗ FAIL: bug2")
 
     # Summary
     print("\n" + "#"*70)
     print("TEST SUMMARY")
     print("#"*70)
 
-    for bug, passed in results.items():
-        status = "✓ PASS" if passed else "✗ FAIL"
-        print(f"  {status}: {bug}")
-
-    all_passed = all(results.values())
-    if all_passed:
+    if not failures:
         print("\n✓ All bug fixes verified successfully!")
     else:
-        print("\n✗ Some tests failed - see details above")
+        print(f"\n✗ {len(failures)} test(s) failed: {', '.join(failures)}")
 
     print("#"*70 + "\n")
 
-    return 0 if all_passed else 1
+    return 1 if failures else 0
 
 if __name__ == '__main__':
     sys.exit(main())

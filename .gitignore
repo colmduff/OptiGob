@@ -167,6 +167,15 @@ sankey.py
 #claude
 CLAUDE.md
 .claude_config.yaml
+goals.md
 
-#test logs
-tests/data/logs/
+#test files/logs/data
+tests/logs/
+.solver_test
+.test_co2e_budget_confirmation.py
+.test_zero_budget_message.py
+.retest.py
+test_bugs_enhanced.py
+Makefile
+sip_bug1.yaml
+sip_bug2.yaml

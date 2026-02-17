@@ -1,21 +1,24 @@
 [tool.poetry]
 name = "optigob"
-version = "0.1.4"
+version = "0.1.5"
 description = "A land use change and environmental assessment tool based on preconfigured data animal population numbers based on negative emissions allowance"
 authors = ["Colm Duffy"]
 license = "MIT"
 readme = "README.md"
+packages = [{include = "optigob", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 pyomo = "^6.8.0"
-cplex = "^22.1.2.0"
 pandas = "^2.2.3"
 numpy = "^2.2.4"
 sqlalchemy = "^2.0.39"
 pyyaml = "^6.0.2"
 
-[tool.poetry.dev-dependencies]
+highspy = { version = "^1.13.1", optional = true }
+
+[tool.poetry.extras]
+solvers = ["highspy"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.2"

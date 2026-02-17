@@ -2,7 +2,7 @@ import unittest
 from optigob.livestock.livestock_budget import LivestockBudget
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
 
-class TestForestBudget(unittest.TestCase):
+class TestLivestockBudget(unittest.TestCase):
 
     def setUp(self):
         self.data = './data/sip.yaml'

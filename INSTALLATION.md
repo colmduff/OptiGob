@@ -4,7 +4,7 @@ This guide will help you install and set up the `optigob` package for developmen
 
 ## Requirements
 
-- Python 3.9 or higher
+- Python 3.12 or higher
 - [Poetry](https://python-poetry.org/) (recommended for development)
 - (Optional) [pip](https://pip.pypa.io/) for standard installation
 - (Optional) [conda](https://docs.conda.io/) for environment management
@@ -16,6 +16,17 @@ You can install the latest release from PyPI:
 ```bash
 pip install optigob
 ```
+
+OptiGob requires a solver to run optimizations. The recommended option is
+**HiGHS**, which you can install alongside optigob:
+
+```bash
+pip install "optigob[solvers]"
+```
+
+Alternatively, install just optigob and choose your own Pyomo-compatible solver
+from the list provided below.
+
 
 ## Development Install (Recommended for Contributors)
 
@@ -32,36 +43,82 @@ pip install optigob
     pip install poetry
     ```
 
-3. **Install dependencies and the package in editable mode:**
+3. **Install dependencies and the project (local-path install):**
 
     ```bash
     poetry install
     ```
 
-4. **Activate the Poetry shell (optional):**
+    Poetry installs the project from your working directory (PEP 660
+    editable-style), so local code changes are reflected immediately without
+    a separate `-e` flag.
+
+    To include the recommended HiGHS solver:
 
     ```bash
-    poetry shell
+    poetry install -E solvers
     ```
 
-5. **Run tests to verify your installation:**
+4. **Run commands in the Poetry environment:**
 
-    ```bash
-    poetry run pytest
-    ```
+    You have two options:
+
+    - **Use `poetry run` prefix** (recommended for single commands):
+      ```bash
+      poetry run pytest
+      poetry run python tests/example.py
+      ```
+
+    - **Or activate the Poetry shell** (for multiple commands in one session):
+      ```bash
+      poetry shell
+      pytest
+      python tests/example.py
+      exit  # to leave the Poetry shell when done
+      ```
 
 ## Optional: Using Conda
 
 If you prefer conda for environment management:
 
 ```bash
-conda create -n optigob python=3.10
+conda create -n optigob python=3.12
 conda activate optigob
 pip install poetry
 poetry install
 ```
 
-## Updating the Package
+To include the recommended HiGHS solver:
+
+```bash
+poetry install -E solvers
+```
+
+## Using Alternative Solvers
+
+OptiGob requires a Pyomo-compatible solver to run optimizations. While **HiGHS** is
+the recommended built-in option (install with `pip install highspy` or
+`poetry install --with solvers`), you can use any solver supported by Pyomo.
+
+To use a different solver, specify the `solver_name` parameter in your configuration:
+
+```python
+from optigob import Optigob
+from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
+
+data = {
+    # ... your scenario parameters ...
+    'solver_name': 'glpk'  # Use GLPK instead of HiGHS
+}
+data_manager = OptiGobDataManager(data)
+optigob = Optigob(data_manager)
+```
+
+For a complete list of available Pyomo-compatible solvers, see the
+[Pyomo documentation](https://pyomo.readthedocs.io/en/stable/getting_started/solvers.html).
+
+To use a specific solver, ensure it is installed in your environment, then
+specify it via `solver_name`.
 
 To update to the latest version from PyPI:
 
@@ -82,7 +139,7 @@ poetry update
 
 ## Additional Resources
 
-- [OptiGob Documentation](https://github.com/colmduff/OptiGob#readme)
+- [OptiGob Documentation](https://optigob.readthedocs.io/en/latest/)
 - [Poetry Documentation](https://python-poetry.org/docs/)
 
 If you have any questions or need help, please open an issue on GitHub or contact the maintainers.
