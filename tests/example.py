@@ -1,8 +1,8 @@
 from pathlib import Path
-from optigob.optigob import Optigob
-from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
-from optigob.input_helper import InputHelper
-from optigob.logger import configure_logging
+from optigob import Optigob
+from optigob import OptiGobDataManager
+from optigob import InputHelper
+from optigob import configure_logging
 import logging
 
 

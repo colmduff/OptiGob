@@ -2,7 +2,7 @@ import unittest
 from optigob.bioenergy.bioenergy_budget import BioEnergyBudget
 from optigob.resource_manager.optigob_data_manager import OptiGobDataManager
 
-class TestForestBudget(unittest.TestCase):
+class TestBioEnergyBudget(unittest.TestCase):
 
     def setUp(self):
         self.data = './data/sip.json'

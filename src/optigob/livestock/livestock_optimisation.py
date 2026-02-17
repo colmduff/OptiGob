@@ -16,9 +16,9 @@ class LivestockOptimisation:
     Class for optimising livestock populations under emissions constraints.
     """
     def __init__(self, optigob_data_manager):
-        self.solver = "cplex_direct"
         self.data_manager_class = optigob_data_manager
         self.baseline_livestock = BaselineLivestock(self.data_manager_class)
+        self.solver = self.data_manager_class.get_solver_name() or "highs"
 
     def scalar(self,x):
         # Utility to ensure value is a float

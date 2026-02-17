@@ -2,6 +2,26 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.5 (17/02/2026)
+
+### Breaking Changes
+
+- **Solver migration**: Replaced `cplex_direct` (previously a core dependency) with **HiGHS** as the recommended solver, now available as an optional extra
+  - Install with `pip install "optigob[solvers]"` or `poetry install -E solvers`
+  - Users without HiGHS can specify any Pyomo-compatible solver via the `solver_name` parameter in their SIP file
+
+### Features
+
+- **Configurable solver**: Users can now specify their preferred solver in the SIP input file (e.g., `solver_name: "highs"`, `solver_name: "glpk"`)
+- **Package-level imports**: Key classes (`Optigob`, `OptiGobDataManager`, `InputHelper`, `configure_logging`, `get_logger`) are now exported from `__init__.py` for cleaner imports (e.g., `from optigob import Optigob`)
+
+### Documentation
+
+- Fixed documentation inconsistencies across README, INSTALLATION, and CLAUDE.md
+- Added `limitations.md` to ReadTheDocs navigation
+- Updated Poetry extras install syntax in installation guide
+- Corrected module tree to reflect actual `substitution/` directory structure
+
 ## v0.1.4 (05/11/2025)
 
 ### Features

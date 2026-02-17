@@ -7,7 +7,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u"optigob"
-copyright = u"2025, Colm Duffy"
+copyright = u"2025-2026, Colm Duffy"
 author = u"Colm Duffy"
 
 # -- General configuration ---------------------------------------------------

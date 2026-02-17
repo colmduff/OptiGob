@@ -11,6 +11,7 @@ Classes:
     OptiGobDataManager: Manages and retrieves data scalers for various sectors.
 
 Methods:
+    get_solver_name: Retrieves the solver type from the SIP input file.
     get_ha_to_kha: Retrieves the conversion factor from hectares to kilohectares.
     get_kha_to_ha: Retrieves the conversion factor from square kilohectares to hectares.
     get_AR_gwp100_values: Retrieves the GWP values for each gas based on the AR value.
@@ -54,6 +55,7 @@ Methods:
 from optigob.resource_manager.database_manager import DatabaseManager
 from optigob.resource_manager.import_factory import ImportFactory  # Import the ImportFactory
 from optigob.resource_manager.input_query import InputQuery
+import pyomo.environ as pyo
 from optigob.logger import get_logger
 
 logger = get_logger("data_manager")
@@ -64,14 +66,18 @@ class OptiGobDataManager:
         Initializes the OptiGobDataManager.
 
         Parameters:
-            sip (str or dict): A file path to a JSON, YAML, CSV file or a dictionary containing
-                               the standard input parameters. Expected keys are:
-                               - "baseline_year"
-                               - "target_year"
-                               - "abatement_scenario"
-                               - "gas"
-                               - "emissions_budget"
-                               - "dairy_beef_ratio"
+            sip (str or dict): A file path to a JSON, YAML file or a dictionary containing
+                               the standard input parameters. See INPUT_VARIABLES.md for
+                               the full parameter reference. Key parameters include:
+                               - "solver_name"
+                               - "AR"
+                               - "split_gas", "split_gas_frac"
+                               - "target_year", "baseline_year"
+                               - "abatement_type", "abatement_scenario"
+                               - "livestock_ratio_type", "livestock_ratio_value"
+                               - "afforestation_rate_kha_per_year", "broadleaf_fraction",
+                                 "organic_soil_fraction", "forest_harvest_intensity"
+                               - "baseline_dairy_pop", "baseline_beef_pop"
         """
         # If sip is a string, assume it's a file path and load the configuration using ImportFactory.
         if isinstance(sip, str):
@@ -80,6 +86,8 @@ class OptiGobDataManager:
             self.standard_input_parameters = sip
         
         self.db_manager = DatabaseManager()
+
+        self.solver_name = None
 
         self._livestock_emission_scalers = None
         self._livestock_area_scalers = None
@@ -130,6 +138,18 @@ class OptiGobDataManager:
             "other_land_use",
             "ad",
             "beccs"]
+
+    def _get_available_solvers(self):
+        """
+        Retrieves the list of available solvers from the Pyomo SolverFactory.
+
+        Returns:
+            list: A list of available solver names.
+        """
+
+        all_solvers = list(pyo.SolverFactory)
+
+        return all_solvers
 
     def _validate_input_parameters(self):
         """
@@ -324,6 +344,41 @@ class OptiGobDataManager:
             )
             logger.error(error_msg)
             raise ValueError(error_msg)
+        
+    def get_solver_name(self):
+        """
+        Retrieves the solver name from the SIP input parameters.
+
+        Returns:
+            str: The solver name specified in the SIP input parameters.
+
+        Raises:
+            ValueError: If the solver_name parameter is missing from the SIP input parameters.
+        """
+
+        available_solvers = self._get_available_solvers()
+
+        if self.solver_name is not None:
+            return self.solver_name
+        
+        solver_name = self.standard_input_parameters.get("solver_name").lower() if self.standard_input_parameters.get("solver_name") else None
+
+        if solver_name is None:
+            error_msg = "Solver name is missing from SIP input parameters. Please specify 'solver_name' in the SIP input. Example:\n  solver_name: 'highs'"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
+        elif solver_name not in available_solvers:
+            error_msg = (
+                f"Specified solver '{solver_name}' is not available.\n"
+                f"Available solvers: {', '.join(available_solvers)}\n"
+                f"Please specify a valid solver name in the SIP input parameters."
+            )
+            logger.error(error_msg)
+            raise ValueError(error_msg)
+        
+        self.solver_name = solver_name
+
+        return self.solver_name
 
     def get_ha_to_kha(self):
         """
