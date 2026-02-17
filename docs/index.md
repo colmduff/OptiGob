@@ -11,5 +11,6 @@ contributing.md
 conduct.md
 installation.md
 input_variables.md
+limitations.md
 autoapi/index
 ```

@@ -24,7 +24,8 @@ optigob/
 │   ├── baseline_emissions.py
 │   ├── emissions_budget.py
 │   ├── landarea_budget.py
-│   ├── econ_output.py
+│   └── econ_output.py
+├── substitution/
 │   └── substitution.py
 ├── bioenergy/
 │   └── bioenergy_budget.py
@@ -54,7 +55,7 @@ optigob/
 - **budget_model/baseline_emissions.py**: Provides baseline emissions by sector for all gases.
 - **budget_model/landarea_budget.py**: Calculates land area (aggregated, disaggregated, HNV) by sector for baseline and scenario.
 - **budget_model/econ_output.py**: Calculates protein, bioenergy, harvested wood products, and livestock population by sector.
-- **budget_model/substitution.py**: Centralizes logic for substitution impacts (e.g., wood for fossil, protein crop substitution).
+- **substitution/substitution.py**: Centralizes logic for substitution impacts (e.g., wood for fossil, protein crop substitution).
 - **protein_crops/protein_crops_budget.py**: Handles protein crop area, yield, and protein output calculations.
 - **livestock/livestock_budget.py**: Calculates livestock sector budgets, including emissions, land use, and protein.
 - **forest/forest_budget.py**: Handles forest sector land area, emissions, and harvested wood product calculations.
@@ -110,7 +111,21 @@ A default database offers multiple permutations of abatement and productivity sc
 To install the package, use pip:
 
 ```bash
+pip install "optigob[solvers]"
+```
+
+if you would prefer to use an alternative solver to HiGHS, the install command is: 
+
+```bash
 pip install optigob
+```
+
+Be sure to specify the solver in "solver_name" in the SIP.yaml.
+
+For example: 
+
+```yaml
+solver_name: "highs"
 ```
 
 ## Usage
@@ -118,6 +133,7 @@ pip install optigob
 Here is some example input data:
 
 ```yaml
+    solver_name: "highs"
     AR: 5
     split_gas: true
     split_gas_frac: 0.3
