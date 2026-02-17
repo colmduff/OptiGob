@@ -23,11 +23,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
 
-      - name: Install dependencies with Poetry
-        run: poetry install --no-interaction --no-root
-
-      - name: Install optigob package (editable)
-        run: poetry install --no-interaction
+      - name: Install dependencies with Poetry (including HiGHS solver)
+        run: poetry install --no-interaction -E solvers
 
       - name: Run tests via Makefile in tests folder
         working-directory: tests

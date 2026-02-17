@@ -176,6 +176,5 @@ tests/logs/
 .test_zero_budget_message.py
 .retest.py
 test_bugs_enhanced.py
-Makefile
 sip_bug1.yaml
 sip_bug2.yaml
