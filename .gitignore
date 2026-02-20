@@ -171,6 +171,7 @@ goals.md
 
 #test files/logs/data
 tests/logs/
+tests/bugs/
 .solver_test
 .test_co2e_budget_confirmation.py
 .test_zero_budget_message.py
