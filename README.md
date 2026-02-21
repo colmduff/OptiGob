@@ -328,6 +328,20 @@ if __name__ == '__main__':
 
 ---
 
+## Future Releases
+
+`OptiGob` is designed to operate using a pre-generated SQLite scenario database. The current release ships with a default database derived from upstream sector models (GOBLIN Lite, FERS-CBM, LCAD2.0).
+
+The underlying architecture already separates data generation from optimisation logic, and the `DatabaseManager` class accepts a custom database path (see [Using a custom database](#using-a-custom-database)). However, constructing a compatible database currently requires familiarity with the expected schema and upstream modelling workflows.
+
+Future releases will focus on making this capability more accessible, including:
+
+- Documentation and worked examples for modifying the existing database or replacing it with alternative datasets (e.g., for different national or regional contexts),
+- Tooling to help users regenerate compatible scenario databases from updated upstream models,
+- Validation utilities for verifying custom databases against the expected schema.
+
+This is an area of active development. Users interested in building custom databases for their own contexts are welcome to get in touch.
+
 ## Contributing
 
 Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
